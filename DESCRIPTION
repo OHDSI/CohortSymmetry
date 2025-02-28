@@ -40,7 +40,6 @@ Suggests:
     testthat (>= 3.1.5),
     DBI (>= 1.0.0),
     cli,
-    checkmate,
     odbc,
     RPostgres,
     tidyselect,
@@ -54,7 +53,7 @@ Suggests:
 Imports: 
     CDMConnector (>= 1.7.0),
     dplyr,
-    PatientProfiles,
+    PatientProfiles (>= 1.0.0),
     rlang,
     tibble,
     visOmopResults (>= 0.4.0),
@@ -62,7 +61,7 @@ Imports:
     omock (>= 0.3.1),    
     stats,
     here,
-    omopgenerics (>= 0.4.0),
+    omopgenerics (>= 1.0.0),
     DrugUtilisation (>= 0.7.0),
     CodelistGenerator (>= 3.1.0)
 Config/testthat/edition: 3
