@@ -68,9 +68,8 @@ mockCohortSymmetry <- function(seed = 1,
   } else {
     markerCohort <- markerCohort
   }
-
-  checkmate::assert_tibble(indexCohort)
-  checkmate::assert_tibble(markerCohort)
+  omopgenerics::assertTable(indexCohort)
+  omopgenerics::assertTable(markerCohort)
 
   cdm <-
     omock::mockCdmReference() |> omock::mockCdmFromTables(tables = list(cohort_1 = indexCohort,
