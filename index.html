@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="index.html">CohortSymmetry</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,11 +95,11 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r.duckdb.org/" class="external-link">duckdb</a></span><span class="op">)</span></span>
 <span> </span>
 <span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu">duckdb</span><span class="fu">::</span><span class="fu"><a href="https://r.duckdb.org/reference/duckdb.html" class="external-link">duckdb</a></span><span class="op">(</span><span class="op">)</span>, </span>
-<span>                     dbdir <span class="op">=</span> <span class="fu">CDMConnector</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/CDMConnector/reference/eunomiaDir.html" class="external-link">eunomia_dir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://darwin-eu.github.io/CDMConnector/reference/cdm_from_con.html" class="external-link">cdm_from_con</a></span><span class="op">(</span></span>
+<span>                     dbdir <span class="op">=</span> <span class="fu">CDMConnector</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/CDMConnector/reference/eunomiaDir.html" class="external-link">eunomiaDir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://darwin-eu.github.io/CDMConnector/reference/cdmFromCon.html" class="external-link">cdmFromCon</a></span><span class="op">(</span></span>
 <span>  con <span class="op">=</span> <span class="va">db</span>,</span>
-<span>  cdm_schema <span class="op">=</span> <span class="st">"main"</span>,</span>
-<span>  write_schema <span class="op">=</span> <span class="st">"main"</span></span>
+<span>  cdmSchema <span class="op">=</span> <span class="st">"main"</span>,</span>
+<span>  writeSchema <span class="op">=</span> <span class="st">"main"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -109,16 +109,24 @@
 <p>If one wants to generate two drugs cohorts in cdm, DrugUtilisation is recommended. For merely illustration purposes, we will carry out PSSA on aspirin (index_cohort) against amoxicillin (marker_cohort)</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu-dev.github.io/DrugUtilisation/" class="external-link">DrugUtilisation</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu.github.io/DrugUtilisation/" class="external-link">DrugUtilisation</a></span><span class="op">)</span></span>
 <span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu">DrugUtilisation</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/DrugUtilisation/reference/generateIngredientCohortSet.html" class="external-link">generateIngredientCohortSet</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>, </span>
 <span>  name <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
 <span>  ingredient <span class="op">=</span> <span class="st">"aspirin"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ℹ Subsetting drug_exposure table</span></span>
+<span><span class="co">#&gt; ℹ Checking whether any record needs to be dropped.</span></span>
+<span><span class="co">#&gt; ℹ Collapsing overlaping records.</span></span>
+<span><span class="co">#&gt; ℹ Collapsing records with gapEra = 1 days.</span></span>
 <span></span>
 <span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu">DrugUtilisation</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/DrugUtilisation/reference/generateIngredientCohortSet.html" class="external-link">generateIngredientCohortSet</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
-<span>  ingredient <span class="op">=</span> <span class="st">"amoxicillin"</span><span class="op">)</span></span></code></pre></div>
+<span>  ingredient <span class="op">=</span> <span class="st">"amoxicillin"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ℹ Subsetting drug_exposure table</span></span>
+<span><span class="co">#&gt; ℹ Checking whether any record needs to be dropped.</span></span>
+<span><span class="co">#&gt; ℹ Collapsing overlaping records.</span></span>
+<span><span class="co">#&gt; ℹ Collapsing records with gapEra = 1 days.</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="step-1-generatesequencecohortset">Step 1: generateSequenceCohortSet<a class="anchor" aria-label="anchor" href="#step-1-generatesequencecohortset"></a>
@@ -138,13 +146,13 @@
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: ??</span></span>
 <span><span class="co">#&gt; Columns: 6</span></span>
-<span><span class="co">#&gt; Database: DuckDB v0.10.1 [xihangc@Windows 10 x64:R 4.3.1/C:\Users\xihangc\AppData\Local\Temp\RtmpqOJIm1\file521c7f3a49b3.duckdb]</span></span>
+<span><span class="co">#&gt; Database: DuckDB v1.1.3 [xihangc@Windows 10 x64:R 4.2.1/C:\Users\xihangc\AppData\Local\Temp\Rtmpy2oj4K\file791c79b03ba9.duckdb]</span></span>
 <span><span class="co">#&gt; $ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…</span></span>
-<span><span class="co">#&gt; $ subject_id           &lt;int&gt; 65, 119, 185, 144, 235, 197, 310, 280, 316, 331, …</span></span>
-<span><span class="co">#&gt; $ cohort_start_date    &lt;date&gt; 1968-07-29, 1967-05-28, 1947-04-07, 1978-10-30, …</span></span>
-<span><span class="co">#&gt; $ cohort_end_date      &lt;date&gt; 1969-06-18, 1968-04-07, 1947-04-12, 1979-09-04, …</span></span>
-<span><span class="co">#&gt; $ index_date           &lt;date&gt; 1969-06-18, 1967-05-28, 1947-04-07, 1978-10-30, …</span></span>
-<span><span class="co">#&gt; $ marker_date          &lt;date&gt; 1968-07-29, 1968-04-07, 1947-04-12, 1979-09-04, …</span></span></code></pre></div>
+<span><span class="co">#&gt; $ subject_id           &lt;int&gt; 563, 1669, 2141, 3145, 3440, 4052, 4776, 331, 161…</span></span>
+<span><span class="co">#&gt; $ cohort_start_date    &lt;date&gt; 1964-06-11, 1959-12-29, 1950-06-23, 1974-11-14, …</span></span>
+<span><span class="co">#&gt; $ cohort_end_date      &lt;date&gt; 1964-08-16, 1960-02-05, 1950-11-14, 1975-04-06, …</span></span>
+<span><span class="co">#&gt; $ index_date           &lt;date&gt; 1964-06-11, 1959-12-29, 1950-11-14, 1975-04-06, …</span></span>
+<span><span class="co">#&gt; $ marker_date          &lt;date&gt; 1964-08-16, 1960-02-05, 1950-06-23, 1974-11-14, …</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="step-2-summarisesequenceratios">Step 2: summariseSequenceRatios<a class="anchor" aria-label="anchor" href="#step-2-summarisesequenceratios"></a>
@@ -157,16 +165,16 @@
 <span><span class="co">#&gt; Rows: 10</span></span>
 <span><span class="co">#&gt; Columns: 13</span></span>
 <span><span class="co">#&gt; $ result_id        &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1</span></span>
-<span><span class="co">#&gt; $ cdm_name         &lt;chr&gt; "Synthea synthetic health database", "Synthea synthet…</span></span>
+<span><span class="co">#&gt; $ cdm_name         &lt;chr&gt; "An OMOP CDM database", "An OMOP CDM database", "An O…</span></span>
 <span><span class="co">#&gt; $ group_name       &lt;chr&gt; "index_cohort_name &amp;&amp;&amp; marker_cohort_name", "index_co…</span></span>
-<span><span class="co">#&gt; $ group_level      &lt;chr&gt; "1191_aspirin &amp;&amp;&amp; 723_amoxicillin", "1191_aspirin &amp;&amp;&amp;…</span></span>
+<span><span class="co">#&gt; $ group_level      &lt;chr&gt; "aspirin &amp;&amp;&amp; amoxicillin", "aspirin &amp;&amp;&amp; amoxicillin",…</span></span>
 <span><span class="co">#&gt; $ strata_name      &lt;chr&gt; "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ strata_level     &lt;chr&gt; "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ variable_name    &lt;chr&gt; "crude", "adjusted", "crude", "crude", "adjusted", "a…</span></span>
 <span><span class="co">#&gt; $ variable_level   &lt;chr&gt; "sequence_ratio", "sequence_ratio", "sequence_ratio",…</span></span>
 <span><span class="co">#&gt; $ estimate_name    &lt;chr&gt; "point_estimate", "point_estimate", "lower_CI", "uppe…</span></span>
 <span><span class="co">#&gt; $ estimate_type    &lt;chr&gt; "numeric", "numeric", "numeric", "numeric", "numeric"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   &lt;chr&gt; "1.43589743589744", "1927.66462191247", "0.9573119756…</span></span>
+<span><span class="co">#&gt; $ estimate_value   &lt;chr&gt; "1.43589743589744", "1629.5148627184", "0.95731197561…</span></span>
 <span><span class="co">#&gt; $ additional_name  &lt;chr&gt; "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level &lt;chr&gt; "overall", "overall", "overall", "overall", "overall"…</span></span></code></pre></div>
 </div>
@@ -195,7 +203,7 @@
 <h3 id="disconnect-from-the-cdm-database-connection">Disconnect from the cdm database connection<a class="anchor" aria-label="anchor" href="#disconnect-from-the-cdm-database-connection"></a>
 </h3>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">CDMConnector</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/CDMConnector/reference/cdmDisconnect.html" class="external-link">cdmDisconnect</a></span><span class="op">(</span>cdm <span class="op">=</span> <span class="va">cdm</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">CDMConnector</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/cdmDisconnect.html" class="external-link">cdmDisconnect</a></span><span class="op">(</span>cdm <span class="op">=</span> <span class="va">cdm</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 </div>
