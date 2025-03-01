@@ -172,7 +172,8 @@ generateSequenceCohortSet <- function(cdm,
           )
         ) |>
         dplyr::select("cohort_start_date", "index_n", "marker_n") |>
-        dplyr::collect() %>%
+        dplyr::collect() |>
+        dplyr::arrange(.data$cohort_start_date) %>%
         {if (is.infinite(movingAverageRestriction))
           dplyr::mutate(.,
             marker_forward = deltaCumulativeSum(.data$marker_n, .data$cohort_start_date, 99999, backwards = F),
