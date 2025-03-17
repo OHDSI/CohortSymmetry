@@ -26,10 +26,17 @@
 mockCohortSymmetry <- function(seed = 1,
                                indexCohort = NULL,
                                markerCohort = NULL,
-                               con = DBI::dbConnect(duckdb::duckdb(), ":memory:"),
+                               con = NULL,
                                schema = "main") {
 
-  rlang::check_installed("duckdb")
+  if (is.null(con)) {
+    rlang::check_installed("duckdb")
+    con <- duckdb::dbConnect(duckdb::duckdb(), ":memory:")
+  }
+
+  if (!inherits(con, "DBIConnection")) {
+    cli::cli_abort(c("!" = "`con` must be a DBI connection"))
+  }
 
   if (is.null(indexCohort)){
     indexCohort <- dplyr::tibble(
