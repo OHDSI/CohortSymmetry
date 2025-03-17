@@ -8,7 +8,7 @@ mockCohortSymmetry(
   seed = 1,
   indexCohort = NULL,
   markerCohort = NULL,
-  con = DBI::dbConnect(duckdb::duckdb(), ":memory:"),
+  con = NULL,
   schema = "main"
 )
 }
