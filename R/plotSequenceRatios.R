@@ -36,6 +36,7 @@ plotSequenceRatios <- function(result,
                                facet = NULL
                                ){
 
+  rlang::check_installed("visOmopResults")
   rlang::check_installed("ggplot2")
 
   # validate checks

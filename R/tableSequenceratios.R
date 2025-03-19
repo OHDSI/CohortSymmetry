@@ -42,7 +42,7 @@ tableSequenceRatios <- function(result,
 
  # check settings
   result <- result |>
-    visOmopResults::filterSettings(
+    omopgenerics::filterSettings(
       .data$result_type == "sequence_ratios"
     )
 

@@ -29,6 +29,7 @@ mockCohortSymmetry <- function(seed = 1,
                                con = NULL,
                                schema = "main") {
 
+  rlang::check_installed("omock")
   if (is.null(con)) {
     rlang::check_installed("duckdb")
     con <- duckdb::dbConnect(duckdb::duckdb(), ":memory:")

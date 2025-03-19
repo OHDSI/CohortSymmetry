@@ -140,6 +140,8 @@ inc_cohort_summary <- function(cdm, tableName, cohortId, nsrTableName, cohortDat
 
 # to resolve "All declared Imports should be used"
 redundant_fun <- function() {
+  rlang::check_installed("flextable")
+  rlang::check_installed("gt")
   here::here()
   CodelistGenerator::mockVocabRef()
   cdm <- DrugUtilisation::mockDrugUtilisation()
@@ -152,6 +154,8 @@ redundant_fun <- function() {
 # empty output of visOmopTable()
 
 emptyResultTable <- function(type) {
+  rlang::check_installed("flextable")
+  rlang::check_installed("gt")
 x <- dplyr::tibble(`Table has no data` = character())
 if (type == "gt") {
   result <- gt::gt(x)
