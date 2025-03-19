@@ -29,7 +29,7 @@ mockCohortSymmetry <- function(seed = 1,
                                con = NULL,
                                schema = "main") {
 
-<<<<<<< Updated upstream
+  rlang::check_installed("omock")
   if (is.null(con)) {
     rlang::check_installed("duckdb")
     con <- duckdb::dbConnect(duckdb::duckdb(), ":memory:")
@@ -38,10 +38,6 @@ mockCohortSymmetry <- function(seed = 1,
   if (!inherits(con, "DBIConnection")) {
     cli::cli_abort(c("!" = "`con` must be a DBI connection"))
   }
-=======
-  rlang::check_installed("omock")
-  rlang::check_installed("duckdb")
->>>>>>> Stashed changes
 
   if (is.null(indexCohort)){
     indexCohort <- dplyr::tibble(
