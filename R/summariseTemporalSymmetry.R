@@ -81,7 +81,7 @@ summariseTemporalSymmetry <- function(cohort,
     PatientProfiles::addCdmName(cdm = omopgenerics::cdmReference(cohort)) |>
     dplyr::collect() |>
     dplyr::select(-c("index_id", "marker_id")) |>
-    visOmopResults::uniteGroup(cols = c("index_name", "marker_name")) |>
+    omopgenerics::uniteGroup(cols = c("index_name", "marker_name")) |>
     tidyr::pivot_longer(
       cols = c("time"),
       names_to = "additional_col",

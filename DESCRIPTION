@@ -46,6 +46,12 @@ Suggests:
     tidyselect,
     knitr,
     dbplyr (>= 2.5.0),
+<<<<<<< Updated upstream
+=======
+    omock (>= 0.3.1),  
+    visOmopResults (>= 0.4.0),
+    flextable,
+>>>>>>> Stashed changes
     gt,
     ggplot2,
     duckdb,
@@ -56,9 +62,7 @@ Imports:
     PatientProfiles (>= 1.0.0),
     rlang,
     tibble,
-    visOmopResults (>= 0.4.0),
-    tidyr,
-    omock (>= 0.3.1),    
+    tidyr,  
     stats,
     here,
     flextable,

@@ -36,6 +36,7 @@ plotTemporalSymmetry <- function(result,
                                  colours = c("blue", "red"),
                                  scales = "free") {
 
+  rlang::check_installed("visOmopResults")
   rlang::check_installed("ggplot2")
 
   # checks

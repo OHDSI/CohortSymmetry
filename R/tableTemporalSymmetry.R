@@ -34,6 +34,7 @@ tableTemporalSymmetry <- function(result,
                                   type = "gt",
                                   hide = "variable_name"){
 
+  rlang::check_installed("visOmopResults")
   rlang::check_installed("flextable")
   rlang::check_installed("gt")
 
@@ -42,7 +43,7 @@ tableTemporalSymmetry <- function(result,
 
   # check settings
   result <- result |>
-    visOmopResults::filterSettings(
+    omopgenerics::filterSettings(
       .data$result_type == "temporal_symmetry"
     )
 
