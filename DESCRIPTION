@@ -62,7 +62,6 @@ Imports:
     tidyr,  
     stats,
     here,
-    flextable,
     omopgenerics (>= 1.0.0),
     DrugUtilisation (>= 0.7.0),
     CodelistGenerator (>= 3.1.0)
