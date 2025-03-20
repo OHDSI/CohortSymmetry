@@ -4,12 +4,7 @@
 \alias{summariseSequenceRatios}
 \title{Sequence ratio calculations}
 \usage{
-summariseSequenceRatios(
-  cohort,
-  cohortId = NULL,
-  confidenceInterval = 95,
-  minCellCount = 5
-)
+summariseSequenceRatios(cohort, cohortId = NULL, confidenceInterval = 95)
 }
 \arguments{
 \item{cohort}{A cohort table in the cdm.}
@@ -17,9 +12,6 @@ summariseSequenceRatios(
 \item{cohortId}{The Ids in the cohort that are to be included in the analyses.}
 
 \item{confidenceInterval}{Default is 95, indicating the central 95\% confidence interval.}
-
-\item{minCellCount}{The minimum number of events to reported, below which
-results will be obscured. If 0, all results will be reported.}
 }
 \value{
 A local table with all the analyses.
@@ -35,7 +27,7 @@ cdm <- generateSequenceCohortSet(cdm = cdm,
                                  name = "joined_cohorts",
                                  indexTable = "cohort_1",
                                  markerTable = "cohort_2")
-pssa_result <- summariseSequenceRatios(cohort = cdm$joined_cohorts, minCellCount = 0)
+pssa_result <- summariseSequenceRatios(cohort = cdm$joined_cohorts)
 pssa_result
 CDMConnector::cdmDisconnect(cdm)
 }
