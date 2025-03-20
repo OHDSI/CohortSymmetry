@@ -23,7 +23,7 @@
 #'                                  name = "joined_cohorts",
 #'                                  indexTable = "cohort_1",
 #'                                  markerTable = "cohort_2")
-#' temporal_symmetry <- summariseTemporalSymmetry(cohort = cdm$joined_cohorts, minCellCount = 0)
+#' temporal_symmetry <- summariseTemporalSymmetry(cohort = cdm$joined_cohorts)
 #' CDMConnector::cdmDisconnect(cdm)
 #' }
 #'

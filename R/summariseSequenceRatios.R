@@ -6,8 +6,6 @@
 #' @param cohort A cohort table in the cdm.
 #' @param cohortId The Ids in the cohort that are to be included in the analyses.
 #' @param confidenceInterval Default is 95, indicating the central 95% confidence interval.
-#' @param minCellCount The minimum number of events to reported, below which
-#' results will be obscured. If 0, all results will be reported.
 #'
 #' @return
 #' A local table with all the analyses.
@@ -21,15 +19,14 @@
 #'                                  name = "joined_cohorts",
 #'                                  indexTable = "cohort_1",
 #'                                  markerTable = "cohort_2")
-#' pssa_result <- summariseSequenceRatios(cohort = cdm$joined_cohorts, minCellCount = 0)
+#' pssa_result <- summariseSequenceRatios(cohort = cdm$joined_cohorts)
 #' pssa_result
 #' CDMConnector::cdmDisconnect(cdm)
 #' }
 #'
 summariseSequenceRatios <- function(cohort,
                                     cohortId = NULL,
-                                    confidenceInterval = 95,
-                                    minCellCount = 5) {
+                                    confidenceInterval = 95) {
 
   # checks
   cdm <- omopgenerics::cdmReference(cohort)
@@ -38,10 +35,6 @@ summariseSequenceRatios <- function(cohort,
   omopgenerics::assertNumeric(confidenceInterval,
                               min = 1,
                               max = 99,
-                              length = 1)
-  omopgenerics::assertNumeric(minCellCount,
-                              min = 0,
-                              max = 99999999,
                               length = 1)
 
   if (is.null(cohortId)){
@@ -136,70 +129,10 @@ summariseSequenceRatios <- function(cohort,
 
   output <- output |>
     PatientProfiles::addCdmName(cdm = omopgenerics::cdmReference(cohort)) |>
-    getSummarisedResult()
-
- setting <- omopgenerics::settings(output)
-
-  output <- output |>
-    omopgenerics::suppress(minCellCount = minCellCount)
-
-  counts <- output |>
-    dplyr::filter(.data$estimate_name == "count" | .data$estimate_name == "percentage")
-
-  output_sr <- output |> dplyr::filter(.data$variable_level == "sequence_ratio")
-
-  index_count <- output |>
-    dplyr::filter(!.data$variable_level == "sequence_ratio",
-                  .data$variable_name == "index",
-                  .data$estimate_name == "count") |>
-    dplyr::rename("variable_name_index" = "variable_name",
-                  "variable_level_index" = "variable_level",
-                  "estimate_name_index" = "estimate_name",
-                  "estimate_type_index" = "estimate_type",
-                  "estimate_value_index" = "estimate_value")
-
-  output_suppressed <- output_sr |>
-    dplyr::left_join(index_count,
-                     by = c("result_id", "cdm_name", "group_name",
-                            "group_level", "strata_name", "strata_level",
-                            "additional_name", "additional_level"),
-                     relationship = "many-to-many") |>
-    dplyr::mutate(estimate_value =
-                    dplyr::case_when(
-                      is.na(.data$estimate_value_index) ~ NA,
-                      T ~ .data$estimate_value
-                    )
-    ) |>
-    dplyr::select(dplyr::all_of(omopgenerics::resultColumns()))
-
-  marker_count <- output |>
-    dplyr::filter(!.data$variable_level == "sequence_ratio",
-                  .data$variable_name == "marker",
-                  .data$estimate_name == "count") |>
-    dplyr::rename("variable_name_index" = "variable_name",
-                  "variable_level_index" = "variable_level",
-                  "estimate_name_index" = "estimate_name",
-                  "estimate_type_index" = "estimate_type",
-                  "estimate_value_index" = "estimate_value")
-
-  output_suppressed <- output_suppressed |>
-    dplyr::left_join(marker_count,
-                     by = c("result_id", "cdm_name", "group_name",
-                            "group_level", "strata_name", "strata_level",
-                            "additional_name", "additional_level"),
-                     relationship = "many-to-many") |>
-    dplyr::mutate(estimate_value =
-                    dplyr::case_when(
-                      is.na(.data$estimate_value_index) ~ NA,
-                      T ~ .data$estimate_value
-                    )
-    ) |>
-    dplyr::select(dplyr::all_of(omopgenerics::resultColumns()))|>
-    rbind(counts) |>
+    getSummarisedResult() |>
     dplyr::arrange(.data$group_level) |>
-    omopgenerics::newSummarisedResult(
-      settings = setting
-    )
+    dplyr::select(dplyr::all_of(omopgenerics::resultColumns())) |>
+    omopgenerics::newSummarisedResult()
 
-  return(output_suppressed)
+  return(output)
 }

@@ -104,8 +104,7 @@ test_that("summariseSequenceRatios - testing ratios and CIs, Example 1", {
 
   suppressWarnings(
     res <- summariseSequenceRatios(
-      cohort = cdm$joined_cohorts,
-      minCellCount = 0)
+      cohort = cdm$joined_cohorts)
   )
 
   res <- res |>
@@ -170,8 +169,7 @@ test_that("summariseSequenceRatios - testing ratios and CIs, Example 2", {
                                    markerTable = "cohort_2")
 
   res <- summariseSequenceRatios(
-    cohort = cdm$joined_cohorts,
-    minCellCount = 0)
+    cohort = cdm$joined_cohorts)
 
   res <- res |>
     visOmopResults::splitAll() |>
@@ -241,8 +239,7 @@ test_that("summariseSequenceRatios - testing CI", {
 
   res_90 <- summariseSequenceRatios(
     cohort = cdm$joined_cohorts,
-    confidenceInterval = 90,
-    minCellCount = 0)
+    confidenceInterval = 90)
 
   expect_equal(res_90 %>% dplyr::filter(variable_level == "first_pharmac",
                                         variable_name == "index",
@@ -280,8 +277,7 @@ test_that("summariseSequenceRatios - testing CI", {
 
   res_95 <- summariseSequenceRatios(
     cohort = cdm$joined_cohorts,
-    confidenceInterval = 95,
-    minCellCount = 0)
+    confidenceInterval = 95)
 
   expect_equal(res_95 %>% dplyr::filter(variable_level == "first_pharmac",
                                         variable_name == "index",
@@ -319,8 +315,7 @@ test_that("summariseSequenceRatios - testing CI", {
 
   res_99 <- summariseSequenceRatios(
     cohort = cdm$joined_cohorts,
-    confidenceInterval = 99,
-    minCellCount = 0)
+    confidenceInterval = 99)
 
   expect_equal(res_99 %>% dplyr::filter(variable_level == "first_pharmac",
                                         variable_name == "index",
@@ -455,8 +450,7 @@ test_that("summariseSequenceRatios - testing cohortId", {
 
   expect_no_error(
     result <- summariseSequenceRatios(cohort = cdm$joined_cohorts,
-                                     cohortId = 1,
-                                     minCellCount = 0) %>%
+                                     cohortId = 1) %>%
       visOmopResults::splitAll()
   )
 
@@ -501,8 +495,7 @@ test_that("summariseSequenceRatios - testing cohortId", {
 
   expect_no_error(
     result2 <- summariseSequenceRatios(cohort = cdm$joined_cohorts,
-                                     cohortId = c(1,3),
-                                     minCellCount = 0) %>%
+                                     cohortId = c(1,3)) %>%
       visOmopResults::splitAll()
   )
 
@@ -565,8 +558,7 @@ test_that("summariseSequenceRatios - testing moving average restriction, ex1", {
 
   expect_no_error(
     result <- summariseSequenceRatios(cohort = cdm$joined_cohorts,
-                                      cohortId = 1,
-                                      minCellCount = 0)
+                                      cohortId = 1)
   )
 
   expect_true(
@@ -646,8 +638,7 @@ test_that("summariseSequenceRatios - testing moving average restriction, ex2", {
   )
 
   expect_no_error(
-    result <- summariseSequenceRatios(cohort = cdm$joined_cohorts,
-                                      minCellCount = 0)
+    result <- summariseSequenceRatios(cohort = cdm$joined_cohorts)
   )
 
   expect_true(all(
@@ -689,20 +680,17 @@ test_that("summariseSequenceRatios - testing moving average restriction, ex2", {
   res_90 <- summariseSequenceRatios(
     cohort = cdm$joined_cohorts,
     cohortId = 1,
-    confidenceInterval = 90,
-    minCellCount = 0)
+    confidenceInterval = 90)
 
   res_95 <- summariseSequenceRatios(
     cohort = cdm$joined_cohorts,
     cohortId = 1,
-    confidenceInterval = 95,
-    minCellCount = 0)
+    confidenceInterval = 95)
 
   res_99 <- summariseSequenceRatios(
     cohort = cdm$joined_cohorts,
     cohortId = 1,
-    confidenceInterval = 99,
-    minCellCount = 0)
+    confidenceInterval = 99)
 
   expect_true(
     (res_90 %>%
@@ -870,89 +858,6 @@ test_that("edge case 3", {
   expect_warning(
     result <- summariseSequenceRatios(cohort = cdm$joined_cohorts)
   )
-  CDMConnector::cdmDisconnect(cdm = cdm)
-})
-
-test_that("min cell count",{
-  skip_on_cran()
-  indexCohort <- dplyr::tibble(
-    cohort_definition_id = c(1, 1, 1, 1, 1, 2, 2, 2, 2, 2),
-    subject_id = c(1, 4, 2, 3, 5, 5, 4, 3, 6, 1),
-    cohort_start_date = as.Date(
-      c(
-        "2020-04-01", "2021-06-01", "2022-05-22", "2010-01-01", "2019-08-01", "2019-04-07", "2021-01-01", "2008-02-02", "2010-09-09", "2021-01-01"
-      )
-    ),
-    cohort_end_date = as.Date(
-      c(
-        "2020-04-01", "2021-08-01", "2022-05-23", "2010-03-01", "2020-04-01", "2020-05-30", "2022-02-02", "2013-12-03", "2010-11-01", "2021-01-01"
-      )
-    )
-  )|>
-    dplyr::mutate(cohort_definition_id = as.integer(.data$cohort_definition_id),
-                  subject_id = as.integer(.data$subject_id))
-
-  markerCohort <- dplyr::tibble(
-    cohort_definition_id = c(1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3),
-    subject_id = c(1, 3, 4, 2, 5, 1, 2, 3, 4, 5, 6),
-    cohort_start_date = as.Date(
-      c(
-        "2020-12-30", "2010-01-01","2021-05-25","2022-05-31", "2020-05-25", "2019-05-25", "2022-05-25", "2010-09-30", "2022-05-25", "2020-02-29", "2021-01-01"
-      )
-    ),
-    cohort_end_date = cohort_start_date
-  )|>
-    dplyr::mutate(cohort_definition_id = as.integer(.data$cohort_definition_id),
-                  subject_id = as.integer(.data$subject_id))
-
-  cdm <- mockCohortSymmetry(indexCohort = indexCohort,
-                            markerCohort = markerCohort)
-
-  cdm <- generateSequenceCohortSet(cdm = cdm,
-                                   name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   markerTable = "cohort_2")
-
-  expect_no_error(
-    expect_warning(
-    result1 <- summariseSequenceRatios(
-      cohort = cdm$joined_cohorts,
-      minCellCount = 0
-    )
-  )
-  )
-
-  expect_error(
-    result_error <- summariseSequenceRatios(
-      cohort = cdm$joined_cohort,
-      minCellCount = Inf
-    )
-  )
-
-  expect_error(
-    result_error2 <- summariseSequenceRatios(
-      cohort = cdm$joined_cohort,
-      minCellCount = -1
-    )
-  )
-
-  expect_no_error(
-    expect_warning(
-    result2 <- summariseSequenceRatios(
-      cohort = cdm$joined_cohorts,
-      minCellCount = 10
-    )
-  )
-  )
-
-  expect_equal(
-    result1 %>%
-      nrow()|>
-      as.numeric(),
-    result2 %>%
-      nrow()|>
-      as.numeric())
-
   CDMConnector::cdmDisconnect(cdm = cdm)
 })
 

@@ -9,7 +9,7 @@ test_that("tableSequenceRatios - gt output", {
                                    markerId = 3,
                                    name = "joined_cohort")
 
-  res <- summariseSequenceRatios(cohort = cdm$joined_cohort, minCellCount = 0)
+  res <- summariseSequenceRatios(cohort = cdm$joined_cohort)
 
   gtResult <- tableSequenceRatios(res)
   expect_true("gt_tbl" %in% (gtResult %>% class()))
@@ -54,7 +54,7 @@ test_that("tableSequenceRatios - tibble output", {
                                    markerId = 3,
                                    name = "joined_cohort")
 
-  res <- summariseSequenceRatios(cohort = cdm$joined_cohort, minCellCount = 0)
+  res <- summariseSequenceRatios(cohort = cdm$joined_cohort)
 
   expect_warning(
     tableTemporalSymmetry(res, type = "tibble")
@@ -78,7 +78,7 @@ test_that("tableSequenceRatios - flextable output", {
                                    markerId = 3,
                                    name = "joined_cohort")
 
-  res <- summariseSequenceRatios(cohort = cdm$joined_cohort, minCellCount = 0)
+  res <- summariseSequenceRatios(cohort = cdm$joined_cohort)
 
   expect_warning(
     tableTemporalSymmetry(res, type = "flextable")
