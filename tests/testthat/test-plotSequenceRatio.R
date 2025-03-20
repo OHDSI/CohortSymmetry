@@ -121,8 +121,7 @@ test_that("empty result error",{
   )
 
   expect_warning(
-  sr2 <- summariseSequenceRatios(cohort = cdm$joined_cohorts,
-                                 minCellCount = 0)
+  sr2 <- summariseSequenceRatios(cohort = cdm$joined_cohorts)
   )
 
   expect_no_error(
