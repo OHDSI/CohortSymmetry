@@ -156,11 +156,11 @@ cohort with the addition of two extra columns: <em>index_date</em> and
 <span><span class="co">#&gt; Columns: 6</span></span>
 <span><span class="co">#&gt; Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]</span></span>
 <span><span class="co">#&gt; $ cohort_definition_id <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…</span></span>
-<span><span class="co">#&gt; $ subject_id           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 13, 48, 1, 78, 26, 17, 44, 65, 75, 79, 20, 68, 21…</span></span>
-<span><span class="co">#&gt; $ cohort_start_date    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2003-10-26, 2007-10-30, 2001-12-18, 2002-12-01, …</span></span>
-<span><span class="co">#&gt; $ cohort_end_date      <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2004-06-17, 2008-02-16, 2002-05-21, 2003-08-22, …</span></span>
-<span><span class="co">#&gt; $ index_date           <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2004-06-17, 2008-02-16, 2001-12-18, 2002-12-01, …</span></span>
-<span><span class="co">#&gt; $ marker_date          <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2003-10-26, 2007-10-30, 2002-05-21, 2003-08-22, …</span></span></code></pre></div>
+<span><span class="co">#&gt; $ subject_id           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 48, 1, 78, 23, 33, 40, 43, 45, 51, 2, 28, 13, 6, …</span></span>
+<span><span class="co">#&gt; $ cohort_start_date    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2007-10-30, 2001-12-18, 2002-12-01, 2004-06-18, …</span></span>
+<span><span class="co">#&gt; $ cohort_end_date      <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2008-02-16, 2002-05-21, 2003-08-22, 2006-02-27, …</span></span>
+<span><span class="co">#&gt; $ index_date           <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2008-02-16, 2001-12-18, 2002-12-01, 2006-02-27, …</span></span>
+<span><span class="co">#&gt; $ marker_date          <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2007-10-30, 2002-05-21, 2003-08-22, 2004-06-18, …</span></span></code></pre></div>
 <p>Once we have the intersect cohort, you are able to explore the
 temporal symmetry by using <code>summariseTemporalSymmetry</code>,
 <code>tableTemporalSymmetry</code>, and
