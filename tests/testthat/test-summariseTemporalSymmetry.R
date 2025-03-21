@@ -28,7 +28,7 @@ test_that("test summariseTemporalSymmetry", {
   ))
 
   temporal_symmetry <-
-    summariseTemporalSymmetry(cohort = cdm$joined_cohorts, minCellCount = 0)
+    summariseTemporalSymmetry(cohort = cdm$joined_cohorts)
 
   expect_true(all(!is.na(
     temporal_symmetry$estimate_value |> unique()
@@ -49,7 +49,6 @@ test_that("test summariseTemporalSymmetry", {
   temporal_symmetry <-
     summariseTemporalSymmetry(
       cohort = cdm$joined_cohorts,
-      minCellCount = 0,
       timescale = "day"
     )
 
@@ -134,16 +133,6 @@ test_that("input validation",{
   expect_error(
     summariseTemporalSymmetry(cohort = cdm$joined_cohorts,
                               cohortId = "1")
-  )
-
-  expect_error(
-    summariseTemporalSymmetry(cohort = cdm$joined_cohorts,
-                              minCellCount = -1)
-  )
-
-  expect_error(
-    summariseTemporalSymmetry(cohort = cdm$joined_cohorts,
-                              minCellCount = Inf)
   )
 
   CDMConnector::cdmDisconnect(cdm = cdm)

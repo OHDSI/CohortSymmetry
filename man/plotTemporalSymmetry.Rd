@@ -42,8 +42,7 @@ cdm <- generateSequenceCohortSet(cdm = cdm,
                                  indexTable = "cohort_1",
                                  markerTable = "cohort_2",
                                  name = "joined_cohort")
-temporal_symmetry <- summariseTemporalSymmetry(cohort = cdm$joined_cohort,
-                                               minCellCount = 0)
+temporal_symmetry <- summariseTemporalSymmetry(cohort = cdm$joined_cohort)
 plotTemporalSymmetry(result = temporal_symmetry)
 CDMConnector::cdmDisconnect(cdm = cdm)
 }
