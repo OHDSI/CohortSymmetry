@@ -9,7 +9,7 @@ test_that("tableTemporalSymmetry - gt output", {
                                    markerId = 3,
                                    name = "joined_cohort")
 
-  res <- summariseTemporalSymmetry(cohort = cdm$joined_cohort, minCellCount = 0)
+  res <- summariseTemporalSymmetry(cohort = cdm$joined_cohort)
 
   gtResult <- tableTemporalSymmetry(res)
   expect_true("gt_tbl" %in% (gtResult %>% class()))
@@ -54,7 +54,7 @@ test_that("tableTemporalSymmetry - tibble output", {
                                    markerId = 3,
                                    name = "joined_cohort")
 
-  res <- summariseTemporalSymmetry(cohort = cdm$joined_cohort, minCellCount = 0)
+  res <- summariseTemporalSymmetry(cohort = cdm$joined_cohort)
 
   tibble_res <- tableTemporalSymmetry(res, type = "tibble")
 
@@ -78,7 +78,7 @@ test_that("tableTemporalSymmetry - flextable output", {
                                    markerId = 3,
                                    name = "joined_cohort")
 
-  res <- summariseTemporalSymmetry(cohort = cdm$joined_cohort, minCellCount = 0)
+  res <- summariseTemporalSymmetry(cohort = cdm$joined_cohort)
 
   flextable_res <- tableTemporalSymmetry(res, type = "flextable")
 
