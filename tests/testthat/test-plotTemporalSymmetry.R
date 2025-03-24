@@ -1,4 +1,5 @@
 test_that("plot working", {
+  skip_if_not_installed("omock")
   cdm <- omock::mockCdmReference(cdmName = "mock") |>
     omock::mockPerson(nPerson = 1000) |>
     omock::mockObservationPeriod() |>

@@ -33,6 +33,7 @@ test_that("check output format, colnames", {
 )
 
 test_that("one ID against one ID, example 1", {
+  skip_if_not_installed("omock")
   cdm <- mockCohortSymmetry()
   cdm <- generateSequenceCohortSet(cdm,
                                    name = "joined_cohorts",
@@ -75,6 +76,7 @@ test_that("one ID against one ID, example 2", {
 )
 
 test_that("one ID against one ID, example 3", {
+  skip_if_not_installed("omock")
   cdm <- mockCohortSymmetry()
   cdm <- generateSequenceCohortSet(cdm,
                                    name = "joined_cohorts",
