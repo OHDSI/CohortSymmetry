@@ -1,4 +1,5 @@
 test_that("test summariseTemporalSymmetry", {
+  skip_if_not_installed("omock")
   cdm <- mockCohortSymmetry()
   cdm <- generateSequenceCohortSet(
     cdm = cdm,
