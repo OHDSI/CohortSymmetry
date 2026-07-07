@@ -6,15 +6,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Introduction to CohortSymmetry • CohortSymmetry</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to CohortSymmetry">
 </head>
@@ -26,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CohortSymmetry</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -154,13 +153,12 @@ cohort with the addition of two extra columns: <em>index_date</em> and
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: ??</span></span>
 <span><span class="co">#&gt; Columns: 6</span></span>
-<span><span class="co">#&gt; Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]</span></span>
-<span><span class="co">#&gt; $ cohort_definition_id <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…</span></span>
-<span><span class="co">#&gt; $ subject_id           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 48, 26, 35, 37, 54, 64, 6, 38, 73, 76, 70, 13, 21…</span></span>
-<span><span class="co">#&gt; $ cohort_start_date    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2007-10-30, 2010-12-31, 2005-02-02, 2014-07-21, …</span></span>
-<span><span class="co">#&gt; $ cohort_end_date      <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2008-02-16, 2011-03-10, 2005-05-09, 2014-08-23, …</span></span>
-<span><span class="co">#&gt; $ index_date           <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2008-02-16, 2011-03-10, 2005-02-02, 2014-08-23, …</span></span>
-<span><span class="co">#&gt; $ marker_date          <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2007-10-30, 2010-12-31, 2005-05-09, 2014-07-21, …</span></span></code></pre></div>
+<span><span class="co">#&gt; $ cohort_definition_id <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1…</span></span>
+<span><span class="co">#&gt; $ subject_id           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 13<span style="color: #949494;">, </span>26<span style="color: #949494;">, </span>35<span style="color: #949494;">, </span>37<span style="color: #949494;">, </span>54<span style="color: #949494;">, </span>64<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>78<span style="color: #949494;">, </span>15<span style="color: #949494;">, </span>32<span style="color: #949494;">, </span>81<span style="color: #949494;">, </span>70<span style="color: #949494;">, </span>48…</span></span>
+<span><span class="co">#&gt; $ cohort_start_date    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1990-02-22<span style="color: #949494;">, </span>2007-01-05<span style="color: #949494;">, </span>1987-04-06<span style="color: #949494;">, </span>2006-07-26<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ cohort_end_date      <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1994-11-09<span style="color: #949494;">, </span>2007-05-03<span style="color: #949494;">, </span>1990-08-10<span style="color: #949494;">, </span>2006-09-01<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ index_date           <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1994-11-09<span style="color: #949494;">, </span>2007-01-05<span style="color: #949494;">, </span>1987-04-06<span style="color: #949494;">, </span>2006-09-01<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ marker_date          <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1990-02-22<span style="color: #949494;">, </span>2007-05-03<span style="color: #949494;">, </span>1990-08-10<span style="color: #949494;">, </span>2006-07-26<span style="color: #949494;">, </span>…</span></span></code></pre></div>
 <p>Once we have the intersect cohort, you are able to explore the
 temporal symmetry by using <code>summariseTemporalSymmetry</code>,
 <code>tableTemporalSymmetry</code>, and
@@ -174,7 +172,7 @@ temporal symmetry by using <code>summariseTemporalSymmetry</code>,
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/tableTemporalSymmetry.html">tableTemporalSymmetry</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">temporal_symmetry</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotTemporalSymmetry.html">plotTemporalSymmetry</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">temporal_symmetry</span><span class="op">)</span></span></code></pre></div>
-<p><img src="a01_Introduction_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<p><img src="a01_Introduction_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="672"></p>
 <p>Next, we will use the <code><a href="../reference/summariseSequenceRatios.html">summariseSequenceRatios()</a></code> function
 to get the crude sequence ratios, adjusted sequence ratios, and the
 corresponding confidence intervals.</p>
@@ -187,13 +185,13 @@ corresponding confidence intervals.</p>
 <p>Or create a plot with the adjusted sequence ratios:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotSequenceRatios.html">plotSequenceRatios</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">sequence_ratio</span><span class="op">)</span></span></code></pre></div>
-<p><img src="a01_Introduction_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
+<p><img src="a01_Introduction_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="672"></p>
 <div class="section level2">
 <h2 id="as-a-diagram">As a diagram<a class="anchor" aria-label="anchor" href="#as-a-diagram"></a>
 </h2>
 <p>Diagrammatically, the work flow using CohortSymmetry resembles the
 following flow chat:</p>
-<p><img src="workflow.png" width="100%"></p>
+<p><img src="workflow.png" class="r-plt" alt="" width="100%"></p>
 </div>
   </main>
 </div>
@@ -201,11 +199,11 @@ following flow chat:</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Xihang Chen, Tyman Stanford, Berta Raventós, Nicole Pratt, Ed Burn, Marti Català, Danielle Newby, Núria Mercadé-Besora, Mike Du, Yuchen Guo, Kim Lopez, Marta Alcalde-Herraiz.</p>
+  <p>Developed by Danielle Newby, Xihang Chen, Tyman Stanford, Berta Raventós, Nicole Pratt, Ed Burn, Marti Català, Núria Mercadé-Besora, Mike Du, Yuchen Guo, Kim Lopez, Marta Alcalde-Herraiz.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

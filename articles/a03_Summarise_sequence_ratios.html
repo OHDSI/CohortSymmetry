@@ -6,15 +6,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Step 2. Obtain the sequence ratios • CohortSymmetry</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Step 2. Obtain the sequence ratios">
 </head>
@@ -26,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CohortSymmetry</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -110,19 +109,19 @@ corresponding confidence intervals) using
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 10</span></span>
 <span><span class="co">#&gt; Columns: 13</span></span>
-<span><span class="co">#&gt; $ result_id        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1</span></span>
-<span><span class="co">#&gt; $ cdm_name         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Synthea", "Synthea", "Synthea", "Synthea", "Synthea"…</span></span>
-<span><span class="co">#&gt; $ group_name       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "index_cohort_name &amp;&amp;&amp; marker_cohort_name", "index_co…</span></span>
-<span><span class="co">#&gt; $ group_level      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "aspirin &amp;&amp;&amp; acetaminophen", "aspirin &amp;&amp;&amp; acetaminoph…</span></span>
-<span><span class="co">#&gt; $ strata_name      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
-<span><span class="co">#&gt; $ strata_level     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
-<span><span class="co">#&gt; $ variable_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "index", "index", "marker", "marker", "crude", "adjus…</span></span>
-<span><span class="co">#&gt; $ variable_level   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "first_pharmac", "first_pharmac", "first_pharmac", "f…</span></span>
-<span><span class="co">#&gt; $ estimate_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "count", "percentage", "count", "percentage", "point_…</span></span>
-<span><span class="co">#&gt; $ estimate_type    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "integer", "numeric", "integer", "numeric", "numeric"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1235", "64.4", "682", "35.6", "1.8108504398827", "1.…</span></span>
-<span><span class="co">#&gt; $ additional_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
-<span><span class="co">#&gt; $ additional_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span></code></pre></div>
+<span><span class="co">#&gt; $ result_id        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1</span></span>
+<span><span class="co">#&gt; $ cdm_name         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Synthea"<span style="color: #949494;">, </span>"Synthea"<span style="color: #949494;">, </span>"Synthea"<span style="color: #949494;">, </span>"Synthea"<span style="color: #949494;">, </span>"Synthea"…</span></span>
+<span><span class="co">#&gt; $ group_name       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "index_cohort_name &amp;&amp;&amp; marker_cohort_name"<span style="color: #949494;">, </span>"index_co…</span></span>
+<span><span class="co">#&gt; $ group_level      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "aspirin &amp;&amp;&amp; acetaminophen"<span style="color: #949494;">, </span>"aspirin &amp;&amp;&amp; acetaminoph…</span></span>
+<span><span class="co">#&gt; $ strata_name      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"…</span></span>
+<span><span class="co">#&gt; $ strata_level     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"…</span></span>
+<span><span class="co">#&gt; $ variable_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "index"<span style="color: #949494;">, </span>"index"<span style="color: #949494;">, </span>"marker"<span style="color: #949494;">, </span>"marker"<span style="color: #949494;">, </span>"crude"<span style="color: #949494;">, </span>"adjus…</span></span>
+<span><span class="co">#&gt; $ variable_level   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "first_pharmac"<span style="color: #949494;">, </span>"first_pharmac"<span style="color: #949494;">, </span>"first_pharmac"<span style="color: #949494;">, </span>"f…</span></span>
+<span><span class="co">#&gt; $ estimate_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "count"<span style="color: #949494;">, </span>"percentage"<span style="color: #949494;">, </span>"count"<span style="color: #949494;">, </span>"percentage"<span style="color: #949494;">, </span>"point_…</span></span>
+<span><span class="co">#&gt; $ estimate_type    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "integer"<span style="color: #949494;">, </span>"numeric"<span style="color: #949494;">, </span>"integer"<span style="color: #949494;">, </span>"numeric"<span style="color: #949494;">, </span>"numeric"…</span></span>
+<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1235"<span style="color: #949494;">, </span>"64.4"<span style="color: #949494;">, </span>"682"<span style="color: #949494;">, </span>"35.6"<span style="color: #949494;">, </span>"1.8108504398827"<span style="color: #949494;">, </span>"1.…</span></span>
+<span><span class="co">#&gt; $ additional_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"…</span></span>
+<span><span class="co">#&gt; $ additional_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"…</span></span></code></pre></div>
 <p>The obtained output has a summarised result format. In the later
 vignette (<strong>Step 3. Visualise results</strong>) we will explore
 how to visualise the results in a more intuitive way.</p>
@@ -136,11 +135,11 @@ how to visualise the results in a more intuitive way.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Xihang Chen, Tyman Stanford, Berta Raventós, Nicole Pratt, Ed Burn, Marti Català, Danielle Newby, Núria Mercadé-Besora, Mike Du, Yuchen Guo, Kim Lopez, Marta Alcalde-Herraiz.</p>
+  <p>Developed by Danielle Newby, Xihang Chen, Tyman Stanford, Berta Raventós, Nicole Pratt, Ed Burn, Marti Català, Núria Mercadé-Besora, Mike Du, Yuchen Guo, Kim Lopez, Marta Alcalde-Herraiz.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

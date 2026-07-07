@@ -6,15 +6,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Step 1. Generate a sequence cohort • CohortSymmetry</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Step 1. Generate a sequence cohort">
 </head>
@@ -26,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CohortSymmetry</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -143,7 +142,7 @@ each parameter works.</p>
 figure below to see an example of an analysis containing six different
 participants.</p>
 <center>
-<p><img src="1-NoRestrictions.png" width="80%"></p>
+<p><img src="1-NoRestrictions.png" class="r-plt" alt="" width="80%"></p>
 </center>
 <p>See that only the first event/episode (for both the index and the
 marker) is included in the analysis. As there is no restriction criteria
@@ -167,13 +166,12 @@ so:</p>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: ??</span></span>
 <span><span class="co">#&gt; Columns: 6</span></span>
-<span><span class="co">#&gt; Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3//tmp/RtmpmWNeDy/file1e2f16e6d4a8.duckdb]</span></span>
-<span><span class="co">#&gt; $ cohort_definition_id <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…</span></span>
-<span><span class="co">#&gt; $ subject_id           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 16, 42, 35, 2, 49, 11, 32, 43, 12, 7, 17, 63, 30,…</span></span>
-<span><span class="co">#&gt; $ cohort_start_date    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1972-04-10, 1914-07-09, 1960-06-20, 1920-07-01, …</span></span>
-<span><span class="co">#&gt; $ cohort_end_date      <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1974-06-11, 1937-09-07, 1993-04-28, 1931-09-03, …</span></span>
-<span><span class="co">#&gt; $ index_date           <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1972-04-10, 1914-07-09, 1993-04-28, 1920-07-01, …</span></span>
-<span><span class="co">#&gt; $ marker_date          <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1974-06-11, 1937-09-07, 1960-06-20, 1931-09-03, …</span></span></code></pre></div>
+<span><span class="co">#&gt; $ cohort_definition_id <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1…</span></span>
+<span><span class="co">#&gt; $ subject_id           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 61<span style="color: #949494;">, </span>66<span style="color: #949494;">, </span>102<span style="color: #949494;">, </span>140<span style="color: #949494;">, </span>149<span style="color: #949494;">, </span>153<span style="color: #949494;">, </span>318<span style="color: #949494;">, </span>340<span style="color: #949494;">, </span>369<span style="color: #949494;">, </span>412<span style="color: #949494;">, </span>5…</span></span>
+<span><span class="co">#&gt; $ cohort_start_date    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1968-08-18<span style="color: #949494;">, </span>1959-04-23<span style="color: #949494;">, </span>1974-01-16<span style="color: #949494;">, </span>1970-05-31<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ cohort_end_date      <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1969-12-23<span style="color: #949494;">, </span>1972-04-16<span style="color: #949494;">, </span>1991-08-20<span style="color: #949494;">, </span>1976-05-20<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ index_date           <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1968-08-18<span style="color: #949494;">, </span>1959-04-23<span style="color: #949494;">, </span>1991-08-20<span style="color: #949494;">, </span>1970-05-31<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ marker_date          <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1969-12-23<span style="color: #949494;">, </span>1972-04-16<span style="color: #949494;">, </span>1974-01-16<span style="color: #949494;">, </span>1976-05-20<span style="color: #949494;">, </span>…</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="important-observations">Important Observations<a class="anchor" aria-label="anchor" href="#important-observations"></a>
 </h4>
@@ -200,8 +198,8 @@ marker table (<code>markerId</code>). To see the correspondence, one
 could do the following:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">cdm</span><span class="op">$</span><span class="va">intersect</span>, <span class="st">"cohort_set"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Source:   table&lt;intersect_set&gt; [?? x 13]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3//tmp/RtmpmWNeDy/file1e2f16e6d4a8.duckdb]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A query:  ?? x 13</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.4 [unknown@Linux 6.17.0-1018-azure:R 4.6.1//tmp/RtmpVuR66E/file1d6b4e9ef3fd.duckdb]</span></span></span>
 <span><span class="co">#&gt;   cohort_definition_id cohort_name     index_id index_name marker_id marker_name</span></span>
 <span><span class="co">#&gt;                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>                    1 index_aspirin_…        1 aspirin            1 acetaminop…</span></span>
@@ -237,7 +235,7 @@ episodes or events happening during a specific period of time. See
 figure below to see an example of an analysis containing six different
 participants.</p>
 <center>
-<p><img src="2-studyPeriod.png" width="80%"></p>
+<p><img src="2-studyPeriod.png" class="r-plt" alt="" width="80%"></p>
 </center>
 <p>Notice that, by imposing a restriction on study period, some of the
 participants might be excluded. For example, participant 4 is excluded
@@ -269,7 +267,7 @@ observation history is set to be 31 days, then participant 5 would be
 excluded because the first event happening within the study period does
 not have more than (or equal to) 31 days of prior history:</p>
 <center>
-<img src="3-PriorObservation.png" width="80%">
+<img src="3-PriorObservation.png" class="r-plt" alt="" width="80%">
 </center>
 <p>The number of days of prior history required can be implemented using
 the argument <code>daysPriorObservation</code>. See an example
@@ -292,7 +290,7 @@ or episode to be included. In the following figure, we exclude
 participant 6 as another episode took place within the washout period.
 Washout period is applied to index and marker respectively.</p>
 <center>
-<img src="4-washoutPeriod.png" width="80%">
+<img src="4-washoutPeriod.png" class="r-plt" alt="" width="80%">
 </center>
 <p>This functionality can be implemented using the
 <code>washoutWindow</code> argument. See an example below:</p>
@@ -315,7 +313,7 @@ between the start of the first event (either if is the index or the
 marker) and the start of the next event. In other words:</p>
 <center>
 <p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo></mrow><annotation encoding="application/x-tex">x =</annotation></semantics></math><code>second_episode(start_date)</code>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>−</mo><annotation encoding="application/x-tex">-</annotation></semantics></math><code>first_episode(start_date)</code>;</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math><code>first_episode(start_date)</code>;</p>
 <p><code>combinationWindow[1]</code>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>&lt;</mo><mi>x</mi><mo>≤</mo></mrow><annotation encoding="application/x-tex">&lt; x \leq</annotation></semantics></math><code>combinationWindow[2]</code></p>
 </center>
@@ -326,7 +324,7 @@ episode should be larger than 0 and less or equal than 20. As
 participant 2 and 3 do not fulfill this condition, they are excluded
 from the analysis.
 <center>
-<img src="5-combinationWindow_numbers.png" width="80%">
+<img src="5-combinationWindow_numbers.png" class="r-plt" alt="" width="80%">
 </center>
 <p>In the <code><a href="../reference/generateSequenceCohortSet.html">generateSequenceCohortSet()</a></code> function, this is
 implemented using the <code>combinationWindow</code> argument. Notice
@@ -360,7 +358,7 @@ between the start of the second episode and the end of the first
 episode. That means:</p>
 <center>
 <p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo></mrow><annotation encoding="application/x-tex">x =</annotation></semantics></math><code>second_episode(cohort_start_date)</code>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>−</mo><annotation encoding="application/x-tex">-</annotation></semantics></math><code>first_episode(cohort_end_date)</code>;</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math><code>first_episode(cohort_end_date)</code>;</p>
 <p>x
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>≤</mo><annotation encoding="application/x-tex">\leq</annotation></semantics></math><code>indexMarkerGap</code></p>
 </center>
@@ -368,7 +366,7 @@ episode. That means:</p>
 higher than 30 days are excluded from the analysis (participant 2, 3 and
 6):</p>
 <center>
-<img src="6-indexGap.png" width="80%">
+<img src="6-indexGap.png" class="r-plt" alt="" width="80%">
 </center>
 <p>Use <code>indexGap</code> argument to impose this restriction, for
 example:</p>
@@ -392,11 +390,11 @@ example:</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Xihang Chen, Tyman Stanford, Berta Raventós, Nicole Pratt, Ed Burn, Marti Català, Danielle Newby, Núria Mercadé-Besora, Mike Du, Yuchen Guo, Kim Lopez, Marta Alcalde-Herraiz.</p>
+  <p>Developed by Danielle Newby, Xihang Chen, Tyman Stanford, Berta Raventós, Nicole Pratt, Ed Burn, Marti Català, Núria Mercadé-Besora, Mike Du, Yuchen Guo, Kim Lopez, Marta Alcalde-Herraiz.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
