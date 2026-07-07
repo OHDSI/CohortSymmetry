@@ -69,7 +69,7 @@
 </h1>
 </div>
 <!-- badges: start -->
-<!-- badges: end -->
+
 <p>The goal of CohortSymmetry is to carry out the necessary calculations for Sequence Symmetry Analysis (SSA). It is highly recommended that this method is tested beforehand against well-known positive and negative controls. Such controls could be found using Pratt et al (2015).</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -145,13 +145,13 @@
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: ??</span></span>
 <span><span class="co">#&gt; Columns: 6</span></span>
-<span><span class="co">#&gt; Database: DuckDB v1.1.3 [xihangc@Windows 10 x64:R 4.2.1/C:\Users\xihangc\AppData\Local\Temp\Rtmpy2oj4K\file791c79b03ba9.duckdb]</span></span>
+<span><span class="co">#&gt; Database: DuckDB 1.5.2 [dnewby@Windows 10 x64:R 4.5.2/C:\Users\dnewby\AppData\Local\Temp\Rtmpu220FQ\file83d053b541e5.duckdb]</span></span>
 <span><span class="co">#&gt; $ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…</span></span>
-<span><span class="co">#&gt; $ subject_id           &lt;int&gt; 563, 1669, 2141, 3145, 3440, 4052, 4776, 331, 161…</span></span>
-<span><span class="co">#&gt; $ cohort_start_date    &lt;date&gt; 1964-06-11, 1959-12-29, 1950-06-23, 1974-11-14, …</span></span>
-<span><span class="co">#&gt; $ cohort_end_date      &lt;date&gt; 1964-08-16, 1960-02-05, 1950-11-14, 1975-04-06, …</span></span>
-<span><span class="co">#&gt; $ index_date           &lt;date&gt; 1964-06-11, 1959-12-29, 1950-11-14, 1975-04-06, …</span></span>
-<span><span class="co">#&gt; $ marker_date          &lt;date&gt; 1964-08-16, 1960-02-05, 1950-06-23, 1974-11-14, …</span></span></code></pre></div>
+<span><span class="co">#&gt; $ subject_id           &lt;int&gt; 65, 1236, 3226, 3454, 3771, 3891, 3935, 4119, 420…</span></span>
+<span><span class="co">#&gt; $ cohort_start_date    &lt;date&gt; 1968-07-29, 1921-07-24, 1971-02-23, 1983-04-06, …</span></span>
+<span><span class="co">#&gt; $ cohort_end_date      &lt;date&gt; 1969-06-18, 1922-03-26, 1971-04-30, 1983-09-11, …</span></span>
+<span><span class="co">#&gt; $ index_date           &lt;date&gt; 1969-06-18, 1921-07-24, 1971-02-23, 1983-09-11, …</span></span>
+<span><span class="co">#&gt; $ marker_date          &lt;date&gt; 1968-07-29, 1922-03-26, 1971-04-30, 1983-04-06, …</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="step-2-summarisesequenceratios">Step 2: summariseSequenceRatios<a class="anchor" aria-label="anchor" href="#step-2-summarisesequenceratios"></a>
@@ -164,16 +164,16 @@
 <span><span class="co">#&gt; Rows: 10</span></span>
 <span><span class="co">#&gt; Columns: 13</span></span>
 <span><span class="co">#&gt; $ result_id        &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1</span></span>
-<span><span class="co">#&gt; $ cdm_name         &lt;chr&gt; "An OMOP CDM database", "An OMOP CDM database", "An O…</span></span>
+<span><span class="co">#&gt; $ cdm_name         &lt;chr&gt; "Synthea", "Synthea", "Synthea", "Synthea", "Synthea"…</span></span>
 <span><span class="co">#&gt; $ group_name       &lt;chr&gt; "index_cohort_name &amp;&amp;&amp; marker_cohort_name", "index_co…</span></span>
 <span><span class="co">#&gt; $ group_level      &lt;chr&gt; "aspirin &amp;&amp;&amp; amoxicillin", "aspirin &amp;&amp;&amp; amoxicillin",…</span></span>
 <span><span class="co">#&gt; $ strata_name      &lt;chr&gt; "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ strata_level     &lt;chr&gt; "overall", "overall", "overall", "overall", "overall"…</span></span>
-<span><span class="co">#&gt; $ variable_name    &lt;chr&gt; "crude", "adjusted", "crude", "crude", "adjusted", "a…</span></span>
-<span><span class="co">#&gt; $ variable_level   &lt;chr&gt; "sequence_ratio", "sequence_ratio", "sequence_ratio",…</span></span>
-<span><span class="co">#&gt; $ estimate_name    &lt;chr&gt; "point_estimate", "point_estimate", "lower_CI", "uppe…</span></span>
-<span><span class="co">#&gt; $ estimate_type    &lt;chr&gt; "numeric", "numeric", "numeric", "numeric", "numeric"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   &lt;chr&gt; "1.43589743589744", "1629.5148627184", "0.95731197561…</span></span>
+<span><span class="co">#&gt; $ variable_name    &lt;chr&gt; "index", "index", "marker", "marker", "crude", "adjus…</span></span>
+<span><span class="co">#&gt; $ variable_level   &lt;chr&gt; "first_pharmac", "first_pharmac", "first_pharmac", "f…</span></span>
+<span><span class="co">#&gt; $ estimate_name    &lt;chr&gt; "count", "percentage", "count", "percentage", "point_…</span></span>
+<span><span class="co">#&gt; $ estimate_type    &lt;chr&gt; "integer", "numeric", "integer", "numeric", "numeric"…</span></span>
+<span><span class="co">#&gt; $ estimate_value   &lt;chr&gt; "56", "58.9", "39", "41.1", "1.43589743589744", "1.35…</span></span>
 <span><span class="co">#&gt; $ additional_name  &lt;chr&gt; "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level &lt;chr&gt; "overall", "overall", "overall", "overall", "overall"…</span></span></code></pre></div>
 </div>
@@ -249,7 +249,15 @@
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
+<li><a href="https://CRAN.R-project.org/package=CohortSymmetry" class="external-link"><img src="https://www.r-pkg.org/badges/version/CohortSymmetry" alt="CRAN status"></a></li>
+<li><a href="https://app.codecov.io/gh/OHDSI/CohortSymmetry" class="external-link"><img src="https://codecov.io/gh/OHDSI/CohortSymmetry/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/OHDSI/CohortSymmetry/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/OHDSI/CohortSymmetry/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+</ul>
+</div>
 
   </aside>
 </div>

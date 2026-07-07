@@ -32,7 +32,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/OHDSI/CohortSymmetry/blob/v0.3.0/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/OHDSI/CohortSymmetry/blob/main/DESCRIPTION)
 
 Newby D, Chen X, Stanford T, Raventós B, Pratt N, Burn E, Català M,
 Mercadé-Besora N, Du M, Guo Y, Lopez K, Alcalde-Herraiz M (2026).
