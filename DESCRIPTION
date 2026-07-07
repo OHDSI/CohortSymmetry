@@ -1,9 +1,11 @@
 Package: CohortSymmetry
 Title: Sequence Symmetry Analysis Using the Observational Medical 
     Outcomes Partnership Common Data Model
-Version: 0.2.4
+Version: 0.3.0
 Authors@R: c(
-    person("Xihang", "Chen", , "xihang.chen@ndorms.ox.ac.uk", role = c("aut", "cre"),
+    person("Danielle", "Newby", , "danielle.newby@ndorms.ox.ac.uk", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-3001-1478")),
+    person("Xihang", "Chen", , "xihang.chen@ndorms.ox.ac.uk", role = "aut",
            comment = c(ORCID = "0009-0001-8112-8959")),
     person("Tyman", "Stanford", , "tyman.stanford@unisa.edu.au", role = "aut",
            comment = c(ORCID = "0000-0002-8570-5493")),
@@ -15,8 +17,6 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-9286-1128")),
     person("Marti", "Català", , "marti.catalasabate@ndorms.ox.ac.uk", role = "aut",
            comment = c(ORCID = "0000-0003-3308-9905")),
-    person("Danielle", "Newby", , "danielle.newby@ndorms.ox.ac.uk", role = "aut",
-           comment = c(ORCID = "0000-0002-3001-1478")),
     person("Núria", "Mercadé-Besora", , "nuria.mercadebesora@ndorms.ox.ac.uk", role = "aut",
            comment = c(ORCID = "0009-0006-7948-3747")),
     person("Mike", "Du", , "mike.du@ndorms.ox.ac.uk", role = "aut",
@@ -28,7 +28,7 @@ Authors@R: c(
     person("Marta", "Alcalde-Herraiz", , "marta.alcaldeherraiz@ndorms.ox.ac.uk", role = "aut",
            comment = c(ORCID = "0009-0002-4405-1814"))
   )
-Maintainer: Xihang Chen <xihang.chen@ndorms.ox.ac.uk>
+Maintainer: Danielle Newby <danielle.newby@ndorms.ox.ac.uk>
 Description: Calculating crude sequence ratio, adjusted sequence ratio and 
     confidence intervals using data mapped to the Observational Medical 
     Outcomes Partnership Common Data Model.
