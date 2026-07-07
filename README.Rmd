@@ -16,6 +16,10 @@ knitr::opts_chunk$set(
 # CohortSymmetry <a href="https://ohdsi.github.io/CohortSymmetry/"><img src="man/figures/logo.png" align="right" height="137" alt="CohortSymmetry website" /></a>
  
 <!-- badges: start -->
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![CRAN status](https://www.r-pkg.org/badges/version/CohortSymmetry)](https://CRAN.R-project.org/package=CohortSymmetry)
+[![Codecov test coverage](https://codecov.io/gh/OHDSI/CohortSymmetry/graph/badge.svg)](https://app.codecov.io/gh/OHDSI/CohortSymmetry)
+[![R-CMD-check](https://github.com/OHDSI/CohortSymmetry/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/OHDSI/CohortSymmetry/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
  
 The goal of CohortSymmetry is to carry out the necessary calculations for Sequence Symmetry Analysis (SSA). It is highly recommended that this method is tested beforehand against well-known positive and negative controls. Such controls could be found using Pratt et al (2015). 
