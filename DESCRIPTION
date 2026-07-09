@@ -35,7 +35,7 @@ Description: Calculating crude sequence ratio, adjusted sequence ratio and
 License: Apache License (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Depends: R (>= 4.1.0)
 Suggests:
     testthat (>= 3.1.5),
@@ -59,12 +59,13 @@ Imports:
     PatientProfiles (>= 1.0.0),
     rlang,
     tibble,
-    tidyr,  
+    tidyr,
     stats,
     here,
     omopgenerics (>= 1.0.0),
     DrugUtilisation (>= 0.7.0),
-    CodelistGenerator (>= 3.1.0)
+    CodelistGenerator (>= 3.1.0),
+    clock
 Config/testthat/edition: 3
 URL: https://ohdsi.github.io/CohortSymmetry/
 BugReports: https://github.com/OHDSI/CohortSymmetry/issues

@@ -46,9 +46,11 @@ preprocessCohort <- function(cdm, cohortName, cohortId, cohortDateRange) {
         dplyr::mutate(!!id := .data[[id]] + 1),
       by = c(id, "cohort_definition_id", "subject_id")
     ) %>%
-    dplyr::mutate(gap_to_prior = as.numeric(!!CDMConnector::datediff(
-      "previous_exposure", "cohort_start_date"
-    ))) |>
+    dplyr::mutate(gap_to_prior = as.numeric(clock::date_count_between(
+      start = .data$previous_exposure,
+      end = .data$cohort_start_date,
+      precision = "day"))
+    ) |>
     dplyr::filter(
       .data$cohort_start_date <= !!cohortDateRange[[2]] &
         .data$cohort_start_date >= !!cohortDateRange[[1]]
