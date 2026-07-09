@@ -66,11 +66,15 @@ summariseSequenceRatios <- function(cohort,
         ) %>%
         dplyr::mutate(
           order_ba = .data$index_date >= .data$marker_date,
-          days_first = as.numeric(!!CDMConnector::datediff(
-            "date_start", "cohort_start_date"
+          days_first = as.numeric(clock::date_count_between(
+            start = .data$date_start,
+            end = .data$cohort_start_date,
+            precision = "day"
           )), # gap between the first drug of a person and the first drug of the whole population
-          days_second = as.numeric(!!CDMConnector::datediff(
-            "cohort_start_date", "cohort_end_date"
+          days_second = as.numeric(clock::date_count_between(
+            start = .data$cohort_start_date,
+            end = .data$cohort_end_date,
+            precision = "day"
           ))) |>
         dplyr::collect() |>
         dplyr::group_by(.data$days_first, .data$index_id, .data$index_name, .data$marker_id, .data$marker_name, .data$cohort_date_range, .data$days_prior_observation, .data$washout_window, .data$index_marker_gap, .data$combination_window, .data$moving_average_restriction) |>
