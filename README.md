@@ -25,8 +25,8 @@ You can install the development version of CohortSymmetry from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("OHDSI/CohortSymmetry")
+# install.packages("pak")
+pak::pak("OHDSI/CohortSymmetry")
 ```
 
 ## Example
