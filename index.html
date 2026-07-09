@@ -145,13 +145,12 @@
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: ??</span></span>
 <span><span class="co">#&gt; Columns: 6</span></span>
-<span><span class="co">#&gt; Database: DuckDB 1.5.2 [dnewby@Windows 10 x64:R 4.5.2/C:\Users\dnewby\AppData\Local\Temp\Rtmpu220FQ\file83d053b541e5.duckdb]</span></span>
 <span><span class="co">#&gt; $ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…</span></span>
-<span><span class="co">#&gt; $ subject_id           &lt;int&gt; 65, 1236, 3226, 3454, 3771, 3891, 3935, 4119, 420…</span></span>
-<span><span class="co">#&gt; $ cohort_start_date    &lt;date&gt; 1968-07-29, 1921-07-24, 1971-02-23, 1983-04-06, …</span></span>
-<span><span class="co">#&gt; $ cohort_end_date      &lt;date&gt; 1969-06-18, 1922-03-26, 1971-04-30, 1983-09-11, …</span></span>
-<span><span class="co">#&gt; $ index_date           &lt;date&gt; 1969-06-18, 1921-07-24, 1971-02-23, 1983-09-11, …</span></span>
-<span><span class="co">#&gt; $ marker_date          &lt;date&gt; 1968-07-29, 1922-03-26, 1971-04-30, 1983-04-06, …</span></span></code></pre></div>
+<span><span class="co">#&gt; $ subject_id           &lt;int&gt; 197, 923, 1206, 2286, 3796, 3803, 4437, 331, 1611…</span></span>
+<span><span class="co">#&gt; $ cohort_start_date    &lt;date&gt; 1972-08-24, 1961-06-29, 1965-01-10, 1958-12-03, …</span></span>
+<span><span class="co">#&gt; $ cohort_end_date      &lt;date&gt; 1973-01-11, 1961-10-15, 1965-07-17, 1959-03-04, …</span></span>
+<span><span class="co">#&gt; $ index_date           &lt;date&gt; 1973-01-11, 1961-06-29, 1965-07-17, 1959-03-04, …</span></span>
+<span><span class="co">#&gt; $ marker_date          &lt;date&gt; 1972-08-24, 1961-10-15, 1965-01-10, 1958-12-03, …</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="step-2-summarisesequenceratios">Step 2: summariseSequenceRatios<a class="anchor" aria-label="anchor" href="#step-2-summarisesequenceratios"></a>
@@ -190,7 +189,7 @@
 <p>One could also visualise the plot, for example, the following is the plot of the adjusted sequence ratio.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plotSequenceRatios.html">plotSequenceRatios</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">res</span>,</span>
-<span>                  onlyaSR <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>                  onlyASR <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>                  colours <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="./reference/figures/plotSR.png"></p>
 <p>The user also has the freedom to plot temporal trend like so:</p>
@@ -268,7 +267,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>
