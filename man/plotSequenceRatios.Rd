@@ -8,8 +8,9 @@ plotSequenceRatios(
   result,
   onlyASR = FALSE,
   plotTitle = NULL,
-  labs = c("SR", "Drug Pairs"),
-  colours = c("red", "blue"),
+  style = "default",
+  labs = c("Sequence Ratio", "Index Marker Pair"),
+  colours = NULL,
   facet = NULL
 )
 }
@@ -20,6 +21,8 @@ plotSequenceRatios(
 Otherwise if it is set to be FALSE then both adjusted and crude SR will be plotted.}
 
 \item{plotTitle}{Title of the plot, if NULL no title will be included in the plot.}
+
+\item{style}{Style used for the plot. Passed to \code{visOmopResults::themeVisOmop()}.}
 
 \item{labs}{Axis labels for the plot.}
 

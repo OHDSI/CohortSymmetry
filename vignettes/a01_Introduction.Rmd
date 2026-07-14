@@ -45,6 +45,7 @@ library(DBI)
 library(omock)
 library(CohortSymmetry)
 library(duckdb)
+library(visOmopResults)
 ```
 
 The CohortSymmetry package works with data mapped to the OMOP CDM. Hence, the initial step involves connecting to a database. As an example, we will be using Omock package to generate a mock database with two mock cohorts: the **index_cohort** and the **marker_cohort**.

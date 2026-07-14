@@ -11,6 +11,7 @@
 #' See visOmopResults package for more information on how to use this parameter.
 #' @param type The desired format of the output table.
 #' @param hide Columns to drop from the output table.
+#' @param style Style used for the table.
 #'
 #' @return A formatted version of the sequence_symmetry object.
 #'
@@ -24,16 +25,18 @@
 #'                                  markerTable = "cohort_2",
 #'                                  name = "joined_cohort")
 #' res <- summariseSequenceRatios(cohort = cdm$joined_cohort)
-#' gtResult <- tableSequenceRatios(res)
+#' flexResult <- tableSequenceRatios(res)
 #' CDMConnector::cdmDisconnect(cdm = cdm)
 #' }
 #'
 tableSequenceRatios <- function(result,
                                 header = "marker_cohort_name",
                                 groupColumn = "cdm_name",
-                                type = "gt",
+                                type = "flextable",
+                                style = "default",
                                 hide = "variable_level") {
 
+  rlang::check_installed("visOmopResults")
   rlang::check_installed("flextable")
   rlang::check_installed("gt")
 
@@ -51,14 +54,33 @@ tableSequenceRatios <- function(result,
     return(emptyResultTable(type))
   }
 
+
+  ci <- omopgenerics::settings(result)$confidence_interval
+  ci <- unique(ci[!is.na(ci)])[1]
+
+  if (is.na(ci)) {
+    ci <- 95
+  }
+
+
+  estimate_name <- c(
+    "<count> (<percentage>%)",
+    "<point_estimate> [<lower_CI> - <upper_CI>]"
+  )
+
+  names(estimate_name) <- c(
+    "N (%)",
+    sprintf("SR [CI %s%%]", ci)
+  )
+
   # format table
   tab <- visOmopResults::visOmopTable(
     result = result,
-    estimateName = c("N (%)" = "<count> (<percentage>%)",
-                     "SR [CI 95%]" = "<point_estimate> [<lower_CI> - <upper_CI>]"),
+    estimateName = estimate_name,
     header = header,
     groupColumn = groupColumn,
     type = type,
-    hide = hide
+    hide = hide,
+    style = style
   )
 }

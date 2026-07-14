@@ -8,7 +8,8 @@ tableSequenceRatios(
   result,
   header = "marker_cohort_name",
   groupColumn = "cdm_name",
-  type = "gt",
+  type = "flextable",
+  style = "default",
   hide = "variable_level"
 )
 }
@@ -22,6 +23,8 @@ See visOmopResults package for more information on how to use this parameter.}
 See visOmopResults package for more information on how to use this parameter.}
 
 \item{type}{The desired format of the output table.}
+
+\item{style}{Style used for the table.}
 
 \item{hide}{Columns to drop from the output table.}
 }
@@ -41,7 +44,7 @@ cdm <- generateSequenceCohortSet(cdm = cdm,
                                  markerTable = "cohort_2",
                                  name = "joined_cohort")
 res <- summariseSequenceRatios(cohort = cdm$joined_cohort)
-gtResult <- tableSequenceRatios(res)
+flexResult <- tableSequenceRatios(res)
 CDMConnector::cdmDisconnect(cdm = cdm)
 }
 

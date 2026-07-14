@@ -8,7 +8,8 @@ tableTemporalSymmetry(
   result,
   header = "variable_level",
   groupColumn = c("cdm_name", "index_name"),
-  type = "gt",
+  type = "flextable",
+  style = "default",
   hide = "variable_name"
 )
 }
@@ -22,6 +23,8 @@ See visOmopResults package for more information on how to use this parameter.}
 See visOmopResults package for more information on how to use this parameter.}
 
 \item{type}{The desired format of the output table.}
+
+\item{style}{Style used for the table.}
 
 \item{hide}{Columns to drop from the output table.}
 }
