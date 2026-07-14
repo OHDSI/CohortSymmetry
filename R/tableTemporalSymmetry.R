@@ -11,6 +11,7 @@
 #' See visOmopResults package for more information on how to use this parameter.
 #' @param type The desired format of the output table.
 #' @param hide Columns to drop from the output table.
+#' @param style Style used for the table.
 #'
 #' @return A formatted version of the temporal_symmetry object.
 #'
@@ -31,7 +32,8 @@
 tableTemporalSymmetry <- function(result,
                                   header = "variable_level",
                                   groupColumn = c("cdm_name", "index_name"),
-                                  type = "gt",
+                                  type = "flextable",
+                                  style = "default",
                                   hide = "variable_name"){
 
   rlang::check_installed("visOmopResults")
@@ -75,6 +77,7 @@ tableTemporalSymmetry <- function(result,
     header = header,
     groupColumn = groupColumn,
     type = type,
-    hide = hide
+    hide = hide,
+    style = style
   )
 }

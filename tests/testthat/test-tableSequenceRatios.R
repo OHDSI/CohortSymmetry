@@ -11,7 +11,7 @@ test_that("tableSequenceRatios - gt output", {
 
   res <- summariseSequenceRatios(cohort = cdm$joined_cohort)
 
-  gtResult <- tableSequenceRatios(res)
+  gtResult <- tableSequenceRatios(res, type = "gt")
   expect_true("gt_tbl" %in% (gtResult %>% class()))
 
   expect_no_error(
