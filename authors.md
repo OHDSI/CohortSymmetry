@@ -38,12 +38,12 @@ Newby D, Chen X, Stanford T, Raventós B, Pratt N, Burn E, Català M,
 Mercadé-Besora N, Du M, Guo Y, Lopez K, Alcalde-Herraiz M (2026).
 *CohortSymmetry: Sequence Symmetry Analysis Using the Observational
 Medical Outcomes Partnership Common Data Model*. R package version
-0.3.0.9000, <https://ohdsi.github.io/CohortSymmetry/>.
+0.3.1.9000, <https://ohdsi.github.io/CohortSymmetry/>.
 
     @Manual{,
       title = {CohortSymmetry: Sequence Symmetry Analysis Using the Observational Medical Outcomes Partnership Common Data Model},
       author = {Danielle Newby and Xihang Chen and Tyman Stanford and Berta Raventós and Nicole Pratt and Ed Burn and Marti Català and Núria Mercadé-Besora and Mike Du and Yuchen Guo and Kim Lopez and Marta Alcalde-Herraiz},
       year = {2026},
-      note = {R package version 0.3.0.9000},
+      note = {R package version 0.3.1.9000},
       url = {https://ohdsi.github.io/CohortSymmetry/},
     }

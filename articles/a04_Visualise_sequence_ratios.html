@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CohortSymmetry</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,19 +105,19 @@ follows (<strong>Step 2. Obtain the sequence ratios</strong>):</p>
 <h2 id="table-output-of-the-sequence-ratio-results">Table output of the sequence ratio results<a class="anchor" aria-label="anchor" href="#table-output-of-the-sequence-ratio-results"></a>
 </h2>
 <p>The function <code>tableSequenceRatios</code> inputs the result from
-<code>summariseSequenceRatios</code>, the default outputs a gt
+<code>summariseSequenceRatios</code>, the default outputs a flextable
 table.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/tableSequenceRatios.html">tableSequenceRatios</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">result</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="modify-type">Modify <code>type</code><a class="anchor" aria-label="anchor" href="#modify-type"></a>
 </h3>
-<p>Instead of a gt table, the user may also want to put the sequence
-ratio results in a flex table format (the rest of the arguments that we
-saw for a gt table also applies here):</p>
+<p>Instead of a flextable table, the user may also want to put the
+sequence ratio results in a gt table format (the rest of the arguments
+that we saw for a flextable table also applies here):</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/tableSequenceRatios.html">tableSequenceRatios</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">result</span>,</span>
-<span>                    type <span class="op">=</span> <span class="st">"flextable"</span><span class="op">)</span></span></code></pre></div>
+<span>                    type <span class="op">=</span> <span class="st">"gt"</span><span class="op">)</span></span></code></pre></div>
 <p>Or a tibble:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/tableSequenceRatios.html">tableSequenceRatios</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">result</span>,</span>

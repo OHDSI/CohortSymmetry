@@ -9,8 +9,9 @@ plotSequenceRatios(
   result,
   onlyASR = FALSE,
   plotTitle = NULL,
-  labs = c("SR", "Drug Pairs"),
-  colours = c("red", "blue"),
+  style = "default",
+  labs = c("Sequence Ratio", "Index Marker Pair"),
+  colours = NULL,
   facet = NULL
 )
 ```
@@ -29,6 +30,11 @@ plotSequenceRatios(
 - plotTitle:
 
   Title of the plot, if NULL no title will be included in the plot.
+
+- style:
+
+  Style used for the plot. Passed to
+  [`visOmopResults::themeVisOmop()`](https://darwin-eu.github.io/visOmopResults/reference/themeVisOmop.html).
 
 - labs:
 

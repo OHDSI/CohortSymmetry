@@ -33,7 +33,7 @@ result <- summariseSequenceRatios(cohort = cdm$intersect)
 ## Table output of the sequence ratio results
 
 The function `tableSequenceRatios` inputs the result from
-`summariseSequenceRatios`, the default outputs a gt table.
+`summariseSequenceRatios`, the default outputs a flextable table.
 
 ``` r
 
@@ -42,14 +42,14 @@ tableSequenceRatios(result = result)
 
 ### Modify `type`
 
-Instead of a gt table, the user may also want to put the sequence ratio
-results in a flex table format (the rest of the arguments that we saw
-for a gt table also applies here):
+Instead of a flextable table, the user may also want to put the sequence
+ratio results in a gt table format (the rest of the arguments that we
+saw for a flextable table also applies here):
 
 ``` r
 
 tableSequenceRatios(result = result,
-                    type = "flextable")
+                    type = "gt")
 ```
 
 Or a tibble:

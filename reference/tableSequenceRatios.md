@@ -10,7 +10,8 @@ tableSequenceRatios(
   result,
   header = "marker_cohort_name",
   groupColumn = "cdm_name",
-  type = "gt",
+  type = "flextable",
+  style = "default",
   hide = "variable_level"
 )
 ```
@@ -35,6 +36,10 @@ tableSequenceRatios(
 - type:
 
   The desired format of the output table.
+
+- style:
+
+  Style used for the table.
 
 - hide:
 
@@ -72,7 +77,7 @@ res <- summariseSequenceRatios(cohort = cdm$joined_cohort)
 #> before index
 #> -- 5 combinations of 8 had index always before marker
 #> -- 5 combinations of 8 had marker always before index
-gtResult <- tableSequenceRatios(res)
+flexResult <- tableSequenceRatios(res)
 CDMConnector::cdmDisconnect(cdm = cdm)
 # }
 ```

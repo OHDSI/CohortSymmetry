@@ -10,7 +10,8 @@ tableTemporalSymmetry(
   result,
   header = "variable_level",
   groupColumn = c("cdm_name", "index_name"),
-  type = "gt",
+  type = "flextable",
+  style = "default",
   hide = "variable_name"
 )
 ```
@@ -35,6 +36,10 @@ tableTemporalSymmetry(
 - type:
 
   The desired format of the output table.
+
+- style:
+
+  Style used for the table.
 
 - hide:
 
