@@ -71,7 +71,7 @@
 </div>
 <!-- badges: start -->
 
-<p>The goal of CohortSymmetry is to carry out the necessary calculations for Sequence Symmetry Analysis (SSA). It is highly recommended that this method is tested beforehand against well-known positive and negative controls. Such controls could be found using Pratt et al (2015).</p>
+<p>The goal of CohortSymmetry is to carry out the necessary calculations for Sequence Symmetry Analysis (SSA). It is highly recommended that this method is tested beforehand against well-known positive and negative controls. Such controls could be found using <a href="https://pubmed.ncbi.nlm.nih.gov/25907076/" class="external-link">Pratt et al (2015)</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -106,7 +106,7 @@
 <h3 id="step-0-instantiate-two-cohorts-in-the-cdm-reference">Step 0: Instantiate two cohorts in the cdm reference<a class="anchor" aria-label="anchor" href="#step-0-instantiate-two-cohorts-in-the-cdm-reference"></a>
 </h3>
 <p>This will be entirely user’s choice on how to generate such cohorts. Minimally, this package requires two cohort tables in the cdm reference, namely the index_cohort and the marker_cohort.</p>
-<p>If one wants to generate two drugs cohorts in cdm, DrugUtilisation is recommended. For merely illustration purposes, we will carry out PSSA on aspirin (index_cohort) against amoxicillin (marker_cohort)</p>
+<p>If one wants to generate two drugs cohorts in cdm, the <a href="https://darwin-eu.github.io/DrugUtilisation/" class="external-link">DrugUtilisation R package</a> is recommended. For merely illustration purposes, we will carry out SSA on aspirin (index_cohort) against amoxicillin (marker_cohort). Multiple markers can be instantiated in the marker cohort and each one will be tested against the index cohort.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu.github.io/DrugUtilisation/" class="external-link">DrugUtilisation</a></span><span class="op">)</span></span>
@@ -131,7 +131,7 @@
 <div class="section level3">
 <h3 id="step-1-generatesequencecohortset">Step 1: generateSequenceCohortSet<a class="anchor" aria-label="anchor" href="#step-1-generatesequencecohortset"></a>
 </h3>
-<p>In order to initiate the calculations, the two cohorts tables need to be intersected using <code><a href="reference/generateSequenceCohortSet.html">generateSequenceCohortSet()</a></code>. This process will output all the individuals who appeared on both tables according to a user-specified parameters. This includes <code>timeGap</code>, <code>washoutWindow</code>, <code>indexMarkerGap</code> and <code>daysPriorObservation</code>. Details on these parameters could be found on the vignette.</p>
+<p>In order to initiate the calculations, the two cohorts tables need to be intersected using <code><a href="reference/generateSequenceCohortSet.html">generateSequenceCohortSet()</a></code>. This process will output all the individuals who appeared on both tables according to a user-specified parameters. This includes <code>timeGap</code>, <code>washoutWindow</code>, <code>indexMarkerGap</code> and <code>daysPriorObservation</code>. Details on these parameters are found on the vignette.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/CohortSymmetry/">CohortSymmetry</a></span><span class="op">)</span></span>
 <span> </span>
@@ -147,11 +147,11 @@
 <span><span class="co">#&gt; Rows: ??</span></span>
 <span><span class="co">#&gt; Columns: 6</span></span>
 <span><span class="co">#&gt; $ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…</span></span>
-<span><span class="co">#&gt; $ subject_id           &lt;int&gt; 197, 923, 1206, 2286, 3796, 3803, 4437, 331, 1611…</span></span>
-<span><span class="co">#&gt; $ cohort_start_date    &lt;date&gt; 1972-08-24, 1961-06-29, 1965-01-10, 1958-12-03, …</span></span>
-<span><span class="co">#&gt; $ cohort_end_date      &lt;date&gt; 1973-01-11, 1961-10-15, 1965-07-17, 1959-03-04, …</span></span>
-<span><span class="co">#&gt; $ index_date           &lt;date&gt; 1973-01-11, 1961-06-29, 1965-07-17, 1959-03-04, …</span></span>
-<span><span class="co">#&gt; $ marker_date          &lt;date&gt; 1972-08-24, 1961-10-15, 1965-01-10, 1958-12-03, …</span></span></code></pre></div>
+<span><span class="co">#&gt; $ subject_id           &lt;int&gt; 144, 363, 1813, 2621, 3436, 4867, 331, 1611, 1785…</span></span>
+<span><span class="co">#&gt; $ cohort_start_date    &lt;date&gt; 1978-10-30, 1965-06-09, 1984-04-05, 1964-05-14, …</span></span>
+<span><span class="co">#&gt; $ cohort_end_date      &lt;date&gt; 1979-09-04, 1965-08-01, 1984-09-23, 1964-10-12, …</span></span>
+<span><span class="co">#&gt; $ index_date           &lt;date&gt; 1978-10-30, 1965-08-01, 1984-09-23, 1964-10-12, …</span></span>
+<span><span class="co">#&gt; $ marker_date          &lt;date&gt; 1979-09-04, 1965-06-09, 1984-04-05, 1964-05-14, …</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="step-2-summarisesequenceratios">Step 2: summariseSequenceRatios<a class="anchor" aria-label="anchor" href="#step-2-summarisesequenceratios"></a>
@@ -181,12 +181,12 @@
 <h3 id="step-3-visualise-the-results">Step 3: visualise the results<a class="anchor" aria-label="anchor" href="#step-3-visualise-the-results"></a>
 </h3>
 <p>The user could then visualise their results using a wide array of provided tools.</p>
-<p>For example, the following produces a gt table.</p>
+<p>For example, the following produces a flextable table.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gt_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tableSequenceRatios.html">tableSequenceRatios</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">res</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">flex_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tableSequenceRatios.html">tableSequenceRatios</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">res</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">gt_results</span></span></code></pre></div>
-<p><img src="./reference/figures/README-gt_table.png"> Note that flextable is also an option, users may specify this by using the <code>type</code> argument.</p>
+<span><span class="va">flex_results</span></span></code></pre></div>
+<p><img src="./reference/figures/README-gt_table.png"> Note that gt is also an option, users may specify this by using the <code>type</code> argument.</p>
 <p>One could also visualise the plot, for example, the following is the plot of the adjusted sequence ratio.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plotSequenceRatios.html">plotSequenceRatios</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">res</span>,</span>

@@ -3,7 +3,8 @@
 The goal of CohortSymmetry is to carry out the necessary calculations
 for Sequence Symmetry Analysis (SSA). It is highly recommended that this
 method is tested beforehand against well-known positive and negative
-controls. Such controls could be found using Pratt et al (2015).
+controls. Such controls could be found using [Pratt et al
+(2015)](https://pubmed.ncbi.nlm.nih.gov/25907076/).
 
 ## Installation
 
@@ -48,9 +49,12 @@ This will be entirely user’s choice on how to generate such cohorts.
 Minimally, this package requires two cohort tables in the cdm reference,
 namely the index_cohort and the marker_cohort.
 
-If one wants to generate two drugs cohorts in cdm, DrugUtilisation is
-recommended. For merely illustration purposes, we will carry out PSSA on
-aspirin (index_cohort) against amoxicillin (marker_cohort)
+If one wants to generate two drugs cohorts in cdm, the [DrugUtilisation
+R package](https://darwin-eu.github.io/DrugUtilisation/) is recommended.
+For merely illustration purposes, we will carry out SSA on aspirin
+(index_cohort) against amoxicillin (marker_cohort). Multiple markers can
+be instantiated in the marker cohort and each one will be tested against
+the index cohort.
 
 ``` r
 
@@ -83,7 +87,7 @@ intersected using
 This process will output all the individuals who appeared on both tables
 according to a user-specified parameters. This includes `timeGap`,
 `washoutWindow`, `indexMarkerGap` and `daysPriorObservation`. Details on
-these parameters could be found on the vignette.
+these parameters are found on the vignette.
 
 ``` r
 
@@ -101,11 +105,11 @@ cdm$aspirin_amoxicillin %>%
 #> Rows: ??
 #> Columns: 6
 #> $ cohort_definition_id <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-#> $ subject_id           <int> 197, 923, 1206, 2286, 3796, 3803, 4437, 331, 1611…
-#> $ cohort_start_date    <date> 1972-08-24, 1961-06-29, 1965-01-10, 1958-12-03, …
-#> $ cohort_end_date      <date> 1973-01-11, 1961-10-15, 1965-07-17, 1959-03-04, …
-#> $ index_date           <date> 1973-01-11, 1961-06-29, 1965-07-17, 1959-03-04, …
-#> $ marker_date          <date> 1972-08-24, 1961-10-15, 1965-01-10, 1958-12-03, …
+#> $ subject_id           <int> 144, 363, 1813, 2621, 3436, 4867, 331, 1611, 1785…
+#> $ cohort_start_date    <date> 1978-10-30, 1965-06-09, 1984-04-05, 1964-05-14, …
+#> $ cohort_end_date      <date> 1979-09-04, 1965-08-01, 1984-09-23, 1964-10-12, …
+#> $ index_date           <date> 1978-10-30, 1965-08-01, 1984-09-23, 1964-10-12, …
+#> $ marker_date          <date> 1979-09-04, 1965-06-09, 1984-04-05, 1964-05-14, …
 ```
 
 ### Step 2: summariseSequenceRatios
@@ -143,17 +147,17 @@ res %>% glimpse()
 The user could then visualise their results using a wide array of
 provided tools.
 
-For example, the following produces a gt table.
+For example, the following produces a flextable table.
 
 ``` r
 
-gt_results <- tableSequenceRatios(result = res)
+flex_results <- tableSequenceRatios(result = res)
 
-gt_results
+flex_results
 ```
 
-![](./reference/figures/README-gt_table.png) Note that flextable is also
-an option, users may specify this by using the `type` argument.
+![](./reference/figures/README-gt_table.png) Note that gt is also an
+option, users may specify this by using the `type` argument.
 
 One could also visualise the plot, for example, the following is the
 plot of the adjusted sequence ratio.
