@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/OHDSI/CohortSymmetry/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/OHDSI/CohortSymmetry/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
  
-The goal of CohortSymmetry is to carry out the necessary calculations for Sequence Symmetry Analysis (SSA). It is highly recommended that this method is tested beforehand against well-known positive and negative controls. Such controls could be found using Pratt et al (2015). 
+The goal of CohortSymmetry is to carry out the necessary calculations for Sequence Symmetry Analysis (SSA). It is highly recommended that this method is tested beforehand against well-known positive and negative controls. Such controls could be found using [Pratt et al (2015)](https://pubmed.ncbi.nlm.nih.gov/25907076/). 
  
 ## Installation
  
@@ -56,7 +56,7 @@ cdm <- cdmFromCon(
 ### Step 0: Instantiate two cohorts in the cdm reference
 This will be entirely user's choice on how to generate such cohorts. Minimally, this package requires two cohort tables in the cdm reference, namely the index_cohort and the marker_cohort.
  
-If one wants to generate two drugs cohorts in cdm, DrugUtilisation is recommended. For merely illustration purposes, we will carry out PSSA on aspirin (index_cohort) against amoxicillin (marker_cohort)
+If one wants to generate two drugs cohorts in cdm, the [DrugUtilisation R package](https://darwin-eu.github.io/DrugUtilisation/) is recommended. For merely illustration purposes, we will carry out SSA on aspirin (index_cohort) against amoxicillin (marker_cohort). Multiple markers can be instantiated in the marker cohort and each one will be tested against the index cohort.
  
 ```{r Example - Step 0: Using DrugUtilisation, eval=TRUE, warning=FALSE}
 library(dplyr)
@@ -74,7 +74,7 @@ cdm <- DrugUtilisation::generateIngredientCohortSet(
  
 ### Step 1: generateSequenceCohortSet
  
-In order to initiate the calculations, the two cohorts tables need to be intersected using `generateSequenceCohortSet()`. This process will output all the individuals who appeared on both tables according to a user-specified parameters. This includes `timeGap`, `washoutWindow`, `indexMarkerGap` and `daysPriorObservation`. Details on these parameters could be found on the vignette.
+In order to initiate the calculations, the two cohorts tables need to be intersected using `generateSequenceCohortSet()`. This process will output all the individuals who appeared on both tables according to a user-specified parameters. This includes `timeGap`, `washoutWindow`, `indexMarkerGap` and `daysPriorObservation`. Details on these parameters are found on the vignette.
  
 ```{r Step 1: generateSequenceCohortSet, eval=TRUE, warning=FALSE}
 library(CohortSymmetry)
@@ -105,16 +105,16 @@ res %>% glimpse()
  
 The user could then visualise their results using a wide array of provided tools.
 
-For example, the following produces a gt table.
+For example, the following produces a flextable table.
 
 ```{r Step 3: visualise the results - tables, eval=FALSE, warning=FALSE}
-gt_results <- tableSequenceRatios(result = res)
+flex_results <- tableSequenceRatios(result = res)
 
-gt_results
+flex_results
 ```
 
 ![](./man/figures/README-gt_table.png)
-Note that flextable is also an option, users may specify this by using the `type` argument.
+Note that gt is also an option, users may specify this by using the `type` argument.
 
 One could also visualise the plot, for example, the following is the plot of the adjusted sequence ratio.
 
