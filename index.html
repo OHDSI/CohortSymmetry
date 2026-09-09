@@ -71,6 +71,7 @@
 </div>
 <!-- badges: start -->
 
+<!-- badges: end -->
 <p>The goal of CohortSymmetry is to carry out the necessary calculations for Sequence Symmetry Analysis (SSA). It is highly recommended that this method is tested beforehand against well-known positive and negative controls. Such controls could be found using <a href="https://pubmed.ncbi.nlm.nih.gov/25907076/" class="external-link">Pratt et al (2015)</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -106,10 +107,13 @@
 <h3 id="step-0-instantiate-two-cohorts-in-the-cdm-reference">Step 0: Instantiate two cohorts in the cdm reference<a class="anchor" aria-label="anchor" href="#step-0-instantiate-two-cohorts-in-the-cdm-reference"></a>
 </h3>
 <p>This will be entirely user’s choice on how to generate such cohorts. Minimally, this package requires two cohort tables in the cdm reference, namely the index_cohort and the marker_cohort.</p>
-<p>If one wants to generate two drugs cohorts in cdm, the <a href="https://darwin-eu.github.io/DrugUtilisation/" class="external-link">DrugUtilisation R package</a> is recommended. For merely illustration purposes, we will carry out SSA on aspirin (index_cohort) against amoxicillin (marker_cohort). Multiple markers can be instantiated in the marker cohort and each one will be tested against the index cohort.</p>
+<p>If one wants to generate two drugs cohorts in cdm, the <a href="https://darwin-eu.github.io/DrugUtilisation/" class="external-link">DrugUtilisation R package</a> can be used or we recommend using <a href="https://ohdsi.github.io/CohortConstructor/" class="external-link">CohortConstructor R package</a>.</p>
+<p>For merely illustration purposes, we will carry out SSA on aspirin (index_cohort) against amoxicillin (marker_cohort). Multiple markers can be instantiated in the marker cohort and each one will be tested against the index cohort.</p>
+<p>Using the drug utilisation package:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu.github.io/DrugUtilisation/" class="external-link">DrugUtilisation</a></span><span class="op">)</span></span>
+<span></span>
 <span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu">DrugUtilisation</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/DrugUtilisation/reference/generateIngredientCohortSet.html" class="external-link">generateIngredientCohortSet</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>, </span>
 <span>  name <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
@@ -127,12 +131,54 @@
 <span><span class="co">#&gt; ℹ Checking whether any record needs to be dropped.</span></span>
 <span><span class="co">#&gt; ℹ Collapsing overlaping records.</span></span>
 <span><span class="co">#&gt; ℹ Collapsing records with gapEra = 1 days.</span></span></code></pre></div>
+<p>Using CohortConstructor R package (recommended):</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu.github.io/CodelistGenerator/" class="external-link">CodelistGenerator</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/CohortConstructor/" class="external-link">CohortConstructor</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">aspirin_codelist</span> <span class="op">&lt;-</span> <span class="fu">CodelistGenerator</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/CodelistGenerator/reference/getDrugIngredientCodes.html" class="external-link">getDrugIngredientCodes</a></span><span class="op">(</span></span>
+<span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
+<span>  name <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
+<span>  nameStyle <span class="op">=</span> <span class="st">"{concept_name}"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cdm</span><span class="op">[[</span><span class="st">"aspirin"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">CohortConstructor</span><span class="fu">::</span><span class="fu">conceptCohort</span><span class="op">(</span></span>
+<span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
+<span>  conceptSet <span class="op">=</span> <span class="va">aspirin_codelist</span>,</span>
+<span>  exit <span class="op">=</span> <span class="st">"event_end_date"</span>,</span>
+<span>  name <span class="op">=</span> <span class="st">"aspirin"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ℹ Subsetting table drug_exposure using 2 concepts with domain: drug.</span></span>
+<span><span class="co">#&gt; ℹ Combining tables.</span></span>
+<span><span class="co">#&gt; ℹ Creating cohort attributes.</span></span>
+<span><span class="co">#&gt; ℹ Applying cohort requirements.</span></span>
+<span><span class="co">#&gt; ℹ Merging overlapping records.</span></span>
+<span><span class="co">#&gt; ✔ Cohort aspirin created.</span></span>
+<span></span>
+<span></span>
+<span><span class="va">amoxicillin_codelist</span> <span class="op">&lt;-</span> <span class="fu">CodelistGenerator</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/CodelistGenerator/reference/getDrugIngredientCodes.html" class="external-link">getDrugIngredientCodes</a></span><span class="op">(</span></span>
+<span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
+<span>  name <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
+<span>  nameStyle <span class="op">=</span> <span class="st">"{concept_name}"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cdm</span><span class="op">[[</span><span class="st">"amoxicillin"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">CohortConstructor</span><span class="fu">::</span><span class="fu">conceptCohort</span><span class="op">(</span></span>
+<span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
+<span>  conceptSet <span class="op">=</span> <span class="va">amoxicillin_codelist</span>,</span>
+<span>  exit <span class="op">=</span> <span class="st">"event_end_date"</span>,</span>
+<span>  name <span class="op">=</span> <span class="st">"amoxicillin"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ℹ Subsetting table drug_exposure using 4 concepts with domain: drug.</span></span>
+<span><span class="co">#&gt; ℹ Combining tables.</span></span>
+<span><span class="co">#&gt; ℹ Creating cohort attributes.</span></span>
+<span><span class="co">#&gt; ℹ Applying cohort requirements.</span></span>
+<span><span class="co">#&gt; ℹ Merging overlapping records.</span></span>
+<span><span class="co">#&gt; ✔ Cohort amoxicillin created.</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="step-1-generatesequencecohortset">Step 1: generateSequenceCohortSet<a class="anchor" aria-label="anchor" href="#step-1-generatesequencecohortset"></a>
 </h3>
-<p>In order to initiate the calculations, the two cohorts tables need to be intersected using <code><a href="reference/generateSequenceCohortSet.html">generateSequenceCohortSet()</a></code>. This process will output all the individuals who appeared on both tables according to a user-specified parameters. This includes <code>timeGap</code>, <code>washoutWindow</code>, <code>indexMarkerGap</code> and <code>daysPriorObservation</code>. Details on these parameters are found on the vignette.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p>In order to initiate the calculations, the two cohorts tables need to be intersected using <code><a href="reference/generateSequenceCohortSet.html">generateSequenceCohortSet()</a></code>. This process will output all the individuals who appeared on both tables according to a user-specified parameters. This includes <code>combinationWindow</code>, <code>washoutWindow</code>, <code>indexMarkerGap</code> and <code>daysPriorObservation</code>. Details on these parameters are found on the vignette.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/CohortSymmetry/">CohortSymmetry</a></span><span class="op">)</span></span>
 <span> </span>
 <span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/generateSequenceCohortSet.html">generateSequenceCohortSet</a></span><span class="op">(</span></span>
@@ -147,17 +193,17 @@
 <span><span class="co">#&gt; Rows: ??</span></span>
 <span><span class="co">#&gt; Columns: 6</span></span>
 <span><span class="co">#&gt; $ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…</span></span>
-<span><span class="co">#&gt; $ subject_id           &lt;int&gt; 144, 363, 1813, 2621, 3436, 4867, 331, 1611, 1785…</span></span>
-<span><span class="co">#&gt; $ cohort_start_date    &lt;date&gt; 1978-10-30, 1965-06-09, 1984-04-05, 1964-05-14, …</span></span>
-<span><span class="co">#&gt; $ cohort_end_date      &lt;date&gt; 1979-09-04, 1965-08-01, 1984-09-23, 1964-10-12, …</span></span>
-<span><span class="co">#&gt; $ index_date           &lt;date&gt; 1978-10-30, 1965-08-01, 1984-09-23, 1964-10-12, …</span></span>
-<span><span class="co">#&gt; $ marker_date          &lt;date&gt; 1979-09-04, 1965-06-09, 1984-04-05, 1964-05-14, …</span></span></code></pre></div>
+<span><span class="co">#&gt; $ subject_id           &lt;int&gt; 331, 1611, 1785, 3370, 5034, 280, 307, 310, 518, …</span></span>
+<span><span class="co">#&gt; $ cohort_start_date    &lt;date&gt; 1936-10-23, 1972-05-25, 1956-08-24, 1974-06-16, …</span></span>
+<span><span class="co">#&gt; $ cohort_end_date      &lt;date&gt; 1937-06-27, 1972-11-20, 1957-04-26, 1975-02-18, …</span></span>
+<span><span class="co">#&gt; $ index_date           &lt;date&gt; 1936-10-23, 1972-11-20, 1956-08-24, 1974-06-16, …</span></span>
+<span><span class="co">#&gt; $ marker_date          &lt;date&gt; 1937-06-27, 1972-05-25, 1957-04-26, 1975-02-18, …</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="step-2-summarisesequenceratios">Step 2: summariseSequenceRatios<a class="anchor" aria-label="anchor" href="#step-2-summarisesequenceratios"></a>
 </h3>
 <p>To get the sequence ratios, we would need the output of the generateSequenceCohortSet() function to be fed into <code><a href="reference/summariseSequenceRatios.html">summariseSequenceRatios()</a></code> The output of this process contains cSR(crude sequence ratio), aSR(adjusted sequence ratio) and confidence intervals.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summariseSequenceRatios.html">summariseSequenceRatios</a></span><span class="op">(</span>cohort <span class="op">=</span> <span class="va">cdm</span><span class="op">$</span><span class="va">aspirin_amoxicillin</span><span class="op">)</span></span>
 <span> </span>
 <span><span class="va">res</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -182,26 +228,29 @@
 </h3>
 <p>The user could then visualise their results using a wide array of provided tools.</p>
 <p>For example, the following produces a flextable table.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">flex_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tableSequenceRatios.html">tableSequenceRatios</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">res</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">flex_results</span></span></code></pre></div>
 <p><img src="./reference/figures/README-gt_table.png"> Note that gt is also an option, users may specify this by using the <code>type</code> argument.</p>
 <p>One could also visualise the plot, for example, the following is the plot of the adjusted sequence ratio.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plotSequenceRatios.html">plotSequenceRatios</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">res</span>,</span>
 <span>                  onlyASR <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>                  colours <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="./reference/figures/plotSR.png"></p>
 <p>The user also has the freedom to plot temporal trend like so:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/plotTemporalSymmetry.html">plotTemporalSymmetry</a></span><span class="op">(</span>cdm <span class="op">=</span> <span class="va">cdm</span>, sequenceTable <span class="op">=</span> <span class="st">"aspirin_amoxicillin"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">temporal_symmetry</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summariseTemporalSymmetry.html">summariseTemporalSymmetry</a></span><span class="op">(</span>cohort <span class="op">=</span> <span class="va">cdm</span><span class="op">$</span><span class="va">aspirin_amoxicillin</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/plotTemporalSymmetry.html">plotTemporalSymmetry</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">temporal_symmetry</span><span class="op">)</span></span></code></pre></div>
 <p><img src="./reference/figures/plot_temporal.png"></p>
 </div>
 <div class="section level3">
 <h3 id="disconnect-from-the-cdm-database-connection">Disconnect from the cdm database connection<a class="anchor" aria-label="anchor" href="#disconnect-from-the-cdm-database-connection"></a>
 </h3>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">CDMConnector</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/cdmDisconnect.html" class="external-link">cdmDisconnect</a></span><span class="op">(</span>cdm <span class="op">=</span> <span class="va">cdm</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>

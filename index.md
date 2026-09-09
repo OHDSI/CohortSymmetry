@@ -50,16 +50,22 @@ Minimally, this package requires two cohort tables in the cdm reference,
 namely the index_cohort and the marker_cohort.
 
 If one wants to generate two drugs cohorts in cdm, the [DrugUtilisation
-R package](https://darwin-eu.github.io/DrugUtilisation/) is recommended.
+R package](https://darwin-eu.github.io/DrugUtilisation/) can be used or
+we recommend using [CohortConstructor R
+package](https://ohdsi.github.io/CohortConstructor/).
+
 For merely illustration purposes, we will carry out SSA on aspirin
 (index_cohort) against amoxicillin (marker_cohort). Multiple markers can
 be instantiated in the marker cohort and each one will be tested against
 the index cohort.
 
+Using the drug utilisation package:
+
 ``` r
 
 library(dplyr)
 library(DrugUtilisation)
+
 cdm <- DrugUtilisation::generateIngredientCohortSet(
   cdm = cdm, 
   name = "aspirin",
@@ -79,15 +85,62 @@ cdm <- DrugUtilisation::generateIngredientCohortSet(
 #> ℹ Collapsing records with gapEra = 1 days.
 ```
 
+Using CohortConstructor R package (recommended):
+
+``` r
+
+library(dplyr)
+library(CodelistGenerator)
+library(CohortConstructor)
+
+aspirin_codelist <- CodelistGenerator::getDrugIngredientCodes(
+  cdm = cdm,
+  name = "aspirin",
+  nameStyle = "{concept_name}"
+)
+
+cdm[["aspirin"]] <- CohortConstructor::conceptCohort(
+  cdm = cdm,
+  conceptSet = aspirin_codelist,
+  exit = "event_end_date",
+  name = "aspirin")
+#> ℹ Subsetting table drug_exposure using 2 concepts with domain: drug.
+#> ℹ Combining tables.
+#> ℹ Creating cohort attributes.
+#> ℹ Applying cohort requirements.
+#> ℹ Merging overlapping records.
+#> ✔ Cohort aspirin created.
+
+
+amoxicillin_codelist <- CodelistGenerator::getDrugIngredientCodes(
+  cdm = cdm,
+  name = "amoxicillin",
+  nameStyle = "{concept_name}"
+)
+
+cdm[["amoxicillin"]] <- CohortConstructor::conceptCohort(
+  cdm = cdm,
+  conceptSet = amoxicillin_codelist,
+  exit = "event_end_date",
+  name = "amoxicillin")
+#> ℹ Subsetting table drug_exposure using 4 concepts with domain: drug.
+#> ℹ Combining tables.
+#> ℹ Creating cohort attributes.
+#> ℹ Applying cohort requirements.
+#> ℹ Merging overlapping records.
+#> ✔ Cohort amoxicillin created.
+```
+
 ### Step 1: generateSequenceCohortSet
 
 In order to initiate the calculations, the two cohorts tables need to be
 intersected using
 [`generateSequenceCohortSet()`](https://ohdsi.github.io/CohortSymmetry/reference/generateSequenceCohortSet.md).
 This process will output all the individuals who appeared on both tables
-according to a user-specified parameters. This includes `timeGap`,
-`washoutWindow`, `indexMarkerGap` and `daysPriorObservation`. Details on
-these parameters are found on the vignette.
+according to a user-specified parameters. This includes
+`combinationWindow`, `washoutWindow`, `indexMarkerGap` and
+`daysPriorObservation`. Details on these parameters are found on the
+vignette.
 
 ``` r
 
@@ -105,11 +158,11 @@ cdm$aspirin_amoxicillin %>%
 #> Rows: ??
 #> Columns: 6
 #> $ cohort_definition_id <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-#> $ subject_id           <int> 144, 363, 1813, 2621, 3436, 4867, 331, 1611, 1785…
-#> $ cohort_start_date    <date> 1978-10-30, 1965-06-09, 1984-04-05, 1964-05-14, …
-#> $ cohort_end_date      <date> 1979-09-04, 1965-08-01, 1984-09-23, 1964-10-12, …
-#> $ index_date           <date> 1978-10-30, 1965-08-01, 1984-09-23, 1964-10-12, …
-#> $ marker_date          <date> 1979-09-04, 1965-06-09, 1984-04-05, 1964-05-14, …
+#> $ subject_id           <int> 331, 1611, 1785, 3370, 5034, 280, 307, 310, 518, …
+#> $ cohort_start_date    <date> 1936-10-23, 1972-05-25, 1956-08-24, 1974-06-16, …
+#> $ cohort_end_date      <date> 1937-06-27, 1972-11-20, 1957-04-26, 1975-02-18, …
+#> $ index_date           <date> 1936-10-23, 1972-11-20, 1956-08-24, 1974-06-16, …
+#> $ marker_date          <date> 1937-06-27, 1972-05-25, 1957-04-26, 1975-02-18, …
 ```
 
 ### Step 2: summariseSequenceRatios
@@ -175,7 +228,10 @@ The user also has the freedom to plot temporal trend like so:
 
 ``` r
 
-plotTemporalSymmetry(cdm = cdm, sequenceTable = "aspirin_amoxicillin")
+
+temporal_symmetry <- summariseTemporalSymmetry(cohort = cdm$aspirin_amoxicillin)
+
+plotTemporalSymmetry(result = temporal_symmetry)
 ```
 
 ![](./reference/figures/plot_temporal.png)
