@@ -62,7 +62,7 @@ preprocessCohort <- function(cdm, cohortName, cohortId, cohortDateRange) {
     dplyr::compute(name = nm, temporary = FALSE) |>
     PatientProfiles::addCohortName() |>
     dplyr::compute()
-  cdm <- omopgenerics::dropTable(cdm = cdm, name = nm)
+  cdm <- omopgenerics::dropSourceTable(cdm = cdm, name = nm)
   return(cohort)
 }
 

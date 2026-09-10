@@ -109,6 +109,37 @@ test_that("summariseSequenceRatios - testing ratios and CIs, Example 1", {
       cohort = cdm$joined_cohorts)
   )
 
+  # Check null sequence ratio is included in the result
+  expect_true(
+    any(
+      res$variable_level == "sequence_ratio" &
+        res$variable_name == "null" &
+        res$estimate_name == "point_estimate"
+    )
+  )
+
+  # Get the original NSR stored in the cohort settings
+  settings_nsr <- omopgenerics::settings(cdm$joined_cohorts) |>
+    dplyr::pull("nsr")
+
+  # Get the NSR now reported in summariseSequenceRatios()
+  result_nsr <- res |>
+    dplyr::filter(
+      .data$variable_level == "sequence_ratio",
+      .data$variable_name == "null",
+      .data$estimate_name == "point_estimate"
+    ) |>
+    dplyr::pull("estimate_value") |>
+    as.numeric()
+
+  # Check that the reported NSR is the same as the original NSR
+  expect_equal(
+    result_nsr,
+    settings_nsr
+  )
+
+
+
   res <- res |>
     visOmopResults::splitAll() |>
     dplyr::filter(variable_name != "settings") |>
