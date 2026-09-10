@@ -98,13 +98,16 @@ summariseSequenceRatios <- function(cohort,
         dplyr::ungroup()
 
       partial_result <- cbind(meta_info,
-                              cbind(tibble::tibble(csr = csr,asr = asr),
+                              cbind(tibble::tibble(nsr = nsr,
+                                                   csr = csr,
+                                                   asr = asr),
                                     counts)) |>
         dplyr::mutate(marker_first_percentage = round(.data$marker_first/(.data$marker_first + .data$index_first)*100, digits = 1),
                       index_first_percentage = round(.data$index_first/(.data$marker_first + .data$index_first)*100, digits = 1),
                       confidence_interval = as.character(.env$confidenceInterval)) |>
         dplyr::select("index_id", "index_name", "marker_id", "marker_name",
                       "index_first", "marker_first", "index_first_percentage", "marker_first_percentage",
+                      "nsr",
                       "csr", "lower_csr_ci", "upper_csr_ci",
                       "asr", "lower_asr_ci", "upper_asr_ci", "cohort_date_range",
                       "days_prior_observation", "washout_window", "index_marker_gap", "combination_window",

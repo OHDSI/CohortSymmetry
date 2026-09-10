@@ -54,6 +54,16 @@ tableSequenceRatios <- function(result,
     return(emptyResultTable(type))
   }
 
+  # Label the null sequence ratio
+  result <- result |>
+    dplyr::mutate(
+      estimate_name = dplyr::if_else(
+        .data$variable_name == "null",
+        "SR",
+        .data$estimate_name
+      )
+    )
+
 
   ci <- omopgenerics::settings(result)$confidence_interval
   ci <- unique(ci[!is.na(ci)])[1]
