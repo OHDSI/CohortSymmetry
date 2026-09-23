@@ -93,4 +93,6 @@ tableSequenceRatios <- function(result,
     hide = hide,
     style = style
   )
+
+  return(tab)
 }

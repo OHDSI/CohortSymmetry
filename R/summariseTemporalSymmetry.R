@@ -101,7 +101,7 @@ summariseTemporalSymmetry <- function(cohort,
     dplyr::select(c(-"cohort_name", -"cohort_definition_id"))
 
   setting <- output_sum |>
-    dplyr::distinct(dplyr::across(dplyr::all_of(c(settings, "cdm_name")))) |>
+    dplyr::distinct(dplyr::across(dplyr::all_of(c(settings)))) |>
     dplyr::mutate(result_id = as.integer(dplyr::row_number()),
                   result_type = "temporal_symmetry",
                   package_name = "CohortSymmetry",
@@ -110,7 +110,7 @@ summariseTemporalSymmetry <- function(cohort,
 
   # new summarise result
   output_sum <- output_sum |>
-    dplyr::left_join(setting, by = c("cdm_name", "days_prior_observation", "washout_window",
+    dplyr::left_join(setting, by = c("days_prior_observation", "washout_window",
                                      "index_marker_gap", "combination_window", "timescale")) |>
     dplyr::select(dplyr::all_of(omopgenerics::resultColumns())) |>
     omopgenerics::newSummarisedResult(
