@@ -1,5 +1,7 @@
 # CohortSymmetry (development version)
 
+# CohortSymmetry 0.4.0
+
 ### Improvements
 
 - Updated compatibility with the latest `visOmopResults`.
