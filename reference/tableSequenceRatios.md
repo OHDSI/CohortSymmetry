@@ -10,7 +10,7 @@ tableSequenceRatios(
   result,
   header = "marker_cohort_name",
   groupColumn = "cdm_name",
-  type = "flextable",
+  type = "gt",
   style = "default",
   hide = "variable_level"
 )
@@ -56,7 +56,7 @@ A formatted version of the sequence_symmetry object.
 library(CohortSymmetry)
 cdm <- mockCohortSymmetry()
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmpM0lBvH/duckdb
+#> ℹ /tmp/Rtmpq63GNx/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
@@ -85,7 +85,7 @@ res <- summariseSequenceRatios(cohort = cdm$joined_cohort)
 #> before index
 #> -- 5 combinations of 8 had index always before marker
 #> -- 5 combinations of 8 had marker always before index
-flexResult <- tableSequenceRatios(res)
+gtResult <- tableSequenceRatios(res)
 CDMConnector::cdmDisconnect(cdm = cdm)
 # }
 ```

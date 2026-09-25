@@ -10,7 +10,7 @@ tableTemporalSymmetry(
   result,
   header = "variable_level",
   groupColumn = c("cdm_name", "index_name"),
-  type = "flextable",
+  type = "gt",
   style = "default",
   hide = "variable_name"
 )
@@ -56,7 +56,7 @@ A formatted version of the temporal_symmetry object.
 library(CohortSymmetry)
 cdm <- mockCohortSymmetry()
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmpM0lBvH/duckdb
+#> ℹ /tmp/Rtmpq63GNx/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.

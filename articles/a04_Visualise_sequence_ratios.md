@@ -33,24 +33,41 @@ result <- summariseSequenceRatios(cohort = cdm$intersect)
 ## Table output of the sequence ratio results
 
 The function `tableSequenceRatios` inputs the result from
-`summariseSequenceRatios`, the default outputs a flextable table.
+`summariseSequenceRatios`, the default outputs a gt table.
 
 ``` r
 
 tableSequenceRatios(result = result)
 ```
 
+[TABLE]
+
 ### Modify `type`
 
-Instead of a flextable table, the user may also want to put the sequence
-ratio results in a gt table format (the rest of the arguments that we
-saw for a flextable table also applies here):
+Instead of a gt table, the user may also want to put the sequence ratio
+results in a flextable table format (the rest of the arguments that we
+saw for a gt table also applies here):
 
 ``` r
 
-tableSequenceRatios(result = result,
-                    type = "gt")
+
+if (requireNamespace("flextable", quietly = TRUE)) {
+  tableSequenceRatios(
+    result = result,
+    type = "flextable"
+  )
+}
 ```
+
+| Index cohort name | Variable name | Estimate name | Marker cohort name   |
+|-------------------|---------------|---------------|----------------------|
+|                   |               |               | acetaminophen        |
+| Synthea           |               |               |                      |
+| aspirin           | index         | N (%)         | 1,235 (64.40%)       |
+|                   | marker        | N (%)         | 682 (35.60%)         |
+|                   | null          | SR            | 1.03                 |
+|                   | crude         | SR \[CI 95%\] | 1.81 \[1.65 - 1.99\] |
+|                   | adjusted      | SR \[CI 95%\] | 1.76 \[1.60 - 1.93\] |
 
 Or a tibble:
 
@@ -58,6 +75,16 @@ Or a tibble:
 
 tableSequenceRatios(result = result,
                     type = "tibble")
+#> # A tibble: 5 × 5
+#>   `Data source` `Index cohort name` `Variable name` `Estimate name`
+#>   <chr>         <chr>               <chr>           <chr>          
+#> 1 Synthea       aspirin             index           N (%)          
+#> 2 Synthea       aspirin             marker          N (%)          
+#> 3 Synthea       aspirin             null            SR             
+#> 4 Synthea       aspirin             crude           SR [CI 95%]    
+#> 5 Synthea       aspirin             adjusted        SR [CI 95%]    
+#> # ℹ 1 more variable:
+#> #   `[header_name]Marker cohort name\n[header_level]acetaminophen` <chr>
 ```
 
 ## Plot output of the sequence ratio results

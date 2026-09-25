@@ -35,7 +35,7 @@ relevant counts.
 library(CohortSymmetry)
 cdm <- mockCohortSymmetry()
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmpM0lBvH/duckdb
+#> ℹ /tmp/Rtmpq63GNx/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.

@@ -38,6 +38,8 @@ to visualise the results:
 tableTemporalSymmetry(result = temporal_symmetry)
 ```
 
+[TABLE]
+
 ``` r
 
 plotTemporalSymmetry(result = temporal_symmetry)
