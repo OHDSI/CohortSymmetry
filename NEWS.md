@@ -1,4 +1,4 @@
-# CohortSymmetry (development version)
+# CohortSymmetry 0.4.0
 
 ### Improvements
 
