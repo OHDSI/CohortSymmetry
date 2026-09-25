@@ -55,7 +55,7 @@ A plot for the temporal symmetry of cohorts.
 library(CohortSymmetry)
 cdm <- mockCohortSymmetry()
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmpHxfoSp/duckdb
+#> ℹ /tmp/Rtmpt2qvO4/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
