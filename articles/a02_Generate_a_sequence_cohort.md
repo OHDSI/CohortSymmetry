@@ -126,7 +126,7 @@ correspondence, one could do the following:
 
 attr(cdm$intersect, "cohort_set")
 #> # A query:  ?? x 13
-#> # Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1022-azure:R 4.6.1//tmp/Rtmpbml9sg/file1d2431c928ad.duckdb]
+#> # Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1022-azure:R 4.6.1//tmp/RtmpAtiTEy/file1be45b70ea0c.duckdb]
 #>   cohort_definition_id cohort_name     index_id index_name marker_id marker_name
 #>                  <int> <chr>              <int> <chr>          <int> <chr>      
 #> 1                    1 index_aspirin_…        1 aspirin            1 acetaminop…

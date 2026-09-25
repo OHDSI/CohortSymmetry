@@ -34,7 +34,7 @@ A local table with all the analyses.
 library(CohortSymmetry)
 cdm <- mockCohortSymmetry()
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/Rtmpq63GNx/duckdb
+#> ℹ /tmp/RtmpHxfoSp/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
@@ -57,7 +57,6 @@ cdm <- generateSequenceCohortSet(cdm = cdm,
                                  name = "joined_cohorts",
                                  indexTable = "cohort_1",
                                  markerTable = "cohort_2")
-#> Warning: restarting interrupted promise evaluation
 pssa_result <- summariseSequenceRatios(cohort = cdm$joined_cohorts)
 #> Warning: For at least some combinations, index is always before marker or marker always
 #> before index

@@ -101,7 +101,7 @@ See visOmopResults package for more information on how to use this parameter.</p
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/CohortSymmetry/">CohortSymmetry</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="mockCohortSymmetry.html">mockCohortSymmetry</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> duckdb keeps downloaded extensions and secrets in a temporary directory:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> /tmp/Rtmpq63GNx/duckdb</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> /tmp/RtmpHxfoSp/duckdb</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> This is removed when the R session ends.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Extensions are re-downloaded each session.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Secrets are lost.</span>
@@ -124,7 +124,6 @@ See visOmopResults package for more information on how to use this parameter.</p
 <span class="r-in"><span>                                 indexTable <span class="op">=</span> <span class="st">"cohort_1"</span>,</span></span>
 <span class="r-in"><span>                                 markerTable <span class="op">=</span> <span class="st">"cohort_2"</span>,</span></span>
 <span class="r-in"><span>                                 name <span class="op">=</span> <span class="st">"joined_cohort"</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>restarting interrupted promise evaluation</span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="summariseTemporalSymmetry.html">summariseTemporalSymmetry</a></span><span class="op">(</span>cohort <span class="op">=</span> <span class="va">cdm</span><span class="op">$</span><span class="va">joined_cohort</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">gtResult</span> <span class="op">&lt;-</span> <span class="fu">tableTemporalSymmetry</span><span class="op">(</span>result <span class="op">=</span> <span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">CDMConnector</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/cdmDisconnect.html" class="external-link">cdmDisconnect</a></span><span class="op">(</span>cdm <span class="op">=</span> <span class="va">cdm</span><span class="op">)</span></span></span>
