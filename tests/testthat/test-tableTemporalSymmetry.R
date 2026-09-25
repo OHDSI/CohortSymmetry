@@ -12,6 +12,7 @@ test_that("tableTemporalSymmetry - gt output", {
   res <- summariseTemporalSymmetry(cohort = cdm$joined_cohort)
 
   gtResult <- tableTemporalSymmetry(res, type = "gt")
+
   expect_true("gt_tbl" %in% (gtResult %>% class()))
 
   expect_no_error(
@@ -80,7 +81,7 @@ test_that("tableTemporalSymmetry - flextable output", {
 
   res <- summariseTemporalSymmetry(cohort = cdm$joined_cohort)
 
-  flextable_res <- tableTemporalSymmetry(res)
+  flextable_res <- tableTemporalSymmetry(res, type = "flextable")
 
   expect_warning(
     tableSequenceRatios(res, type = "flextable")

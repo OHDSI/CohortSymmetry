@@ -8,7 +8,7 @@ tableTemporalSymmetry(
   result,
   header = "variable_level",
   groupColumn = c("cdm_name", "index_name"),
-  type = "flextable",
+  type = "gt",
   style = "default",
   hide = "variable_name"
 )

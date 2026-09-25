@@ -25,20 +25,27 @@
 #'                                  markerTable = "cohort_2",
 #'                                  name = "joined_cohort")
 #' res <- summariseSequenceRatios(cohort = cdm$joined_cohort)
-#' flexResult <- tableSequenceRatios(res)
+#' gtResult <- tableSequenceRatios(res)
 #' CDMConnector::cdmDisconnect(cdm = cdm)
 #' }
 #'
 tableSequenceRatios <- function(result,
                                 header = "marker_cohort_name",
                                 groupColumn = "cdm_name",
-                                type = "flextable",
+                                type = "gt",
                                 style = "default",
                                 hide = "variable_level") {
 
   rlang::check_installed("visOmopResults")
-  rlang::check_installed("flextable")
-  rlang::check_installed("gt")
+
+  if (type == "flextable") {
+    rlang::check_installed("flextable")
+  }
+
+  if (type == "gt") {
+    rlang::check_installed("gt")
+  }
+
 
   # validate checks
   result <- omopgenerics::validateResultArgument(result)
