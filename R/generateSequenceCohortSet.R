@@ -384,8 +384,8 @@ generateSequenceCohortSet <- function(cdm,
                      temporary = FALSE)
   }
 
-  cdm <- CDMConnector::dropTable(cdm = cdm, name = "ids")
-  CDMConnector::dropTable(cdm = cdm, name = dplyr::starts_with(nsr_name))
+  cdm <- omopgenerics::dropSourceTable(cdm = cdm, name = "ids")
+  omopgenerics::dropSourceTable(cdm = cdm, name = dplyr::starts_with(nsr_name))
 
   return(cdm)
 }
