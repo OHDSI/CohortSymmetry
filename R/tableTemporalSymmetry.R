@@ -32,13 +32,20 @@
 tableTemporalSymmetry <- function(result,
                                   header = "variable_level",
                                   groupColumn = c("cdm_name", "index_name"),
-                                  type = "flextable",
+                                  type = "gt",
                                   style = "default",
                                   hide = "variable_name"){
 
   rlang::check_installed("visOmopResults")
-  rlang::check_installed("flextable")
-  rlang::check_installed("gt")
+
+  if (type == "flextable") {
+    rlang::check_installed("flextable")
+  }
+
+  if (type == "gt") {
+    rlang::check_installed("gt")
+  }
+
 
   # validate checks
   result <- omopgenerics::validateResultArgument(result)
@@ -80,4 +87,6 @@ tableTemporalSymmetry <- function(result,
     hide = hide,
     style = style
   )
+
+  return(tab)
 }

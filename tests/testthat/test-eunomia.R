@@ -1,5 +1,6 @@
 test_that("eunomia - generateSequenceCohortSet", {
   skip_on_cran()
+  testthat::skip_if_not_installed("flextable")
 
   if (Sys.getenv("EUNOMIA_DATA_FOLDER") == "") {
     Sys.setenv("EUNOMIA_DATA_FOLDER" = tempdir())
@@ -63,6 +64,7 @@ test_that("eunomia - generateSequenceCohortSet", {
 
 test_that("check redundant_fun", {
   skip_on_cran()
+  testthat::skip_if_not_installed("flextable")
   expect_no_error(
     redundant_fun()
   )

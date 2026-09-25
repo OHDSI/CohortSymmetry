@@ -49,7 +49,7 @@ getSummarisedResult <- function(x) {
     )
 
   setting <- x |>
-    dplyr::distinct(dplyr::across(dplyr::all_of(c(settings, "cdm_name")))) |>
+    dplyr::distinct(dplyr::across(dplyr::all_of(c(settings)))) |>
     dplyr::mutate(result_id = as.integer(dplyr::row_number()),
                   result_type = "sequence_ratios",
                   package_name = "CohortSymmetry",
@@ -57,8 +57,7 @@ getSummarisedResult <- function(x) {
 
   x_sum <- x_sum |>
     dplyr::left_join(setting, by = c("days_prior_observation", "washout_window",
-                     "index_marker_gap", "combination_window", "moving_average_restriction", "confidence_interval",
-                     "cdm_name")) |>
+                     "index_marker_gap", "combination_window", "moving_average_restriction", "confidence_interval")) |>
     dplyr::select(dplyr::all_of(omopgenerics::resultColumns())) |>
     omopgenerics::newSummarisedResult(
       settings = setting

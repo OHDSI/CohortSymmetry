@@ -211,7 +211,7 @@ test_that("summariseSequenceRatios - testing ratios and CIs, Example 2", {
     dplyr::select(-"estimate_type") |>
     tidyr::pivot_wider(names_from = c("variable_level", "variable_name", "estimate_name"),
                        values_from = "estimate_value") |>
-    dplyr::left_join(res |> omopgenerics::settings(), by = c("result_id", "cdm_name"))
+    dplyr::left_join(res |> omopgenerics::settings(), by = c("result_id"))
 
   expect_true(all(res$days_prior_observation==0))
   expect_true(all(res$washout_window==0))
