@@ -55,7 +55,8 @@ plotSequenceRatios <- function(result,
   }
 
   result <- result |>
-    visOmopResults::filterSettings(.data$result_type == "sequence_ratios")
+    visOmopResults::filterSettings(.data$result_type == "sequence_ratios")  |>
+    dplyr::filter(.data$variable_name != "null")
 
   if (nrow(result) == 0) {
     cli::cli_warn("`result` object does not contain any `result_type == 'sequence_ratios'` information.")
