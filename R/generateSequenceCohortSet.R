@@ -272,7 +272,7 @@ generateSequenceCohortSet <- function(cdm,
                    temporary = FALSE)
 
   cdm[["ids"]] <- cdm[[name]] |>
-    dplyr::select(.data$index_id, .data$marker_id) |>
+    dplyr::select("index_id", "marker_id") |>
     dplyr::distinct() |>
     dplyr::arrange(.data$index_id, .data$marker_id) |>
     dplyr::mutate(cohort_definition_id = as.integer(dplyr::row_number())) |>
