@@ -65,9 +65,9 @@ if (requireNamespace("flextable", quietly = TRUE)) {
 | Synthea           |               |               |                      |
 | aspirin           | index         | N (%)         | 1,235 (64.40%)       |
 |                   | marker        | N (%)         | 682 (35.60%)         |
-|                   | null          | SR            | 1.03                 |
+|                   | null          | SR            | 1.71                 |
 |                   | crude         | SR \[CI 95%\] | 1.81 \[1.65 - 1.99\] |
-|                   | adjusted      | SR \[CI 95%\] | 1.76 \[1.60 - 1.93\] |
+|                   | adjusted      | SR \[CI 95%\] | 1.06 \[0.96 - 1.16\] |
 
 Or a tibble:
 

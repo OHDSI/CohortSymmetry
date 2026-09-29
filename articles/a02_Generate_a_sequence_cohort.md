@@ -86,22 +86,22 @@ cdm <- generateSequenceCohortSet(
   indexTable = "aspirin",
   markerTable = "acetaminophen",
   name = "intersect",
-  cohortDateRange = as.Date(c(NA, NA)), #default
-  daysPriorObservation = 0, #default
-  washoutWindow = 0, #default
-  indexMarkerGap = Inf, #default
-  combinationWindow = c(0,Inf)) # default
+  cohortDateRange = as.Date(c(NA, NA)), 
+  daysPriorObservation = 0, 
+  washoutWindow = 0,
+  indexMarkerGap = Inf, 
+  combinationWindow = c(0,Inf)) 
 
 cdm$intersect |> 
   dplyr::glimpse()
 #> Rows: ??
 #> Columns: 6
 #> $ cohort_definition_id <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-#> $ subject_id           <int> 95, 99, 123, 148, 245, 263, 331, 399, 404, 411, 4…
-#> $ cohort_start_date    <date> 1962-04-05, 1959-06-22, 1952-02-03, 1980-09-04, …
-#> $ cohort_end_date      <date> 1962-10-08, 1959-08-21, 1962-07-08, 1993-06-12, …
-#> $ index_date           <date> 1962-04-05, 1959-08-21, 1962-07-08, 1980-09-04, …
-#> $ marker_date          <date> 1962-10-08, 1959-06-22, 1952-02-03, 1993-06-12, …
+#> $ subject_id           <int> 7, 57, 80, 86, 90, 144, 187, 211, 222, 248, 250, …
+#> $ cohort_start_date    <date> 1968-12-06, 1971-02-27, 1937-07-09, 1952-04-03, …
+#> $ cohort_end_date      <date> 1972-07-09, 1982-01-01, 1938-08-01, 1961-03-15, …
+#> $ index_date           <date> 1968-12-06, 1971-02-27, 1938-08-01, 1961-03-15, …
+#> $ marker_date          <date> 1972-07-09, 1982-01-01, 1937-07-09, 1952-04-03, …
 ```
 
 #### Important Observations
@@ -126,7 +126,7 @@ correspondence, one could do the following:
 
 attr(cdm$intersect, "cohort_set")
 #> # A query:  ?? x 13
-#> # Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1022-azure:R 4.6.1//tmp/RtmpvBlQQy/file1c226e4d2494.duckdb]
+#> # Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1022-azure:R 4.6.1//tmp/RtmpTAUYSx/file1b4e66040c3b.duckdb]
 #>   cohort_definition_id cohort_name     index_id index_name marker_id marker_name
 #>                  <int> <chr>              <int> <chr>          <int> <chr>      
 #> 1                    1 index_aspirin_…        1 aspirin            1 acetaminop…
@@ -153,7 +153,7 @@ cdm <- generateSequenceCohortSet(
   markerId = 1,
   daysPriorObservation = 0,
   washoutWindow = 0,
-  indexMarkerGap = NULL,
+  indexMarkerGap = Inf,
   combinationWindow = c(0,Inf))
 ```
 
@@ -187,6 +187,9 @@ cdm <- generateSequenceCohortSet(
   indexTable = "aspirin",
   markerTable = "acetaminophen",
   name = "intersect_study_period",
+  daysPriorObservation = 0,
+  washoutWindow = 0,
+  indexMarkerGap = Inf,
   cohortDateRange = as.Date(c("1950-01-01","1969-01-01")))
 ```
 
@@ -206,13 +209,15 @@ the argument `daysPriorObservation`. See an example below:
 
 ``` r
 
- cdm <- generateSequenceCohortSet(
-   cdm = cdm,
-   indexTable = "aspirin",
-   markerTable = "acetaminophen",
-   name = "intersect_prior_obs",
-   cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
-   daysPriorObservation = 365)
+cdm <- generateSequenceCohortSet(
+  cdm = cdm,
+  indexTable = "aspirin",
+  markerTable = "acetaminophen",
+  name = "intersect_prior_obs",
+  cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
+  daysPriorObservation = 365,
+  washoutWindow = 0,
+  indexMarkerGap = Inf)
 ```
 
 ### Specified study period, prior history requirement and washout period
@@ -236,7 +241,8 @@ cdm <- generateSequenceCohortSet(
   name = "intersect_washout",
   cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
   daysPriorObservation = 365,
-  washoutWindow = 365)
+  washoutWindow = 365,
+  indexMarkerGap = Inf)
 ```
 
 ### Specified study period, prior history requirement and combination window
@@ -270,14 +276,16 @@ the **intersect_changed_cw** cohort:
 
 ``` r
 
- cdm <- generateSequenceCohortSet(
-   cdm = cdm,
-   indexTable = "aspirin",
-   markerTable = "acetaminophen",
-   name = "intersect_changed_cw",
-   cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
-   daysPriorObservation = 365,
-   combinationWindow = c(0, Inf))
+cdm <- generateSequenceCohortSet(
+  cdm = cdm,
+  indexTable = "aspirin",
+  markerTable = "acetaminophen",
+  name = "intersect_changed_cw",
+  cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
+  daysPriorObservation = 365,
+  washoutWindow = 365,
+  indexMarkerGap = Inf,
+  combinationWindow = c(0, Inf))
 
  cdm$intersect_changed_cw |>
    dplyr::filter(subject_id %in% c(80,187)) |>
@@ -312,6 +320,7 @@ cdm <- generateSequenceCohortSet(
   name = "intersect_",
   cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
   daysPriorObservation = 365,
+  washoutWindow = 365,
   indexMarkerGap = 7)
 ```
 

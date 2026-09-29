@@ -95,6 +95,8 @@ cohort, we’ve generated <code>cdm$aspirin</code> and
 <span>  indexTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
 <span>  markerTable <span class="op">=</span> <span class="st">"acetaminophen"</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">"intersect"</span>,</span>
+<span>  daysPriorObservation <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  washoutWindow <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  combinationWindow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="cn">Inf</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -120,7 +122,7 @@ corresponding confidence intervals) using
 <span><span class="co">#&gt; $ variable_level   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "first_pharmac"<span style="color: #949494;">, </span>"first_pharmac"<span style="color: #949494;">, </span>"first_pharmac"<span style="color: #949494;">, </span>"f…</span></span>
 <span><span class="co">#&gt; $ estimate_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "count"<span style="color: #949494;">, </span>"percentage"<span style="color: #949494;">, </span>"count"<span style="color: #949494;">, </span>"percentage"<span style="color: #949494;">, </span>"point_…</span></span>
 <span><span class="co">#&gt; $ estimate_type    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "integer"<span style="color: #949494;">, </span>"numeric"<span style="color: #949494;">, </span>"integer"<span style="color: #949494;">, </span>"numeric"<span style="color: #949494;">, </span>"numeric"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1235"<span style="color: #949494;">, </span>"64.4"<span style="color: #949494;">, </span>"682"<span style="color: #949494;">, </span>"35.6"<span style="color: #949494;">, </span>"1.03143827281059"<span style="color: #949494;">, </span>"1…</span></span>
+<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1235"<span style="color: #949494;">, </span>"64.4"<span style="color: #949494;">, </span>"682"<span style="color: #949494;">, </span>"35.6"<span style="color: #949494;">, </span>"1.71279724211865"<span style="color: #949494;">, </span>"1…</span></span>
 <span><span class="co">#&gt; $ additional_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"…</span></span></code></pre></div>
 <p>The obtained output has a summarised result format. In the later

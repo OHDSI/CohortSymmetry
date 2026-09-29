@@ -56,7 +56,7 @@ A formatted version of the sequence_symmetry object.
 library(CohortSymmetry)
 cdm <- mockCohortSymmetry()
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/Rtmpt2qvO4/duckdb
+#> ℹ /tmp/RtmpQ6EpWc/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
@@ -82,8 +82,8 @@ cdm <- generateSequenceCohortSet(cdm = cdm,
 res <- summariseSequenceRatios(cohort = cdm$joined_cohort)
 #> Warning: For at least some combinations, index is always before marker or marker always
 #> before index
-#> -- 5 combinations of 8 had index always before marker
-#> -- 5 combinations of 8 had marker always before index
+#> -- 4 combinations of 7 had index always before marker
+#> -- 4 combinations of 7 had marker always before index
 gtResult <- tableSequenceRatios(res)
 CDMConnector::cdmDisconnect(cdm = cdm)
 # }

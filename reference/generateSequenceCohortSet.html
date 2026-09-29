@@ -61,11 +61,10 @@ Index and marker cohorts should be instantiated in advance by the user.</p>
 <span>  indexId <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  markerId <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cohortDateRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  daysPriorObservation <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  washoutWindow <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  daysPriorObservation <span class="op">=</span> <span class="fl">365</span>,</span>
+<span>  washoutWindow <span class="op">=</span> <span class="fl">365</span>,</span>
 <span>  indexMarkerGap <span class="op">=</span> <span class="cn">Inf</span>,</span>
-<span>  combinationWindow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">365</span><span class="op">)</span>,</span>
-<span>  movingAverageRestriction <span class="op">=</span> <span class="fl">548</span></span>
+<span>  combinationWindow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">365</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -106,25 +105,21 @@ to restrict to.</p></dd>
 
 <dt id="arg-dayspriorobservation">daysPriorObservation<a class="anchor" aria-label="anchor" href="#arg-dayspriorobservation"></a></dt>
 <dd><p>The minimum amount of prior observation required on both the index
-and marker cohorts per person.</p></dd>
+and marker cohorts per person. Default is 365 days.</p></dd>
 
 
 <dt id="arg-washoutwindow">washoutWindow<a class="anchor" aria-label="anchor" href="#arg-washoutwindow"></a></dt>
-<dd><p>A washout window to be applied on both the index cohort event and marker cohort.</p></dd>
+<dd><p>A washout window to be applied on both the index cohort event and marker cohort. Default is 365 days.</p></dd>
 
 
 <dt id="arg-indexmarkergap">indexMarkerGap<a class="anchor" aria-label="anchor" href="#arg-indexmarkergap"></a></dt>
 <dd><p>The maximum allowable gap between the end of the first episode
-and the start of the second episode in a sequence/combination.</p></dd>
+and the start of the second episode in a sequence/combination. Default is Inf.</p></dd>
 
 
 <dt id="arg-combinationwindow">combinationWindow<a class="anchor" aria-label="anchor" href="#arg-combinationwindow"></a></dt>
 <dd><p>A constrain to be placed on the gap between two initiations.
 Default c(0,365), meaning the gap should be larger than 0 but less than or equal to 365.</p></dd>
-
-
-<dt id="arg-movingaveragerestriction">movingAverageRestriction<a class="anchor" aria-label="anchor" href="#arg-movingaveragerestriction"></a></dt>
-<dd><p>The moving window when calculating nSR, default is 548.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -138,7 +133,7 @@ Default c(0,365), meaning the gap should be larger than 0 but less than or equal
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/CohortSymmetry/">CohortSymmetry</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="mockCohortSymmetry.html">mockCohortSymmetry</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> duckdb keeps downloaded extensions and secrets in a temporary directory:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> /tmp/Rtmpt2qvO4/duckdb</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> /tmp/RtmpQ6EpWc/duckdb</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> This is removed when the R session ends.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Extensions are re-downloaded each session.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Secrets are lost.</span>
@@ -168,20 +163,17 @@ Default c(0,365), meaning the gap should be larger than 0 but less than or equal
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1022-azure:R 4.6.1/:memory:]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    cohort_definition_id subject_id cohort_start_date cohort_end_date index_date</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>                    3          5 2019-08-01        2020-02-29      2019-08-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>                    2          1 2020-04-01        2021-01-01      2020-04-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>                    2          5 2019-08-01        2020-05-25      2019-08-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>                    1          3 2009-09-09        2010-01-01      2009-09-09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>                    2          1 2020-04-01        2021-01-01      2020-04-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>                    5          2 2022-05-22        2022-05-31      2022-05-22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>                    6          3 2010-01-01        2010-09-30      2010-01-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>                    3          4 2021-06-01        2022-05-25      2021-06-01</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>                    6          2 2022-05-22        2022-05-25      2022-05-22</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>                    1          1 2020-04-01        2020-12-30      2020-04-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>                    8          4 2021-01-01        2021-05-25      2021-01-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>                    5          2 2022-05-22        2022-05-31      2022-05-22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>                    3          1 2019-05-25        2020-04-01      2020-04-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>                    9          5 2019-04-07        2020-02-29      2019-04-07</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span>                    3          4 2021-06-01        2022-05-25      2021-06-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span>                    7          1 2020-12-30        2021-01-01      2021-01-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span>                    2          4 2021-05-25        2021-06-01      2021-06-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span>                    6          3 2010-01-01        2010-09-30      2010-01-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>                    2          4 2021-05-25        2021-06-01      2021-06-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>                    3          1 2019-05-25        2020-04-01      2020-04-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>                    7          1 2020-12-30        2021-01-01      2021-01-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>                    8          4 2021-01-01        2021-05-25      2021-01-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span>                    1          3 2009-09-09        2010-01-01      2009-09-09</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: marker_date &lt;date&gt;</span></span>
 <span class="r-in"><span> <span class="fu">CDMConnector</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/cdmDisconnect.html" class="external-link">cdmDisconnect</a></span><span class="op">(</span>cdm <span class="op">=</span> <span class="va">cdm</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>

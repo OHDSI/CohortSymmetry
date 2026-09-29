@@ -157,22 +157,22 @@ so:</p>
 <span>  indexTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
 <span>  markerTable <span class="op">=</span> <span class="st">"acetaminophen"</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">"intersect"</span>,</span>
-<span>  cohortDateRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>, <span class="co">#default</span></span>
-<span>  daysPriorObservation <span class="op">=</span> <span class="fl">0</span>, <span class="co">#default</span></span>
-<span>  washoutWindow <span class="op">=</span> <span class="fl">0</span>, <span class="co">#default</span></span>
-<span>  indexMarkerGap <span class="op">=</span> <span class="cn">Inf</span>, <span class="co">#default</span></span>
-<span>  combinationWindow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="cn">Inf</span><span class="op">)</span><span class="op">)</span> <span class="co"># default</span></span>
+<span>  cohortDateRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>  daysPriorObservation <span class="op">=</span> <span class="fl">0</span>, </span>
+<span>  washoutWindow <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  indexMarkerGap <span class="op">=</span> <span class="cn">Inf</span>, </span>
+<span>  combinationWindow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="cn">Inf</span><span class="op">)</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">cdm</span><span class="op">$</span><span class="va">intersect</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: ??</span></span>
 <span><span class="co">#&gt; Columns: 6</span></span>
 <span><span class="co">#&gt; $ cohort_definition_id <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1…</span></span>
-<span><span class="co">#&gt; $ subject_id           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 95<span style="color: #949494;">, </span>99<span style="color: #949494;">, </span>123<span style="color: #949494;">, </span>148<span style="color: #949494;">, </span>245<span style="color: #949494;">, </span>263<span style="color: #949494;">, </span>331<span style="color: #949494;">, </span>399<span style="color: #949494;">, </span>404<span style="color: #949494;">, </span>411<span style="color: #949494;">, </span>4…</span></span>
-<span><span class="co">#&gt; $ cohort_start_date    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1962-04-05<span style="color: #949494;">, </span>1959-06-22<span style="color: #949494;">, </span>1952-02-03<span style="color: #949494;">, </span>1980-09-04<span style="color: #949494;">, </span>…</span></span>
-<span><span class="co">#&gt; $ cohort_end_date      <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1962-10-08<span style="color: #949494;">, </span>1959-08-21<span style="color: #949494;">, </span>1962-07-08<span style="color: #949494;">, </span>1993-06-12<span style="color: #949494;">, </span>…</span></span>
-<span><span class="co">#&gt; $ index_date           <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1962-04-05<span style="color: #949494;">, </span>1959-08-21<span style="color: #949494;">, </span>1962-07-08<span style="color: #949494;">, </span>1980-09-04<span style="color: #949494;">, </span>…</span></span>
-<span><span class="co">#&gt; $ marker_date          <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1962-10-08<span style="color: #949494;">, </span>1959-06-22<span style="color: #949494;">, </span>1952-02-03<span style="color: #949494;">, </span>1993-06-12<span style="color: #949494;">, </span>…</span></span></code></pre></div>
+<span><span class="co">#&gt; $ subject_id           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 7<span style="color: #949494;">, </span>57<span style="color: #949494;">, </span>80<span style="color: #949494;">, </span>86<span style="color: #949494;">, </span>90<span style="color: #949494;">, </span>144<span style="color: #949494;">, </span>187<span style="color: #949494;">, </span>211<span style="color: #949494;">, </span>222<span style="color: #949494;">, </span>248<span style="color: #949494;">, </span>250<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ cohort_start_date    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1968-12-06<span style="color: #949494;">, </span>1971-02-27<span style="color: #949494;">, </span>1937-07-09<span style="color: #949494;">, </span>1952-04-03<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ cohort_end_date      <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1972-07-09<span style="color: #949494;">, </span>1982-01-01<span style="color: #949494;">, </span>1938-08-01<span style="color: #949494;">, </span>1961-03-15<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ index_date           <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1968-12-06<span style="color: #949494;">, </span>1971-02-27<span style="color: #949494;">, </span>1938-08-01<span style="color: #949494;">, </span>1961-03-15<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ marker_date          <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1972-07-09<span style="color: #949494;">, </span>1982-01-01<span style="color: #949494;">, </span>1937-07-09<span style="color: #949494;">, </span>1952-04-03<span style="color: #949494;">, </span>…</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="important-observations">Important Observations<a class="anchor" aria-label="anchor" href="#important-observations"></a>
 </h4>
@@ -200,7 +200,7 @@ could do the following:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">cdm</span><span class="op">$</span><span class="va">intersect</span>, <span class="st">"cohort_set"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A query:  ?? x 13</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1022-azure:R 4.6.1//tmp/RtmpvBlQQy/file1c226e4d2494.duckdb]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1022-azure:R 4.6.1//tmp/RtmpTAUYSx/file1b4e66040c3b.duckdb]</span></span></span>
 <span><span class="co">#&gt;   cohort_definition_id cohort_name     index_id index_name marker_id marker_name</span></span>
 <span><span class="co">#&gt;                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>                    1 index_aspirin_…        1 aspirin            1 acetaminop…</span></span>
@@ -224,7 +224,7 @@ from both the index and the marker table.</p>
 <span>  markerId <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  daysPriorObservation <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  washoutWindow <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  indexMarkerGap <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  indexMarkerGap <span class="op">=</span> <span class="cn">Inf</span>,</span>
 <span>  combinationWindow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="cn">Inf</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -256,6 +256,9 @@ within the study period.</p>
 <span>  indexTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
 <span>  markerTable <span class="op">=</span> <span class="st">"acetaminophen"</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">"intersect_study_period"</span>,</span>
+<span>  daysPriorObservation <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  washoutWindow <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  indexMarkerGap <span class="op">=</span> <span class="cn">Inf</span>,</span>
 <span>  cohortDateRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1950-01-01"</span>,<span class="st">"1969-01-01"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -274,13 +277,15 @@ not have more than (or equal to) 31 days of prior history:</p>
 the argument <code>daysPriorObservation</code>. See an example
 below:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span> <span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generateSequenceCohortSet.html">generateSequenceCohortSet</a></span><span class="op">(</span></span>
-<span>   cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
-<span>   indexTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
-<span>   markerTable <span class="op">=</span> <span class="st">"acetaminophen"</span>,</span>
-<span>   name <span class="op">=</span> <span class="st">"intersect_prior_obs"</span>,</span>
-<span>   cohortDateRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1950-01-01"</span>,<span class="st">"1969-01-01"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>   daysPriorObservation <span class="op">=</span> <span class="fl">365</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generateSequenceCohortSet.html">generateSequenceCohortSet</a></span><span class="op">(</span></span>
+<span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
+<span>  indexTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
+<span>  markerTable <span class="op">=</span> <span class="st">"acetaminophen"</span>,</span>
+<span>  name <span class="op">=</span> <span class="st">"intersect_prior_obs"</span>,</span>
+<span>  cohortDateRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1950-01-01"</span>,<span class="st">"1969-01-01"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  daysPriorObservation <span class="op">=</span> <span class="fl">365</span>,</span>
+<span>  washoutWindow <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  indexMarkerGap <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="specified-study-period-prior-history-requirement-and-washout-period">Specified study period, prior history requirement and washout
@@ -303,7 +308,8 @@ Washout period is applied to index and marker respectively.</p>
 <span>  name <span class="op">=</span> <span class="st">"intersect_washout"</span>,</span>
 <span>  cohortDateRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1950-01-01"</span>,<span class="st">"1969-01-01"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  daysPriorObservation <span class="op">=</span> <span class="fl">365</span>,</span>
-<span>  washoutWindow <span class="op">=</span> <span class="fl">365</span><span class="op">)</span></span></code></pre></div>
+<span>  washoutWindow <span class="op">=</span> <span class="fl">365</span>,</span>
+<span>  indexMarkerGap <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="specified-study-period-prior-history-requirement-and-combination-window">Specified study period, prior history requirement and combination
@@ -337,14 +343,16 @@ explore subject_id 80 and 187 to see the functionality of this argument.
 When using no restriction for the combination window, both are included
 in the <strong>intersect_changed_cw</strong> cohort:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span> <span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generateSequenceCohortSet.html">generateSequenceCohortSet</a></span><span class="op">(</span></span>
-<span>   cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
-<span>   indexTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
-<span>   markerTable <span class="op">=</span> <span class="st">"acetaminophen"</span>,</span>
-<span>   name <span class="op">=</span> <span class="st">"intersect_changed_cw"</span>,</span>
-<span>   cohortDateRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1950-01-01"</span>,<span class="st">"1969-01-01"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>   daysPriorObservation <span class="op">=</span> <span class="fl">365</span>,</span>
-<span>   combinationWindow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="cn">Inf</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generateSequenceCohortSet.html">generateSequenceCohortSet</a></span><span class="op">(</span></span>
+<span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
+<span>  indexTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
+<span>  markerTable <span class="op">=</span> <span class="st">"acetaminophen"</span>,</span>
+<span>  name <span class="op">=</span> <span class="st">"intersect_changed_cw"</span>,</span>
+<span>  cohortDateRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1950-01-01"</span>,<span class="st">"1969-01-01"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  daysPriorObservation <span class="op">=</span> <span class="fl">365</span>,</span>
+<span>  washoutWindow <span class="op">=</span> <span class="fl">365</span>,</span>
+<span>  indexMarkerGap <span class="op">=</span> <span class="cn">Inf</span>,</span>
+<span>  combinationWindow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="cn">Inf</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span> <span class="va">cdm</span><span class="op">$</span><span class="va">intersect_changed_cw</span> <span class="op">|&gt;</span></span>
 <span>   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">subject_id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>,<span class="fl">187</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -379,6 +387,7 @@ example:</p>
 <span>  name <span class="op">=</span> <span class="st">"intersect_"</span>,</span>
 <span>  cohortDateRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1950-01-01"</span>,<span class="st">"1969-01-01"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  daysPriorObservation <span class="op">=</span> <span class="fl">365</span>,</span>
+<span>  washoutWindow <span class="op">=</span> <span class="fl">365</span>,</span>
 <span>  indexMarkerGap <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">CDMConnector</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/cdmDisconnect.html" class="external-link">cdmDisconnect</a></span><span class="op">(</span>cdm <span class="op">=</span> <span class="va">cdm</span><span class="op">)</span></span></code></pre></div>

@@ -34,7 +34,7 @@ A local table with all the analyses.
 library(CohortSymmetry)
 cdm <- mockCohortSymmetry()
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/Rtmpt2qvO4/duckdb
+#> ℹ /tmp/RtmpQ6EpWc/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
@@ -60,10 +60,10 @@ cdm <- generateSequenceCohortSet(cdm = cdm,
 pssa_result <- summariseSequenceRatios(cohort = cdm$joined_cohorts)
 #> Warning: For at least some combinations, index is always before marker or marker always
 #> before index
-#> -- 5 combinations of 8 had index always before marker
-#> -- 5 combinations of 8 had marker always before index
+#> -- 4 combinations of 7 had index always before marker
+#> -- 4 combinations of 7 had marker always before index
 pssa_result
-#> # A tibble: 88 × 13
+#> # A tibble: 77 × 13
 #>    result_id cdm_name      group_name       group_level strata_name strata_level
 #>        <int> <chr>         <chr>            <chr>       <chr>       <chr>       
 #>  1         1 mock database index_cohort_na… cohort_1 &… overall     overall     
@@ -76,7 +76,7 @@ pssa_result
 #>  8         1 mock database index_cohort_na… cohort_1 &… overall     overall     
 #>  9         1 mock database index_cohort_na… cohort_1 &… overall     overall     
 #> 10         1 mock database index_cohort_na… cohort_1 &… overall     overall     
-#> # ℹ 78 more rows
+#> # ℹ 67 more rows
 #> # ℹ 7 more variables: variable_name <chr>, variable_level <chr>,
 #> #   estimate_name <chr>, estimate_type <chr>, estimate_value <chr>,
 #> #   additional_name <chr>, additional_level <chr>
