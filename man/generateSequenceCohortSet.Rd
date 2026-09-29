@@ -12,11 +12,10 @@ generateSequenceCohortSet(
   indexId = NULL,
   markerId = NULL,
   cohortDateRange = as.Date(c(NA, NA)),
-  daysPriorObservation = 0,
-  washoutWindow = 0,
+  daysPriorObservation = 365,
+  washoutWindow = 365,
   indexMarkerGap = Inf,
-  combinationWindow = c(0, 365),
-  movingAverageRestriction = 548
+  combinationWindow = c(0, 365)
 )
 }
 \arguments{
@@ -38,17 +37,15 @@ Change to NULL if all markers are wished to be included.}
 to restrict to.}
 
 \item{daysPriorObservation}{The minimum amount of prior observation required on both the index
-and marker cohorts per person.}
+and marker cohorts per person. Default is 365 days.}
 
-\item{washoutWindow}{A washout window to be applied on both the index cohort event and marker cohort.}
+\item{washoutWindow}{A washout window to be applied on both the index cohort event and marker cohort. Default is 365 days.}
 
 \item{indexMarkerGap}{The maximum allowable gap between the end of the first episode
-and the start of the second episode in a sequence/combination.}
+and the start of the second episode in a sequence/combination. Default is Inf.}
 
 \item{combinationWindow}{A constrain to be placed on the gap between two initiations.
 Default c(0,365), meaning the gap should be larger than 0 but less than or equal to 365.}
-
-\item{movingAverageRestriction}{The moving window when calculating nSR, default is 548.}
 }
 \value{
 A table within the cdm reference.

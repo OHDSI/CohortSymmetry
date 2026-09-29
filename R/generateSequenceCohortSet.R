@@ -16,13 +16,12 @@
 #' @param cohortDateRange Two dates indicating study period and the sequences that the user wants
 #' to restrict to.
 #' @param daysPriorObservation The minimum amount of prior observation required on both the index
-#' and marker cohorts per person.
-#' @param washoutWindow A washout window to be applied on both the index cohort event and marker cohort.
+#' and marker cohorts per person. Default is 365 days.
+#' @param washoutWindow A washout window to be applied on both the index cohort event and marker cohort. Default is 365 days.
 #' @param indexMarkerGap The maximum allowable gap between the end of the first episode
-#' and the start of the second episode in a sequence/combination.
+#' and the start of the second episode in a sequence/combination. Default is Inf.
 #' @param combinationWindow A constrain to be placed on the gap between two initiations.
 #' Default c(0,365), meaning the gap should be larger than 0 but less than or equal to 365.
-#' @param movingAverageRestriction The moving window when calculating nSR, default is 548.
 #'
 #' @return
 #' A table within the cdm reference.
@@ -48,11 +47,10 @@ generateSequenceCohortSet <- function(cdm,
                                       indexId = NULL,
                                       markerId = NULL,
                                       cohortDateRange = as.Date(c(NA, NA)),
-                                      daysPriorObservation = 0,
-                                      washoutWindow = 0,
+                                      daysPriorObservation = 365,
+                                      washoutWindow = 365,
                                       indexMarkerGap = Inf,
-                                      combinationWindow = c(0,365),
-                                      movingAverageRestriction = 548){
+                                      combinationWindow = c(0,365)){
   # checks
   cdm <- omopgenerics::validateCdmArgument(cdm = cdm)
   omopgenerics::assertCharacter(indexTable, length = 1)
@@ -66,11 +64,13 @@ generateSequenceCohortSet <- function(cdm,
   omopgenerics::assertNumeric(washoutWindow, min = 0, max = 999999)
   omopgenerics::assertNumeric(indexMarkerGap, min = 0)
   omopgenerics::assertNumeric(combinationWindow, length = 2)
+  # set moving average restriction to max combination window
+  movingAverageRestriction <- combinationWindow[2]
   combinationWindow <- omopgenerics::validateWindowArgument(window = combinationWindow, snakeCase = TRUE)
   if(length(combinationWindow)!= 1) {
     cli::cli_abort("combinationWindow should contain only one window.")
   }
-  omopgenerics::assertNumeric(movingAverageRestriction, min = 0)
+  #omopgenerics::assertNumeric(movingAverageRestriction, min = 0)
 
   # Change CohortDateRange
   if (any(is.na(cohortDateRange))) {

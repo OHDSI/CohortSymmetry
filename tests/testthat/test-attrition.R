@@ -100,6 +100,8 @@ test_that("attrition: cohortDateRange", {
                                    indexId = 1,
                                    markerTable = "cohort_2",
                                    markerId = 3,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0, Inf))
 
   expect_true(all(c(
@@ -118,6 +120,8 @@ test_that("attrition: cohortDateRange", {
                                    indexId = 1,
                                    markerTable = "cohort_2",
                                    markerId = 3,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    cohortDateRange=as.Date(c("2019-12-01", "2022-12-31")),
                                    combinationWindow = c(0, Inf))
 
@@ -137,6 +141,8 @@ test_that("attrition: cohortDateRange", {
                                    indexId = 1,
                                    markerTable = "cohort_2",
                                    markerId = 3,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    cohortDateRange=as.Date(c("2019-12-01", "2022-12-31")))
 
   expect_true(all(omopgenerics::attrition(cdm$joined_cohorts) |>
@@ -186,6 +192,8 @@ test_that("attrition: combinationWindow", {
                                    indexId=1,
                                    markerTable = "cohort_2",
                                    markerId=3,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(30,365))
 
   expect_identical(omopgenerics::attrition(cdm$joined_cohorts) |>
@@ -237,6 +245,8 @@ test_that("attrition: combinationWindow", {
                                    indexId=1,
                                    markerTable = "cohort_2",
                                    markerId=3,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0,90))
 
   expect_identical(omopgenerics::attrition(cdm$joined_cohorts) |>
@@ -280,6 +290,8 @@ test_that("attrition: combinationWindow", {
                                    indexId=2,
                                    markerTable = "cohort_2",
                                    markerId=3,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0, Inf))
 
   expect_true(all(omopgenerics::attrition(cdm$joined_cohorts_3) |>
@@ -292,6 +304,7 @@ test_that("attrition: combinationWindow", {
                                    indexId=2,
                                    markerTable = "cohort_2",
                                    markerId=3)
+
 
   expect_true(omopgenerics::attrition(cdm$joined_cohorts_3) |>
                 dplyr::filter(reason == "Events excluded due to the prespecified combination window") |>
@@ -347,6 +360,9 @@ test_that("attrition: indexMarkerGap", {
                                    indexId=1,
                                    markerTable = "cohort_2",
                                    markerId=3,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
+                                   combinationWindow = c(0, Inf),
                                    indexMarkerGap=60)
 
   expect_true(omopgenerics::attrition(cdm$joined_cohorts_2) |>
@@ -367,6 +383,8 @@ test_that("attrition: indexMarkerGap", {
                                    indexId=2,
                                    markerTable = "cohort_2",
                                    markerId=3,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0, Inf),
                                    indexMarkerGap = 365)
 
@@ -434,6 +452,7 @@ test_that("attrition: daysPriorObservation", {
                                    indexId=2,
                                    markerTable = "cohort_2",
                                    markerId=3,
+                                   washoutWindow = 0,
                                    daysPriorObservation = 1460,
                                    combinationWindow = c(0, Inf))
 
@@ -496,6 +515,8 @@ test_that("attrition: washoutWindow", {
                                    name = "joined_cohorts",
                                    indexTable = "cohort_1",
                                    markerTable = "cohort_2",
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0, Inf))
 
   expect_true(all(c(omopgenerics::attrition(cdm$joined_cohorts) |>
@@ -516,6 +537,8 @@ test_that("attrition: washoutWindow", {
                                    indexId = 1,
                                    markerTable = "cohort_2",
                                    markerId = 3,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0, Inf))
 
   expect_identical(cdm$joined_cohorts |>
@@ -533,6 +556,8 @@ test_that("attrition: washoutWindow", {
                                    indexId = 1,
                                    markerTable = "cohort_2",
                                    markerId = 3,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    cohortDateRange = as.Date(c("2015-01-01", NA)),
                                    combinationWindow = c(0, Inf))
 
@@ -551,6 +576,8 @@ test_that("attrition: washoutWindow", {
                                    indexId = 1,
                                    markerTable = "cohort_2",
                                    markerId = 3,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    cohortDateRange = as.Date(c("2012-01-01", NA)),
                                    combinationWindow = c(0, Inf))
 
@@ -569,6 +596,7 @@ test_that("attrition: washoutWindow", {
                                    indexId = 1,
                                    markerTable = "cohort_2",
                                    markerId = 3,
+                                   daysPriorObservation = 0,
                                    cohortDateRange = as.Date(c("2012-01-01", NA)),
                                    combinationWindow = c(0, Inf),
                                    washoutWindow = 365)

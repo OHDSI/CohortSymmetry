@@ -83,7 +83,10 @@ test_that("one ID against one ID, example 3", {
                                    indexTable ="cohort_1",
                                    indexId=1,
                                    markerTable = "cohort_2",
-                                   markerId=2)
+                                   markerId=2,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
+                                   combinationWindow = c(0, Inf))
 
   loc <- cdm$joined_cohorts %>%
     dplyr::inner_join(omopgenerics::settings(cdm$joined_cohorts), by = "cohort_definition_id", copy = T) %>%
@@ -131,7 +134,10 @@ test_that("multiple entries per person", {
   cdm <- generateSequenceCohortSet(cdm,
                                    name = "joined_cohorts",
                                    indexTable ="cohort_1",
-                                   markerTable = "cohort_2")
+                                   markerTable = "cohort_2",
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
+                                   combinationWindow = c(0, Inf))
 
   loc <- cdm$joined_cohorts %>% dplyr::collect()
   expect_true(all(loc %>% dplyr::group_by(subject_id) %>% dplyr::tally() %>% dplyr::select(n) == 1))
@@ -141,6 +147,8 @@ test_that("multiple entries per person", {
                                    name = "joined_cohorts",
                                    indexTable ="cohort_1",
                                    markerTable = "cohort_2",
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0, 90))
 
   loc <- cdm$joined_cohorts %>% dplyr::collect()
@@ -162,6 +170,8 @@ test_that("change combinationWindow one ID against one ID, example 1", {
                                    indexId=1,
                                    markerTable = "cohort_2",
                                    markerId=2,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0,30))
 
   loc <- cdm$joined_cohorts %>%
@@ -177,6 +187,8 @@ test_that("change combinationWindow one ID against one ID, example 1", {
                                    indexId=1,
                                    markerTable = "cohort_2",
                                    markerId=2,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0,Inf))
 
   loc <- cdm$joined_cohorts %>%
@@ -191,6 +203,8 @@ test_that("change combinationWindow one ID against one ID, example 1", {
                                    indexId=1,
                                    markerTable = "cohort_2",
                                    markerId=2,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(7,365))
 
   loc <- cdm$joined_cohorts %>%
@@ -214,6 +228,8 @@ test_that("change combinationWindow one ID against one ID, example 2", {
                                    indexId=3,
                                    markerTable = "cohort_2",
                                    markerId=1,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0,30))
 
   loc <- cdm$joined_cohorts %>%
@@ -229,6 +245,8 @@ test_that("change combinationWindow one ID against one ID, example 2", {
                                    indexId=3,
                                    markerTable = "cohort_2",
                                    markerId=1,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0,Inf))
 
   loc <- cdm$joined_cohorts %>%
@@ -243,6 +261,8 @@ test_that("change combinationWindow one ID against one ID, example 2", {
                                    indexId=3,
                                    markerTable = "cohort_2",
                                    markerId=1,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(7,Inf))
 
   loc <- cdm$joined_cohorts %>%
@@ -265,6 +285,8 @@ test_that("all IDs against all IDs", {
                                    name = "joined_cohorts",
                                    indexTable = "cohort_1",
                                    markerTable = "cohort_2",
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0,Inf))
 
   loc <- cdm$joined_cohorts %>%
@@ -295,6 +317,8 @@ test_that("one index (rsp. marker) ID against all marker (rsp. index) IDs", {
                                    indexTable ="cohort_1",
                                    indexId = 1,
                                    markerTable = "cohort_2",
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0, Inf)
   )
 
@@ -313,7 +337,10 @@ test_that("one index (rsp. marker) ID against all marker (rsp. index) IDs", {
                                    name = "joined_cohorts",
                                    indexTable ="cohort_1",
                                    markerTable = "cohort_2",
-                                   markerId = 1
+                                   markerId = 1,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
+                                   combinationWindow = c(0, 365)
   )
 
   loc <- cdm$joined_cohorts %>%
@@ -337,7 +364,10 @@ test_that("a subset of IDs against a subset of IDs", {
                                    indexTable ="cohort_1",
                                    indexId = c(1,2),
                                    markerTable = "cohort_2",
-                                   markerId = c(2,3)
+                                   markerId = c(2,3),
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
+                                   combinationWindow = c(0, 365)
   )
 
   loc <- cdm$joined_cohorts %>%
@@ -363,7 +393,10 @@ test_that("example of changed combinationWindow", {
                                    indexTable ="cohort_1",
                                    indexId = 3,
                                    markerTable = "cohort_2",
-                                   markerId = 3
+                                   markerId = 3,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
+                                   combinationWindow = c(0, 365)
   )
 
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n) == 1) # default time, 1 entry
@@ -374,6 +407,8 @@ test_that("example of changed combinationWindow", {
                                    indexId = 3,
                                    markerTable = "cohort_2",
                                    markerId = 3,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0,Inf)
   )
   loc <- cdm$joined_cohorts %>%
@@ -387,6 +422,8 @@ test_that("example of changed combinationWindow", {
                                    indexId = 3,
                                    markerTable = "cohort_2",
                                    markerId = 1,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0,Inf)
   )
   loc <- cdm$joined_cohorts %>%
@@ -400,6 +437,8 @@ test_that("example of changed combinationWindow", {
                                    indexId = 3,
                                    markerTable = "cohort_2",
                                    markerId = 1,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0,365)
   )
   loc <- cdm$joined_cohorts %>%
@@ -414,6 +453,8 @@ test_that("example of changed combinationWindow", {
                                    indexId = 3,
                                    markerTable = "cohort_2",
                                    markerId = 1,
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(7,Inf)
   )
   loc <- cdm$joined_cohorts %>%
@@ -464,6 +505,7 @@ test_that("priorObservation and cohortDateRange", {
                                    indexTable ="cohort_1",
                                    markerTable = "cohort_2",
                                    daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0,Inf)
   )
 
@@ -474,6 +516,7 @@ test_that("priorObservation and cohortDateRange", {
                                    indexTable ="cohort_1",
                                    markerTable = "cohort_2",
                                    daysPriorObservation = 30,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0,365)
   )
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n) == 3)
@@ -484,6 +527,7 @@ test_that("priorObservation and cohortDateRange", {
                                    markerTable = "cohort_2",
                                    cohortDateRange = as.Date(c("2020-01-01", NA)),
                                    daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0,Inf)
   )
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n) == 3)
@@ -495,6 +539,7 @@ test_that("priorObservation and cohortDateRange", {
                                    markerTable = "cohort_2",
                                    cohortDateRange = as.Date(c("2000-01-01", "2022-01-01")),
                                    daysPriorObservation = 30,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0,Inf)
   )
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n) == 2)
@@ -506,6 +551,7 @@ test_that("priorObservation and cohortDateRange", {
                                    markerTable = "cohort_2",
                                    cohortDateRange = as.Date(c("2000-01-01", "2023-01-01")),
                                    daysPriorObservation = 365,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0,Inf)
   )
  # expect_equal(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n), 3)
@@ -557,6 +603,8 @@ test_that("tests involving washout", {
                                    name = "joined_cohorts",
                                    indexTable ="cohort_1",
                                    markerTable = "cohort_2",
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0,Inf)
   )
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n) == 1)
@@ -577,7 +625,10 @@ test_that("tests involving washout", {
   cdm <- generateSequenceCohortSet(cdm,
                                    name = "joined_cohorts",
                                    indexTable ="cohort_1",
-                                   markerTable = "cohort_2"
+                                   markerTable = "cohort_2",
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
+                                   combinationWindow = c(0, 365)
   )
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n) == 0) #combinationWindow fails
 
@@ -586,7 +637,8 @@ test_that("tests involving washout", {
                                    indexTable ="cohort_1",
                                    markerTable = "cohort_2",
                                    daysPriorObservation = 3650,
-                                   combinationWindow = c(0, Inf)
+                                   washoutWindow = 0,
+                                   combinationWindow = c(0, 365)
   )
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n) == 0) #insufficient prior_obs
 
@@ -596,6 +648,7 @@ test_that("tests involving washout", {
                                    indexTable ="cohort_1",
                                    markerTable = "cohort_2",
                                    daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0,Inf)
   )
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n) == 1)
@@ -606,6 +659,7 @@ test_that("tests involving washout", {
                                    indexTable ="cohort_1",
                                    markerTable = "cohort_2",
                                    washoutWindow = 365,
+                                   daysPriorObservation = 0,
                                    combinationWindow = c(0,Inf)
   )
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n) == 1)
@@ -619,6 +673,7 @@ test_that("tests involving washout", {
                                    markerTable = "cohort_2",
                                    cohortDateRange = as.Date(c("2002-01-01", NA)),
                                    washoutWindow = 365,
+                                   daysPriorObservation = 0,
                                    combinationWindow = c(0,Inf)
   )
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n) == 1)
@@ -630,6 +685,7 @@ test_that("tests involving washout", {
                                      markerTable = "cohort_2",
                                      cohortDateRange = as.Date(c("2020-04-01", NA)),
                                      washoutWindow = 365,
+                                     daysPriorObservation = 0,
                                      combinationWindow = c(0,Inf)
     )
   )
@@ -639,6 +695,7 @@ test_that("tests involving washout", {
                                    indexTable ="cohort_1",
                                    markerTable = "cohort_2",
                                    washoutWindow = 365,
+                                   daysPriorObservation = 0,
                                    combinationWindow = c(0,Inf)
   )
 
@@ -705,6 +762,8 @@ test_that("tests involving indexMarkerGap", {
                                    name = "joined_cohorts",
                                    indexTable ="cohort_1",
                                    markerTable = "cohort_2",
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0,Inf)
   )
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n)==2)
@@ -713,6 +772,8 @@ test_that("tests involving indexMarkerGap", {
                                    name = "joined_cohorts",
                                    indexTable ="cohort_1",
                                    markerTable = "cohort_2",
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    combinationWindow = c(0,365)
   )
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n)==0)
@@ -722,6 +783,8 @@ test_that("tests involving indexMarkerGap", {
                                    indexTable ="cohort_1",
                                    markerTable = "cohort_2",
                                    combinationWindow = c(0, Inf),
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    indexMarkerGap = 730
                                    )
 
@@ -732,6 +795,8 @@ test_that("tests involving indexMarkerGap", {
                                    indexTable ="cohort_1",
                                    markerTable = "cohort_2",
                                    combinationWindow = c(0, Inf),
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    indexMarkerGap = 15
   )
 
@@ -741,6 +806,8 @@ test_that("tests involving indexMarkerGap", {
                                    indexTable ="cohort_1",
                                    markerTable = "cohort_2",
                                    combinationWindow = c(0, Inf),
+                                   daysPriorObservation = 0,
+                                   washoutWindow = 0,
                                    indexMarkerGap = 20
   )
 
@@ -904,6 +971,7 @@ test_that("generateSequenceCohortSet - inputValidation", {
       markerTable = "cohort_2",
       cohortDateRange = as.Date(c("2002-01-01", NA)),
       washoutWindow = 365,
+      daysPriorObservation = 0,
       combinationWindow = c(0,Inf)
     )
   )
@@ -916,6 +984,7 @@ test_that("generateSequenceCohortSet - inputValidation", {
       markerTable = "cohort_2",
       cohortDateRange = as.Date(c("2002-01-01", NA)),
       washoutWindow = 365,
+      daysPriorObservation = 0,
       combinationWindow = c(0,Inf)
     )
   )
@@ -927,6 +996,7 @@ test_that("generateSequenceCohortSet - inputValidation", {
       markerTable = "cohort_2",
       cohortDateRange = c(as.Date("2002-01-01"),1),
       washoutWindow = 365,
+      daysPriorObservation = 0,
       combinationWindow = c(0, Inf)
     ))
   expect_error(
