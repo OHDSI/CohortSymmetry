@@ -91,11 +91,11 @@ cdm <- generateSequenceCohortSet(
   indexTable = "aspirin",
   markerTable = "acetaminophen",
   name = "intersect",
-  cohortDateRange = as.Date(c(NA, NA)), #default
-  daysPriorObservation = 0, #default
-  washoutWindow = 0, #default
-  indexMarkerGap = Inf, #default
-  combinationWindow = c(0,Inf)) # default
+  cohortDateRange = as.Date(c(NA, NA)), 
+  daysPriorObservation = 0, 
+  washoutWindow = 0,
+  indexMarkerGap = Inf, 
+  combinationWindow = c(0,Inf)) 
 
 cdm$intersect |> 
   dplyr::glimpse()
@@ -127,7 +127,7 @@ cdm <- generateSequenceCohortSet(
   markerId = 1,
   daysPriorObservation = 0,
   washoutWindow = 0,
-  indexMarkerGap = NULL,
+  indexMarkerGap = Inf,
   combinationWindow = c(0,Inf))
 ```
 
@@ -160,6 +160,9 @@ cdm <- generateSequenceCohortSet(
   indexTable = "aspirin",
   markerTable = "acetaminophen",
   name = "intersect_study_period",
+  daysPriorObservation = 0,
+  washoutWindow = 0,
+  indexMarkerGap = Inf,
   cohortDateRange = as.Date(c("1950-01-01","1969-01-01")))
 ```
 
@@ -176,13 +179,15 @@ knitr::include_graphics(here("vignettes/3-PriorObservation.png"))
 The number of days of prior history required can be implemented using the argument `daysPriorObservation`. See an example below:
 
 ```{r message= FALSE, warning=FALSE, eval=FALSE}
- cdm <- generateSequenceCohortSet(
-   cdm = cdm,
-   indexTable = "aspirin",
-   markerTable = "acetaminophen",
-   name = "intersect_prior_obs",
-   cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
-   daysPriorObservation = 365)
+cdm <- generateSequenceCohortSet(
+  cdm = cdm,
+  indexTable = "aspirin",
+  markerTable = "acetaminophen",
+  name = "intersect_prior_obs",
+  cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
+  daysPriorObservation = 365,
+  washoutWindow = 0,
+  indexMarkerGap = Inf)
 ```
 
 ## Specified study period, prior history requirement and washout period
@@ -204,7 +209,8 @@ cdm <- generateSequenceCohortSet(
   name = "intersect_washout",
   cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
   daysPriorObservation = 365,
-  washoutWindow = 365)
+  washoutWindow = 365,
+  indexMarkerGap = Inf)
 ```
 
 ## Specified study period, prior history requirement and combination window
@@ -229,14 +235,16 @@ knitr::include_graphics(here("vignettes/5-combinationWindow_numbers.png"))
 In the `generateSequenceCohortSet()` function, this is implemented using the `combinationWindow` argument. Notice that in the previous examples, as we did not want any combination window requirement, we have set this argument to `combinationWindow = c(0,Inf)`, as by default is `combinationWindow = c(0, 365)`. In the following example, we explore subject_id 80 and 187 to see the functionality of this argument. When using no restriction for the combination window, both are included in the **intersect_changed_cw** cohort:
 
 ```{r message= FALSE, warning=FALSE, eval=FALSE}
- cdm <- generateSequenceCohortSet(
-   cdm = cdm,
-   indexTable = "aspirin",
-   markerTable = "acetaminophen",
-   name = "intersect_changed_cw",
-   cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
-   daysPriorObservation = 365,
-   combinationWindow = c(0, Inf))
+cdm <- generateSequenceCohortSet(
+  cdm = cdm,
+  indexTable = "aspirin",
+  markerTable = "acetaminophen",
+  name = "intersect_changed_cw",
+  cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
+  daysPriorObservation = 365,
+  washoutWindow = 365,
+  indexMarkerGap = Inf,
+  combinationWindow = c(0, Inf))
 
  cdm$intersect_changed_cw |>
    dplyr::filter(subject_id %in% c(80,187)) |>
@@ -273,6 +281,7 @@ cdm <- generateSequenceCohortSet(
   name = "intersect_",
   cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
   daysPriorObservation = 365,
+  washoutWindow = 365,
   indexMarkerGap = 7)
 ```
 

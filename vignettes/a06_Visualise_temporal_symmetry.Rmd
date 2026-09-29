@@ -68,6 +68,8 @@ cdm <- generateSequenceCohortSet(
   indexTable = "aspirin",
   markerTable = "acetaminophen",
   name = "intersect",
+  daysPriorObservation = 0,
+  washoutWindow = 0,
   combinationWindow = c(0,Inf))
 ```
 

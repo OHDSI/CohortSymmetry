@@ -148,8 +148,8 @@ test_that("summariseSequenceRatios - testing ratios and CIs, Example 1", {
                        values_from = "estimate_value") |>
     dplyr::left_join(res |> omopgenerics::settings())
 
-  expect_true(all(res$days_prior_observation==0))
-  expect_true(all(res$washout_window==0))
+  expect_true(all(res$days_prior_observation==365))
+  expect_true(all(res$washout_window==365))
   expect_true(all(res$combination_window == "0, 365"))
   expect_true(all(res$index_marker_gap=="Inf"))
   expect_true(all(res$confidence_interval==95))
@@ -213,8 +213,8 @@ test_that("summariseSequenceRatios - testing ratios and CIs, Example 2", {
                        values_from = "estimate_value") |>
     dplyr::left_join(res |> omopgenerics::settings(), by = c("result_id"))
 
-  expect_true(all(res$days_prior_observation==0))
-  expect_true(all(res$washout_window==0))
+  expect_true(all(res$days_prior_observation==365))
+  expect_true(all(res$washout_window==365))
   expect_true(all(res$combination_window == "0, 365"))
   expect_true(all(res$index_marker_gap=="Inf"))
   expect_true(all(res$confidence_interval==95))
@@ -586,8 +586,7 @@ test_that("summariseSequenceRatios - testing moving average restriction, ex1", {
                                      indexTable = "cohort_1",
                                      markerTable = "cohort_2",
                                      daysPriorObservation = 0,
-                                     combinationWindow = c(0, Inf),
-                                     movingAverageRestriction = 730)
+                                     combinationWindow = c(0, 730))
   )
 
   expect_no_error(
@@ -667,8 +666,7 @@ test_that("summariseSequenceRatios - testing moving average restriction, ex2", {
                                      indexTable = "cohort_1",
                                      markerTable = "cohort_2",
                                      daysPriorObservation = 0,
-                                     combinationWindow = c(0, Inf),
-                                     movingAverageRestriction = Inf)
+                                     combinationWindow = c(0, Inf))
   )
 
   expect_no_error(
@@ -708,8 +706,7 @@ test_that("summariseSequenceRatios - testing moving average restriction, ex2", {
                                    indexTable = "cohort_1",
                                    markerTable = "cohort_2",
                                    daysPriorObservation = 0,
-                                   combinationWindow = c(0, Inf),
-                                   movingAverageRestriction = Inf)
+                                   combinationWindow = c(0, Inf))
 
   res_90 <- summariseSequenceRatios(
     cohort = cdm$joined_cohorts,
