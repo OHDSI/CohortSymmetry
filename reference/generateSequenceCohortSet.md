@@ -89,7 +89,7 @@ A table within the cdm reference.
 library(CohortSymmetry)
 cdm <- mockCohortSymmetry()
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/Rtmp4fk90y/duckdb
+#> ℹ /tmp/RtmpM0rOhx/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
@@ -116,19 +116,19 @@ cdm <- generateSequenceCohortSet(
 )
  cdm$joined_cohorts
 #> # A query:  ?? x 6
-#> # Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1022-azure:R 4.6.1/:memory:]
+#> # Database: DuckDB 1.5.6 [unknown@Linux 6.17.0-1022-azure:R 4.6.1/:memory:]
 #>    cohort_definition_id subject_id cohort_start_date cohort_end_date index_date
 #>                   <int>      <int> <date>            <date>          <date>    
-#>  1                    7          1 2020-12-30        2021-01-01      2021-01-01
-#>  2                    2          4 2021-05-25        2021-06-01      2021-06-01
-#>  3                    1          3 2009-09-09        2010-01-01      2009-09-09
-#>  4                    3          4 2021-06-01        2022-05-25      2021-06-01
-#>  5                    6          2 2022-05-22        2022-05-25      2022-05-22
-#>  6                    5          2 2022-05-22        2022-05-31      2022-05-22
+#>  1                    6          2 2022-05-22        2022-05-25      2022-05-22
+#>  2                    5          2 2022-05-22        2022-05-31      2022-05-22
+#>  3                    7          1 2020-12-30        2021-01-01      2021-01-01
+#>  4                    8          4 2021-01-01        2021-05-25      2021-01-01
+#>  5                    3          4 2021-06-01        2022-05-25      2021-06-01
+#>  6                    2          1 2020-04-01        2021-01-01      2020-04-01
 #>  7                    1          1 2020-04-01        2020-12-30      2020-04-01
-#>  8                    8          4 2021-01-01        2021-05-25      2021-01-01
-#>  9                    3          1 2019-05-25        2020-04-01      2020-04-01
-#> 10                    2          1 2020-04-01        2021-01-01      2020-04-01
+#>  8                    2          4 2021-05-25        2021-06-01      2021-06-01
+#>  9                    1          3 2009-09-09        2010-01-01      2009-09-09
+#> 10                    3          1 2019-05-25        2020-04-01      2020-04-01
 #> 11                    6          3 2010-01-01        2010-09-30      2010-01-01
 #> # ℹ 1 more variable: marker_date <date>
  CDMConnector::cdmDisconnect(cdm = cdm)

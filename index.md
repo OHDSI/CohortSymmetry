@@ -52,7 +52,10 @@ namely the index_cohort and the marker_cohort.
 If one wants to generate two drugs cohorts in cdm, the [DrugUtilisation
 R package](https://darwin-eu.github.io/DrugUtilisation/) can be used or
 we recommend using [CohortConstructor R
-package](https://ohdsi.github.io/CohortConstructor/).
+package](https://ohdsi.github.io/CohortConstructor/). However a user
+will need to specify the gap eras for each of the cohorts i.e. a gap era
+set to 30 would collaspe episodes together if they are within 30 days of
+each other for example.
 
 For merely illustration purposes, we will carry out SSA on aspirin
 (index_cohort) against amoxicillin (marker_cohort). Multiple markers can
@@ -138,9 +141,9 @@ intersected using
 [`generateSequenceCohortSet()`](https://ohdsi.github.io/CohortSymmetry/reference/generateSequenceCohortSet.md).
 This process will output all the individuals who appeared on both tables
 according to a user-specified parameters. This includes
-`combinationWindow`, `washoutWindow`, `indexMarkerGap` and
-`daysPriorObservation`. Details on these parameters are found on the
-vignette.
+`cohortDateRange`, `combinationWindow`, `washoutWindow`,
+`indexMarkerGap` and `daysPriorObservation`. More details on these
+parameters are found on the vignette.
 
 ``` r
 
@@ -158,11 +161,11 @@ cdm$aspirin_amoxicillin %>%
 #> Rows: ??
 #> Columns: 6
 #> $ cohort_definition_id <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-#> $ subject_id           <int> 331, 1611, 1785, 3370, 5034, 280, 307, 310, 518, …
-#> $ cohort_start_date    <date> 1936-10-23, 1972-05-25, 1956-08-24, 1974-06-16, …
-#> $ cohort_end_date      <date> 1937-06-27, 1972-11-20, 1957-04-26, 1975-02-18, …
-#> $ index_date           <date> 1936-10-23, 1972-11-20, 1956-08-24, 1974-06-16, …
-#> $ marker_date          <date> 1937-06-27, 1972-05-25, 1957-04-26, 1975-02-18, …
+#> $ subject_id           <int> 1154, 1408, 3394, 3518, 3814, 4325, 1401, 1934, 2…
+#> $ cohort_start_date    <date> 1971-04-10, 1947-08-11, 1971-02-03, 1967-06-12, …
+#> $ cohort_end_date      <date> 1971-10-31, 1948-05-16, 1971-09-06, 1968-05-08, …
+#> $ index_date           <date> 1971-10-31, 1947-08-11, 1971-02-03, 1967-06-12, …
+#> $ marker_date          <date> 1971-04-10, 1948-05-16, 1971-09-06, 1968-05-08, …
 ```
 
 ### Step 2: summariseSequenceRatios
@@ -170,27 +173,27 @@ cdm$aspirin_amoxicillin %>%
 To get the sequence ratios, we would need the output of the
 generateSequenceCohortSet() function to be fed into
 [`summariseSequenceRatios()`](https://ohdsi.github.io/CohortSymmetry/reference/summariseSequenceRatios.md)
-The output of this process contains cSR(crude sequence ratio),
-aSR(adjusted sequence ratio) and confidence intervals.
+The output of this process contains CSR(crude sequence ratio),
+ASR(adjusted sequence ratio) and confidence intervals.
 
 ``` r
 
 res <- summariseSequenceRatios(cohort = cdm$aspirin_amoxicillin)
  
 res %>% glimpse()
-#> Rows: 10
+#> Rows: 11
 #> Columns: 13
-#> $ result_id        <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+#> $ result_id        <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 #> $ cdm_name         <chr> "Synthea", "Synthea", "Synthea", "Synthea", "Synthea"…
 #> $ group_name       <chr> "index_cohort_name &&& marker_cohort_name", "index_co…
 #> $ group_level      <chr> "aspirin &&& amoxicillin", "aspirin &&& amoxicillin",…
 #> $ strata_name      <chr> "overall", "overall", "overall", "overall", "overall"…
 #> $ strata_level     <chr> "overall", "overall", "overall", "overall", "overall"…
-#> $ variable_name    <chr> "index", "index", "marker", "marker", "crude", "adjus…
+#> $ variable_name    <chr> "index", "index", "marker", "marker", "null", "crude"…
 #> $ variable_level   <chr> "first_pharmac", "first_pharmac", "first_pharmac", "f…
 #> $ estimate_name    <chr> "count", "percentage", "count", "percentage", "point_…
 #> $ estimate_type    <chr> "integer", "numeric", "integer", "numeric", "numeric"…
-#> $ estimate_value   <chr> "56", "58.9", "39", "41.1", "1.43589743589744", "1.35…
+#> $ estimate_value   <chr> "56", "58.9", "39", "41.1", "1.05734480639213", "1.43…
 #> $ additional_name  <chr> "overall", "overall", "overall", "overall", "overall"…
 #> $ additional_level <chr> "overall", "overall", "overall", "overall", "overall"…
 ```
@@ -200,31 +203,37 @@ res %>% glimpse()
 The user could then visualise their results using a wide array of
 provided tools.
 
-For example, the following produces a flextable table.
+For example, the following produces a gt table. This table contains the
+CSR, ASR and confidence intervals as well as the Null Sequence Ratio
+(NSR). It also contains the counts and percentages of how many sequences
+had the index first or marker first.
 
 ``` r
 
-flex_results <- tableSequenceRatios(result = res)
+gt_results <- tableSequenceRatios(result = res)
 
-flex_results
+gt_results
 ```
 
-![](./reference/figures/README-gt_table.png) Note that gt is also an
-option, users may specify this by using the `type` argument.
+![](reference/figures/README-Step%203:%20visualise%20the%20results%20-%20tables-1.png)
+
+Note that flextable is also an option, users may specify this by using
+the `type` argument.
 
 One could also visualise the plot, for example, the following is the
-plot of the adjusted sequence ratio.
+plot of the crude and adjusted sequence ratio. There is flexibility to
+just show the ASR and update colours.
 
 ``` r
 
 plotSequenceRatios(result = res,
-                  onlyASR = T,
-                  colours = "black")
+                  onlyASR = F)
 ```
 
-![](./reference/figures/plotSR.png)
+![](reference/figures/README-Step%203:%20visualise%20the%20results%20-%20plots-1.png)
 
-The user also has the freedom to plot temporal trend like so:
+The user also has the freedom to plot temporal trend to review the
+asymmetry between index and marker:
 
 ``` r
 
@@ -234,7 +243,7 @@ temporal_symmetry <- summariseTemporalSymmetry(cohort = cdm$aspirin_amoxicillin)
 plotTemporalSymmetry(result = temporal_symmetry)
 ```
 
-![](./reference/figures/plot_temporal.png)
+![](reference/figures/README-Step%203:%20visualise%20the%20results%20-%20plot%20temporal-1.png)
 
 ### Disconnect from the cdm database connection
 

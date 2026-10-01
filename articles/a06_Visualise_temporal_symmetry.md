@@ -46,6 +46,7 @@ plotTemporalSymmetry(result = temporal_symmetry)
 ```
 
 ![](a06_Visualise_temporal_symmetry_files/figure-html/unnamed-chunk-6-1.png)
+
 Note that the $`x`$ axis is the time, which we recall to be the
 initiation of the marker minus the initiation of the index. The unit of
 the time difference here is month as this is the default from

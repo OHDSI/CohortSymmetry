@@ -108,9 +108,10 @@ examples.</p>
 cohort tables: the index cohort and the marker cohort. There are a lot
 of different ways to create these cohorts, and it will depend on what
 the index cohort and marker cohort represent. Here, we use the
-DrugUtilisation package to generate two drug cohorts in the cdm object.
-For illustrative purposes, we will carry out SSA on aspirin
-(index_cohort) against acetaminophen (marker_cohort).</p>
+DrugUtilisation package to generate two drug cohorts in the cdm object
+however we recommend using CohortConstructor. For illustrative purposes,
+we will carry out SSA on aspirin (index_cohort) against acetaminophen
+(marker_cohort).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu.github.io/DrugUtilisation/" class="external-link">DrugUtilisation</a></span><span class="op">)</span></span>
 <span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu">DrugUtilisation</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/DrugUtilisation/reference/generateIngredientCohortSet.html" class="external-link">generateIngredientCohortSet</a></span><span class="op">(</span></span>
@@ -200,7 +201,7 @@ could do the following:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">cdm</span><span class="op">$</span><span class="va">intersect</span>, <span class="st">"cohort_set"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A query:  ?? x 13</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1022-azure:R 4.6.1//tmp/Rtmpsf9x2O/file1baa59950187.duckdb]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.6 [unknown@Linux 6.17.0-1022-azure:R 4.6.1//tmp/RtmpouLylJ/file1cce5514fe06.duckdb]</span></span></span>
 <span><span class="co">#&gt;   cohort_definition_id cohort_name     index_id index_name marker_id marker_name</span></span>
 <span><span class="co">#&gt;                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>                    1 index_aspirin_…        1 aspirin            1 acetaminop…</span></span>
@@ -265,11 +266,15 @@ within the study period.</p>
 <h3 id="specified-study-period-and-prior-history-requirement">Specified study period and prior history requirement<a class="anchor" aria-label="anchor" href="#specified-study-period-and-prior-history-requirement"></a>
 </h3>
 <p>We can also specify the minimum prior history that an individual has
-to have before the start of the first event. Individuals with not enough
-prior history will be excluded. See the figure below, imagine the prior
-observation history is set to be 31 days, then participant 5 would be
-excluded because the first event happening within the study period does
-not have more than (or equal to) 31 days of prior history:</p>
+to have before the start of the first event in the sequence. This just
+asks “Does the person have enough prior observation history based on
+which event occurred first?” It applies this on the sequence so this can
+be applied to either index or marker event depending on which is first.
+Individuals with not enough prior history will be excluded. See the
+figure below, imagine the prior observation history is set to be 31
+days, then participant 5 would be excluded because the first event
+happening within the study period does not have more than (or equal to)
+31 days of prior history:</p>
 <center>
 <img src="3-PriorObservation.png" class="r-plt" alt="" width="80%">
 </center>
@@ -292,9 +297,10 @@ below:</p>
 period<a class="anchor" aria-label="anchor" href="#specified-study-period-prior-history-requirement-and-washout-period"></a>
 </h3>
 <p>We can also specify the minimum washout period required for an event
-or episode to be included. In the following figure, we exclude
-participant 6 as another episode took place within the washout period.
-Washout period is applied to index and marker respectively.</p>
+or episode to be included to restrict to incident users. In the
+following figure, we exclude participant 6 as another episode took place
+within the washout period. Washout period is applied to both the index
+and marker respectively.</p>
 <center>
 <img src="4-washoutPeriod.png" class="r-plt" alt="" width="80%">
 </center>
@@ -317,7 +323,8 @@ window<a class="anchor" aria-label="anchor" href="#specified-study-period-prior-
 </h3>
 <p>We define the combination window as the minimum and the maximum days
 between the start of the first event (either if is the index or the
-marker) and the start of the next event. In other words:</p>
+marker) and the start of the next event. So a index and marker must be
+within so many days of one another. In other words:</p>
 <center>
 <p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo></mrow><annotation encoding="application/x-tex">x =</annotation></semantics></math><code>second_episode(start_date)</code>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math><code>first_episode(start_date)</code>;</p>
@@ -337,7 +344,7 @@ from the analysis.
 implemented using the <code>combinationWindow</code> argument. Notice
 that in the previous examples, as we did not want any combination window
 requirement, we have set this argument to
-<code>combinationWindow = c(0,Inf)</code>, as by default is
+<code>combinationWindow = c(0,Inf)</code>, but the default is
 <code>combinationWindow = c(0, 365)</code>. In the following example, we
 explore subject_id 80 and 187 to see the functionality of this argument.
 When using no restriction for the combination window, both are included
@@ -357,6 +364,15 @@ in the <strong>intersect_changed_cw</strong> cohort:</p>
 <span> <span class="va">cdm</span><span class="op">$</span><span class="va">intersect_changed_cw</span> <span class="op">|&gt;</span></span>
 <span>   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">subject_id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>,<span class="fl">187</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>combinationWindow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">pmax</a></span><span class="op">(</span><span class="va">index_date</span>, <span class="va">marker_date</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">pmin</a></span><span class="op">(</span><span class="va">index_date</span>, <span class="va">marker_date</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Furthermore, for the <code>combinationWindow</code> argument, a user
+can also set the minimum window so
+<code>combinationWindow = c(7,365)</code> for example. This allows for a
+blackout window/period to be applied as described in <a href="https://pubmed.ncbi.nlm.nih.gov/38212730/" class="external-link">Hendrix et
+al. (2024)</a>. So in other words if a user knows that the index and
+marker cannot occur within 7 days of each other this can be set and by
+setting this it would exclude sequences in which two events occur 7 days
+or fewer days apart, while retaining sequences occuring 8-365 days
+apart.</p>
 </div>
 <div class="section level3">
 <h3 id="specified-study-period-prior-history-requirement-and-index-marker-gap">Specified study period, prior history requirement and index marker
@@ -372,13 +388,28 @@ episode. That means:</p>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>≤</mo><annotation encoding="application/x-tex">\leq</annotation></semantics></math><code>indexMarkerGap</code></p>
 </center>
 <p>See an example below, where all participants with an index-marker gap
-higher than 30 days are excluded from the analysis (participant 2, 3 and
-6):</p>
+higher than 30 days are excluded from the analysis and in this case this
+is no one as participants 2-6 have already been excluded due to not
+fufilling previous criteria and participant 1 fufills the index-marker
+gap:</p>
 <center>
 <img src="6-indexGap.png" class="r-plt" alt="" width="80%">
 </center>
-<p>Use <code>indexGap</code> argument to impose this restriction, for
-example:</p>
+<p>The default for <code>indexMarkerGap = Inf</code> meaning that no
+restriction is imposed on the interval between the end of the first
+event and start of the second. This is in line with established SSA
+methodology, as SSA evaluates asymmetry in sequences rather than
+duration of concurrent exposure.</p>
+<p>However, this setting can be updated to implement a continued
+exposure interval (CEI) used in prescription-cascade analyses. By
+setting this parameter it specifies the maximum permitted interval
+between the end of the first event and start of the second. For example
+<a href="https://pubmed.ncbi.nlm.nih.gov/38212730/" class="external-link">Hendrix et
+al. (2024)</a> applied a 4 month CEI to account for uncertainty in the
+estimated end of medication exposure. Analogous to this
+a<code>indexMarkerGap = 120</code> would be used for this argument.</p>
+<p>An example of the <code>indexGap</code> argument to impose this
+restriction, for example is shown below:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generateSequenceCohortSet.html">generateSequenceCohortSet</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
