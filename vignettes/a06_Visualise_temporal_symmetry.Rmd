@@ -85,9 +85,12 @@ With this established, much like `summariseSequenceRatios()`, the object `tempor
 tableTemporalSymmetry(result = temporal_symmetry)
 ```
 
+<center>
 ```{r message= FALSE, warning=FALSE}
 plotTemporalSymmetry(result = temporal_symmetry)
 ```
+</center>
+
 Note that the $x$ axis is the time, which we recall to be the initiation of the marker minus the initiation of the index. The unit of the time difference here is month as this is the default from `summarisTemporalSymmetry()`. 
 
 ```{r message= FALSE, warning=FALSE, eval=FALSE}
