@@ -8,7 +8,6 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
   out.width = "100%"
 )
 ```
@@ -59,7 +58,7 @@ cdm <- cdmFromCon(
 
 This will be entirely user's choice on how to generate such cohorts. Minimally, this package requires two cohort tables in the cdm reference, namely the index_cohort and the marker_cohort.
 
-If one wants to generate two drugs cohorts in cdm, the [DrugUtilisation R package](https://darwin-eu.github.io/DrugUtilisation/) can be used or we recommend using [CohortConstructor R package](https://ohdsi.github.io/CohortConstructor/).
+If one wants to generate two drugs cohorts in cdm, the [DrugUtilisation R package](https://darwin-eu.github.io/DrugUtilisation/) can be used or we recommend using [CohortConstructor R package](https://ohdsi.github.io/CohortConstructor/). However a user will need to specify the gap eras for each of the cohorts i.e. a gap era set to 30 would collapse episodes together if they are within 30 days of each other for example please see the individual packages on how to implement this if required.
 
 For merely illustration purposes, we will carry out SSA on aspirin (index_cohort) against amoxicillin (marker_cohort). Multiple markers can be instantiated in the marker cohort and each one will be tested against the index cohort.
 
@@ -116,7 +115,7 @@ cdm[["amoxicillin"]] <- CohortConstructor::conceptCohort(
 
 ### Step 1: generateSequenceCohortSet
 
-In order to initiate the calculations, the two cohorts tables need to be intersected using `generateSequenceCohortSet()`. This process will output all the individuals who appeared on both tables according to a user-specified parameters. This includes `combinationWindow`, `washoutWindow`, `indexMarkerGap` and `daysPriorObservation`. Details on these parameters are found on the vignette.
+In order to initiate the calculations, the two cohorts tables need to be intersected using `generateSequenceCohortSet()`. This process will output all the individuals who appeared on both tables according to a user-specified parameters. This includes `cohortDateRange`, `combinationWindow`, `washoutWindow`, `indexMarkerGap` and `daysPriorObservation`. More details on these parameters are found on the vignette.
 
 ```{r Step 1: generateSequenceCohortSet, eval=TRUE, warning=FALSE}
 library(CohortSymmetry)
@@ -134,7 +133,7 @@ cdm$aspirin_amoxicillin %>%
 
 ### Step 2: summariseSequenceRatios
 
-To get the sequence ratios, we would need the output of the generateSequenceCohortSet() function to be fed into `summariseSequenceRatios()` The output of this process contains cSR(crude sequence ratio), aSR(adjusted sequence ratio) and confidence intervals.
+To get the sequence ratios, we would need the output of the generateSequenceCohortSet() function to be fed into `summariseSequenceRatios()` The output of this process contains CSR(crude sequence ratio), ASR(adjusted sequence ratio) and confidence intervals.
 
 ```{r Step 2: summariseSequenceRatios, eval=TRUE, warning=FALSE}
 res <- summariseSequenceRatios(cohort = cdm$aspirin_amoxicillin)
@@ -146,37 +145,32 @@ res %>% glimpse()
 
 The user could then visualise their results using a wide array of provided tools.
 
-For example, the following produces a flextable table.
+For example, the following produces a gt table. This table contains the CSR, ASR and confidence intervals as well as the Null Sequence Ratio (NSR). It also contains the counts and percentages of how many sequences had the index first or marker first.
 
-```{r Step 3: visualise the results - tables, eval=FALSE, warning=FALSE}
-flex_results <- tableSequenceRatios(result = res)
+```{r Step 3: visualise the results - tables, eval=TRUE, warning=FALSE}
+gt_results <- tableSequenceRatios(result = res)
 
-flex_results
+gt_results
 ```
 
-![](./man/figures/README-gt_table.png) Note that gt is also an option, users may specify this by using the `type` argument.
+Note that flextable is also an option, users may specify this by using the `type` argument.
 
-One could also visualise the plot, for example, the following is the plot of the adjusted sequence ratio.
+One could also visualise the plot, for example, the following is the plot of the crude and adjusted sequence ratio. There is flexibility to just show the ASR and update colours.
 
-```{r Step 3: visualise the results - plots, eval=FALSE, warning=FALSE}
+```{r Step 3: visualise the results - plots, eval=TRUE, warning=FALSE}
 plotSequenceRatios(result = res,
-                  onlyASR = T,
-                  colours = "black")
+                  onlyASR = F)
 ```
 
-![](./man/figures/plotSR.png)
+The user also has the freedom to plot temporal trend to review the asymmetry between index and marker:
 
-The user also has the freedom to plot temporal trend like so:
-
-```{r Step 3: visualise the results - plot temporal, eval=FALSE, warning=FALSE}
+```{r Step 3: visualise the results - plot temporal, eval=TRUE, warning=FALSE}
 
 temporal_symmetry <- summariseTemporalSymmetry(cohort = cdm$aspirin_amoxicillin)
 
 plotTemporalSymmetry(result = temporal_symmetry)
 
 ```
-
-![](./man/figures/plot_temporal.png)
 
 ### Disconnect from the cdm database connection
 
