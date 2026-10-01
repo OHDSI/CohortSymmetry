@@ -56,7 +56,7 @@ A formatted version of the sequence_symmetry object.
 library(CohortSymmetry)
 cdm <- mockCohortSymmetry()
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/Rtmpc9maUk/duckdb
+#> ℹ /tmp/RtmpAJx4TN/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
