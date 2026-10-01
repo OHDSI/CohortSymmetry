@@ -67,8 +67,9 @@ R package](https://darwin-eu.github.io/DrugUtilisation/) can be used or
 we recommend using [CohortConstructor R
 package](https://ohdsi.github.io/CohortConstructor/). However a user
 will need to specify the gap eras for each of the cohorts i.e. a gap era
-set to 30 would collaspe episodes together if they are within 30 days of
-each other for example.
+set to 30 would collapse episodes together if they are within 30 days of
+each other for example please see the individual packages on how to
+implement this if required.
 
 For merely illustration purposes, we will carry out SSA on aspirin
 (index_cohort) against amoxicillin (marker_cohort). Multiple markers can
@@ -170,11 +171,11 @@ cdm$aspirin_amoxicillin %>%
 #> Rows: ??
 #> Columns: 6
 #> $ cohort_definition_id <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-#> $ subject_id           <int> 1154, 1408, 3394, 3518, 3814, 4325, 1401, 1934, 2…
-#> $ cohort_start_date    <date> 1971-04-10, 1947-08-11, 1971-02-03, 1967-06-12, …
-#> $ cohort_end_date      <date> 1971-10-31, 1948-05-16, 1971-09-06, 1968-05-08, …
-#> $ index_date           <date> 1971-10-31, 1947-08-11, 1971-02-03, 1967-06-12, …
-#> $ marker_date          <date> 1971-04-10, 1948-05-16, 1971-09-06, 1968-05-08, …
+#> $ subject_id           <int> 280, 307, 310, 1340, 144, 1813, 2621, 3436, 4867,…
+#> $ cohort_start_date    <date> 1946-10-16, 1979-10-27, 1951-09-06, 1912-10-22, …
+#> $ cohort_end_date      <date> 1947-03-20, 1979-11-02, 1952-08-08, 1912-12-29, …
+#> $ index_date           <date> 1946-10-16, 1979-10-27, 1951-09-06, 1912-10-22, …
+#> $ marker_date          <date> 1947-03-20, 1979-11-02, 1952-08-08, 1912-12-29, …
 ```
 
 ### Step 2: summariseSequenceRatios
@@ -201,7 +202,7 @@ res %>% glimpse()
 #> $ variable_level   <chr> "first_pharmac", "first_pharmac", "first_pharmac", "f…
 #> $ estimate_name    <chr> "count", "percentage", "count", "percentage", "point_…
 #> $ estimate_type    <chr> "integer", "numeric", "integer", "numeric", "numeric"…
-#> $ estimate_value   <chr> "56", "58.9", "39", "41.1", "1.05734480639213", "1.43…
+#> $ estimate_value   <chr> "42", "58.3", "30", "41.7", "1.04487150121398", "1.4"…
 #> $ additional_name  <chr> "overall", "overall", "overall", "overall", "overall"…
 #> $ additional_level <chr> "overall", "overall", "overall", "overall", "overall"…
 ```
@@ -222,7 +223,7 @@ gt_results <- tableSequenceRatios(result = res)
 gt_results
 ```
 
-<img src="man/figures/README-Step 3: visualise the results - tables-1.png" alt="" width="100%" />
+![](man/figures/tableSequenceRatios.png)
 
 Note that flextable is also an option, users may specify this by using
 the `type` argument.
@@ -232,11 +233,16 @@ plot of the crude and adjusted sequence ratio. There is flexibility to
 just show the ASR and update colours.
 
 ``` r
-plotSequenceRatios(result = res,
-                  onlyASR = F)
+
+sequence_ratio_plot <- plotSequenceRatios(
+  result = res,
+  onlyASR = FALSE
+)
+
+sequence_ratio_plot
 ```
 
-<img src="man/figures/README-Step 3: visualise the results - plots-1.png" alt="" width="100%" />
+![](man/figures/plotSequenceRatios.png)
 
 The user also has the freedom to plot temporal trend to review the
 asymmetry between index and marker:
@@ -245,10 +251,14 @@ asymmetry between index and marker:
 
 temporal_symmetry <- summariseTemporalSymmetry(cohort = cdm$aspirin_amoxicillin)
 
-plotTemporalSymmetry(result = temporal_symmetry)
+temporal_symmetry_plot <- plotTemporalSymmetry(
+  result = temporal_symmetry
+)
+
+temporal_symmetry_plot
 ```
 
-<img src="man/figures/README-Step 3: visualise the results - plot temporal-1.png" alt="" width="100%" />
+![](man/figures/plotTemporalSymmetry.png)
 
 ### Disconnect from the cdm database connection
 

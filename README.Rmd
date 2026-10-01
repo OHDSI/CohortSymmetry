@@ -8,6 +8,7 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  fig.path = "man/figures/README-",
   out.width = "100%"
 )
 ```
@@ -147,30 +148,48 @@ The user could then visualise their results using a wide array of provided tools
 
 For example, the following produces a gt table. This table contains the CSR, ASR and confidence intervals as well as the Null Sequence Ratio (NSR). It also contains the counts and percentages of how many sequences had the index first or marker first.
 
-```{r Step 3: visualise the results - tables, eval=TRUE, warning=FALSE}
+```{r Step 3: visualise the results - tables, eval=FALSE, warning=FALSE}
 gt_results <- tableSequenceRatios(result = res)
 
 gt_results
+
 ```
+
+![](man/figures/tableSequenceRatios.png)
 
 Note that flextable is also an option, users may specify this by using the `type` argument.
 
 One could also visualise the plot, for example, the following is the plot of the crude and adjusted sequence ratio. There is flexibility to just show the ASR and update colours.
 
-```{r Step 3: visualise the results - plots, eval=TRUE, warning=FALSE}
-plotSequenceRatios(result = res,
-                  onlyASR = F)
+```{r Step 3: visualise the results - plots, eval=FALSE, warning=FALSE}
+
+sequence_ratio_plot <- plotSequenceRatios(
+  result = res,
+  onlyASR = FALSE
+)
+
+sequence_ratio_plot
+
+
 ```
+
+![](man/figures/plotSequenceRatios.png)
 
 The user also has the freedom to plot temporal trend to review the asymmetry between index and marker:
 
-```{r Step 3: visualise the results - plot temporal, eval=TRUE, warning=FALSE}
+```{r Step 3: visualise the results - plot temporal, eval=FALSE, warning=FALSE}
 
 temporal_symmetry <- summariseTemporalSymmetry(cohort = cdm$aspirin_amoxicillin)
 
-plotTemporalSymmetry(result = temporal_symmetry)
+temporal_symmetry_plot <- plotTemporalSymmetry(
+  result = temporal_symmetry
+)
+
+temporal_symmetry_plot
 
 ```
+
+![](man/figures/plotTemporalSymmetry.png)
 
 ### Disconnect from the cdm database connection
 
