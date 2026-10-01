@@ -107,7 +107,7 @@
 <h3 id="step-0-instantiate-two-cohorts-in-the-cdm-reference">Step 0: Instantiate two cohorts in the cdm reference<a class="anchor" aria-label="anchor" href="#step-0-instantiate-two-cohorts-in-the-cdm-reference"></a>
 </h3>
 <p>This will be entirely user’s choice on how to generate such cohorts. Minimally, this package requires two cohort tables in the cdm reference, namely the index_cohort and the marker_cohort.</p>
-<p>If one wants to generate two drugs cohorts in cdm, the <a href="https://darwin-eu.github.io/DrugUtilisation/" class="external-link">DrugUtilisation R package</a> can be used or we recommend using <a href="https://ohdsi.github.io/CohortConstructor/" class="external-link">CohortConstructor R package</a>. However a user will need to specify the gap eras for each of the cohorts i.e. a gap era set to 30 would collaspe episodes together if they are within 30 days of each other for example.</p>
+<p>If one wants to generate two drugs cohorts in cdm, the <a href="https://darwin-eu.github.io/DrugUtilisation/" class="external-link">DrugUtilisation R package</a> can be used or we recommend using <a href="https://ohdsi.github.io/CohortConstructor/" class="external-link">CohortConstructor R package</a>. However a user will need to specify the gap eras for each of the cohorts i.e. a gap era set to 30 would collapse episodes together if they are within 30 days of each other for example please see the individual packages on how to implement this if required.</p>
 <p>For merely illustration purposes, we will carry out SSA on aspirin (index_cohort) against amoxicillin (marker_cohort). Multiple markers can be instantiated in the marker cohort and each one will be tested against the index cohort.</p>
 <p>Using the drug utilisation package:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -193,11 +193,11 @@
 <span><span class="co">#&gt; Rows: ??</span></span>
 <span><span class="co">#&gt; Columns: 6</span></span>
 <span><span class="co">#&gt; $ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…</span></span>
-<span><span class="co">#&gt; $ subject_id           &lt;int&gt; 1154, 1408, 3394, 3518, 3814, 4325, 1401, 1934, 2…</span></span>
-<span><span class="co">#&gt; $ cohort_start_date    &lt;date&gt; 1971-04-10, 1947-08-11, 1971-02-03, 1967-06-12, …</span></span>
-<span><span class="co">#&gt; $ cohort_end_date      &lt;date&gt; 1971-10-31, 1948-05-16, 1971-09-06, 1968-05-08, …</span></span>
-<span><span class="co">#&gt; $ index_date           &lt;date&gt; 1971-10-31, 1947-08-11, 1971-02-03, 1967-06-12, …</span></span>
-<span><span class="co">#&gt; $ marker_date          &lt;date&gt; 1971-04-10, 1948-05-16, 1971-09-06, 1968-05-08, …</span></span></code></pre></div>
+<span><span class="co">#&gt; $ subject_id           &lt;int&gt; 280, 307, 310, 1340, 144, 1813, 2621, 3436, 4867,…</span></span>
+<span><span class="co">#&gt; $ cohort_start_date    &lt;date&gt; 1946-10-16, 1979-10-27, 1951-09-06, 1912-10-22, …</span></span>
+<span><span class="co">#&gt; $ cohort_end_date      &lt;date&gt; 1947-03-20, 1979-11-02, 1952-08-08, 1912-12-29, …</span></span>
+<span><span class="co">#&gt; $ index_date           &lt;date&gt; 1946-10-16, 1979-10-27, 1951-09-06, 1912-10-22, …</span></span>
+<span><span class="co">#&gt; $ marker_date          &lt;date&gt; 1947-03-20, 1979-11-02, 1952-08-08, 1912-12-29, …</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="step-2-summarisesequenceratios">Step 2: summariseSequenceRatios<a class="anchor" aria-label="anchor" href="#step-2-summarisesequenceratios"></a>
@@ -219,7 +219,7 @@
 <span><span class="co">#&gt; $ variable_level   &lt;chr&gt; "first_pharmac", "first_pharmac", "first_pharmac", "f…</span></span>
 <span><span class="co">#&gt; $ estimate_name    &lt;chr&gt; "count", "percentage", "count", "percentage", "point_…</span></span>
 <span><span class="co">#&gt; $ estimate_type    &lt;chr&gt; "integer", "numeric", "integer", "numeric", "numeric"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   &lt;chr&gt; "56", "58.9", "39", "41.1", "1.05734480639213", "1.43…</span></span>
+<span><span class="co">#&gt; $ estimate_value   &lt;chr&gt; "42", "58.3", "30", "41.7", "1.04487150121398", "1.4"…</span></span>
 <span><span class="co">#&gt; $ additional_name  &lt;chr&gt; "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level &lt;chr&gt; "overall", "overall", "overall", "overall", "overall"…</span></span></code></pre></div>
 </div>
@@ -232,20 +232,29 @@
 <code class="sourceCode R"><span><span class="va">gt_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tableSequenceRatios.html">tableSequenceRatios</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">res</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">gt_results</span></span></code></pre></div>
-<p><img src="reference/figures/README-Step%203:%20visualise%20the%20results%20-%20tables-1.png" alt="" width="100%"></p>
+<p><img src="reference/figures/tableSequenceRatios.png"></p>
 <p>Note that flextable is also an option, users may specify this by using the <code>type</code> argument.</p>
 <p>One could also visualise the plot, for example, the following is the plot of the crude and adjusted sequence ratio. There is flexibility to just show the ASR and update colours.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/plotSequenceRatios.html">plotSequenceRatios</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">res</span>,</span>
-<span>                  onlyASR <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-Step%203:%20visualise%20the%20results%20-%20plots-1.png" alt="" width="100%"></p>
+<code class="sourceCode R"><span></span>
+<span><span class="va">sequence_ratio_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotSequenceRatios.html">plotSequenceRatios</a></span><span class="op">(</span></span>
+<span>  result <span class="op">=</span> <span class="va">res</span>,</span>
+<span>  onlyASR <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sequence_ratio_plot</span></span></code></pre></div>
+<p><img src="reference/figures/plotSequenceRatios.png"></p>
 <p>The user also has the freedom to plot temporal trend to review the asymmetry between index and marker:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">temporal_symmetry</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summariseTemporalSymmetry.html">summariseTemporalSymmetry</a></span><span class="op">(</span>cohort <span class="op">=</span> <span class="va">cdm</span><span class="op">$</span><span class="va">aspirin_amoxicillin</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/plotTemporalSymmetry.html">plotTemporalSymmetry</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">temporal_symmetry</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-Step%203:%20visualise%20the%20results%20-%20plot%20temporal-1.png" alt="" width="100%"></p>
+<span><span class="va">temporal_symmetry_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotTemporalSymmetry.html">plotTemporalSymmetry</a></span><span class="op">(</span></span>
+<span>  result <span class="op">=</span> <span class="va">temporal_symmetry</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">temporal_symmetry_plot</span></span></code></pre></div>
+<p><img src="reference/figures/plotTemporalSymmetry.png"></p>
 </div>
 <div class="section level3">
 <h3 id="disconnect-from-the-cdm-database-connection">Disconnect from the cdm database connection<a class="anchor" aria-label="anchor" href="#disconnect-from-the-cdm-database-connection"></a>
