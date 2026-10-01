@@ -1,4 +1,34 @@
 url: https://ohdsi.github.io/CohortSymmetry/
+
 template:
   bootstrap: 5
 
+reference:
+
+  - title: "Generate sequence cohorts"
+    desc: >
+      Functions for generating sequence cohorts for sequence symmetry analysis.
+    contents:
+      - generateSequenceCohortSet
+
+  - title: "Sequence symmetry analysis"
+    desc: >
+      Functions for summarising, visualising, and tabulating sequence ratios.
+    contents:
+      - summariseSequenceRatios
+      - plotSequenceRatios
+      - tableSequenceRatios
+
+  - title: "Temporal symmetry analysis"
+    desc: >
+      Functions for summarising, visualising, and tabulating temporal symmetry.
+    contents:
+      - summariseTemporalSymmetry
+      - plotTemporalSymmetry
+      - tableTemporalSymmetry
+
+  - title: "Mock data"
+    desc: >
+      Function for creating mock data for CohortSymmetry.
+    contents:
+      - mockCohortSymmetry
