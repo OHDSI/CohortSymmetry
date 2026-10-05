@@ -1,5 +1,5 @@
 test_that("plot working", {
-  skip_if_not_installed("omock")
+  testthat::skip_if_not_installed("omock")
   cdm <- omock::mockCdmReference(cdmName = "mock") |>
     omock::mockPerson(nPerson = 1000) |>
     omock::mockObservationPeriod() |>
@@ -15,16 +15,12 @@ test_that("plot working", {
       cohortName = c("index_a", "index_b"),
       seed = 33
     )
-  db <- DBI::dbConnect(duckdb::duckdb(), ":memory:")
-  cdm <- CDMConnector::copyCdmTo(db,
-                                   cdm,
-                                   schema = "main",
-                                   overwrite = TRUE)
+
   cdm <- generateSequenceCohortSet(cdm, "index_cohort", "marker_cohort", "joined_cohort", combinationWindow = c(0, Inf))
 
-  result <- summariseTemporalSymmetry(cohort = cdm$joined_cohort, timescale = "year")
+  result <- summariseTemporalSymmetry(cohort = cdm$joined_cohort, days = 30)
   plotTS <- plotTemporalSymmetry(result = result)
-  plotTS2 <- plotTemporalSymmetry(result = result, xlim = c(-5,5))
+  plotTS2 <- plotTemporalSymmetry(result = result, xlim = c(-365,365))
   plotTS3 <- plotTemporalSymmetry(result = result, colours = c("white", "black"))
   plotTS4 <- plotTemporalSymmetry(result = result, plotTitle = "Test")
   plotTS5 <- plotTemporalSymmetry(result = result, labs = c("lab1", "lab2"))
@@ -36,7 +32,6 @@ test_that("plot working", {
   expect_true("ggplot" %in% (plotTS5 %>% class()))
   expect_true("ggplot" %in% (plotTS6 %>% class()))
 
-  CDMConnector::cdmDisconnect(cdm)
 })
 
 test_that("expected errors", {
@@ -56,11 +51,7 @@ test_that("expected errors", {
       cohortName = c("index_a", "index_b"),
       seed = 33
     )
-  db <- DBI::dbConnect(duckdb::duckdb(), ":memory:")
-  cdm <- CDMConnector::copyCdmTo(db,
-                                   cdm,
-                                   schema = "main",
-                                   overwrite = TRUE)
+
   cdm <- generateSequenceCohortSet(cdm, "index_cohort", "marker_cohort", "joined_cohort", combinationWindow = c(0, Inf))
 
   result <- summariseTemporalSymmetry(cohort = cdm$joined_cohort)
@@ -79,7 +70,6 @@ test_that("expected errors", {
   expect_error(plotTemporalSymmetry(result = result, scales = "days"))
   expect_error(plotTemporalSymmetry(result = result, scales = c("free", "fixed")))
 
-  CDMConnector::cdmDisconnect(cdm)
 })
 
 test_that("empty result error",{
@@ -128,5 +118,4 @@ test_that("empty result error",{
     plotTemporalSymmetry(ts2)
   )
 
-  CDMConnector::cdmDisconnect(cdm = cdm)
 })

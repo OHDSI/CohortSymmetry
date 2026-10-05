@@ -10,8 +10,6 @@
 #' Default is NULL, which means the default indexCohort is being used.
 #' @param markerCohort The tibble of your marker cohort.
 #' Default is NULL, which means the default markerCohort is being used.
-#' @param con Connection detail.
-#' @param schema Name of your write schema.
 #'
 #' @return A mock cdm object contains your index and marker cohort
 #' @export
@@ -25,19 +23,9 @@
 #' }
 mockCohortSymmetry <- function(seed = 1,
                                indexCohort = NULL,
-                               markerCohort = NULL,
-                               con = NULL,
-                               schema = "main") {
+                               markerCohort = NULL) {
 
   rlang::check_installed("omock")
-  if (is.null(con)) {
-    rlang::check_installed("duckdb")
-    con <- duckdb::dbConnect(duckdb::duckdb(), ":memory:")
-  }
-
-  if (!inherits(con, "DBIConnection")) {
-    cli::cli_abort(c("!" = "`con` must be a DBI connection"))
-  }
 
   if (is.null(indexCohort)){
     indexCohort <- dplyr::tibble(
@@ -84,9 +72,6 @@ mockCohortSymmetry <- function(seed = 1,
                                                                         cohort_2 = markerCohort),
                                                           seed = seed)
 
-  cdm <- CDMConnector::copyCdmTo(con = con,
-                                 cdm = cdm,
-                                 schema = schema)
 
   return(cdm)
 

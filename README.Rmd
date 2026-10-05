@@ -36,23 +36,18 @@ pak::pak("OHDSI/CohortSymmetry")
 
 ### Create a reference to data in the OMOP CDM format
 
-The CohortSymmetry package is designed to work with data in the OMOP CDM (Common Data Model) format, so our first step is to create a reference to the data using the `CDMConnector` package.
+The CohortSymmetry package is designed to work with data mapped to OMOP CDM, so the first step is to create a mock database using the [omock package](https://ohdsi.github.io/omock/). We will use the Eunomia dataset within omock for the subsequent examples. There are other synthetic datasets within omock that users can also use to get familiar with CohortSymmetry before applying to their own database. See the [omock vignette](https://ohdsi.github.io/omock/) for more details.
 
-As an example, we will be using Eunomia data set.
+As an example, we will be using Eunomia GIBleed data set.
 
 ```{r, message=FALSE, eval=TRUE, warning=FALSE}
-library(CDMConnector)
 library(dplyr)
 library(DBI)
-library(duckdb)
- 
-db <- DBI::dbConnect(duckdb::duckdb(), 
-                     dbdir = CDMConnector::eunomiaDir())
-cdm <- cdmFromCon(
-  con = db,
-  cdmSchema = "main",
-  writeSchema = "main"
-)
+library(omock)
+library(CohortSymmetry)
+
+cdm <- mockCdmFromDataset(datasetName = "GiBleed")
+
 ```
 
 ### Step 0: Instantiate two cohorts in the cdm reference
@@ -175,7 +170,7 @@ sequence_ratio_plot
 
 ![](man/figures/plotSequenceRatios.png)
 
-The user also has the freedom to plot temporal trend to review the asymmetry between index and marker:
+The user also has the freedom to plot temporal trend to review the asymmetry between index and marker. The argument days (default 30 days) allows the user to create specific breaks for this plot:
 
 ```{r Step 3: visualise the results - plot temporal, eval=FALSE, warning=FALSE}
 
@@ -187,12 +182,7 @@ temporal_symmetry_plot <- plotTemporalSymmetry(
 
 temporal_symmetry_plot
 
+
 ```
 
 ![](man/figures/plotTemporalSymmetry.png)
-
-### Disconnect from the cdm database connection
-
-```{r Disconnect from the cdm database connection, eval=TRUE, warning=FALSE}
-CDMConnector::cdmDisconnect(cdm = cdm)
-```

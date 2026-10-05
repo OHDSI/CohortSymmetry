@@ -30,8 +30,8 @@
 #' }
 plotTemporalSymmetry <- function(result,
                                  plotTitle = NULL,
-                                 labs = c("Time (months)", "Individuals (N)"),
-                                 xlim = c(-12, 12),
+                                 labs = c("Time (days)", "Individuals (N)"),
+                                 xlim = c(-365, 365),
                                  colours = c("blue", "red"),
                                  scales = "free") {
 

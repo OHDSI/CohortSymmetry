@@ -312,7 +312,8 @@ generateSequenceCohortSet <- function(cdm,
                   moving_average_restriction = !!format(movingAverageRestriction, nsmall = 0)) |>
     dplyr::left_join(nsr_tbl,
                      by = c("index_id", "marker_id"),
-                     copy = T)
+                     copy = T) %>%
+    dplyr::ungroup()
 
   cdm[[name]] <- cdm[[name]] |>
     dplyr::select(!c("cohort_name", "index_name", "marker_name"))
@@ -333,7 +334,7 @@ generateSequenceCohortSet <- function(cdm,
                                    cohortAttritionRef = NULL)
 
     # exclusion criteria - where attrition starts
-    # 1) within combination window
+    # 1) within combination window]
     cdm[[name]] <- cdm[[name]] %>%
       {if (is.infinite(combinationWindow[[1]][2]))
         dplyr::filter(.,
@@ -357,7 +358,6 @@ generateSequenceCohortSet <- function(cdm,
         dplyr::compute(name = name, temporary = FALSE) |>
         omopgenerics::recordCohortAttrition(reason="Events excluded due to the prespecified index marker gap")
     }
-
     # 3) days prior observation
     cdm[[name]] <- cdm[[name]] |>
       dplyr::filter(
@@ -374,7 +374,6 @@ generateSequenceCohortSet <- function(cdm,
       ) |>
       dplyr::compute(name = name, temporary = FALSE) |>
       omopgenerics::recordCohortAttrition(reason="Events excluded due to insufficient washout window")
-
     # final output table
     cdm[[name]] <- cdm[[name]] |>
       dplyr::select("cohort_definition_id", "subject_id",

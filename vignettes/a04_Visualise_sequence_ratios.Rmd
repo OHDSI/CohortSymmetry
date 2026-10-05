@@ -18,12 +18,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r, include = FALSE}
-if (Sys.getenv("EUNOMIA_DATA_FOLDER") == "") Sys.setenv("EUNOMIA_DATA_FOLDER" = tempdir())
-if (!dir.exists(Sys.getenv("EUNOMIA_DATA_FOLDER"))) dir.create(Sys.getenv("EUNOMIA_DATA_FOLDER"))
-if (!CDMConnector::eunomiaIsAvailable()) CDMConnector::downloadEunomiaData()
-```
-
 # Introduction
 In this vignette we will explore the functionality and arguments of a set of functions that will help us to understand and visualise the sequence ratio results. In particular, we will delve into the following functions:
 
@@ -34,43 +28,47 @@ This function builds-up on previous functions, such as `generateSequenceCohortSe
 
 ```{r message= FALSE, warning=FALSE, include=FALSE}
 # Load libraries
-library(CDMConnector)
 library(dplyr)
-library(DBI)
 library(CohortSymmetry)
-library(duckdb)
-library(DrugUtilisation)
-library(visOmopResults)
+library(CohortConstructor)
+library(omock)
 
-# Connect to the database
-db <- DBI::dbConnect(duckdb::duckdb(), 
-                     dbdir = CDMConnector::eunomiaDir())
-cdm <- cdmFromCon(
-  con = db,
-  cdmSchema = "main",
-  writeSchema = "main"
-)
+# Get mock data from omock
+cdm <- mockCdmFromDataset(datasetName = "GiBleed")
 
-# Generate cohorts
-cdm <- DrugUtilisation::generateIngredientCohortSet(
+# Generate index-marker cohorts
+aspirin_codelist <- CodelistGenerator::getDrugIngredientCodes(
   cdm = cdm,
   name = "aspirin",
-  ingredient = "aspirin")
+  nameStyle = "{concept_name}"
+)
 
-cdm <- DrugUtilisation::generateIngredientCohortSet(
+cdm[["aspirin"]] <- CohortConstructor::conceptCohort(
   cdm = cdm,
-  name = "acetaminophen",
-  ingredient = "acetaminophen")
+  conceptSet = aspirin_codelist,
+  exit = "event_end_date",
+  name = "aspirin")
+
+
+amoxicillin_codelist <- CodelistGenerator::getDrugIngredientCodes(
+  cdm = cdm,
+  name = "amoxicillin",
+  nameStyle = "{concept_name}"
+)
+
+cdm[["amoxicillin"]] <- CohortConstructor::conceptCohort(
+  cdm = cdm,
+  conceptSet = amoxicillin_codelist,
+  exit = "event_end_date",
+  name = "amoxicillin")
 
 # Generate a sequence cohort
 cdm <- generateSequenceCohortSet(
   cdm = cdm,
   indexTable = "aspirin",
-  markerTable = "acetaminophen",
-  name = "intersect",
-  daysPriorObservation = 0,
-  washoutWindow = 0,
-  combinationWindow = c(0,Inf))
+  markerTable = "amoxicillin",
+  name = "intersect")
+
 ```
 
 Recall we had the table **intersect** in the cdm reference and that the results of sequence ratio could produced as follows (**Step 2. Obtain the sequence ratios**):
@@ -132,8 +130,4 @@ One could change the colour like so:
 plotSequenceRatios(result = result,
                    onlyASR = T,
                    colours = "red")
-```
-
-```{r message= FALSE, warning=FALSE, eval=FALSE}
-CDMConnector::cdmDisconnect(cdm = cdm)
 ```

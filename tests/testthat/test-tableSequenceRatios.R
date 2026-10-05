@@ -1,6 +1,6 @@
 test_that("tableSequenceRatios - gt output", {
-  skip_if_not_installed("gt")
-  skip_if_not_installed("flextable")
+  testthat::skip_if_not_installed("gt")
+  testthat::skip_if_not_installed("flextable")
   cdm <- mockCohortSymmetry()
   cdm <- generateSequenceCohortSet(cdm = cdm,
                                    indexTable = "cohort_1",
@@ -40,13 +40,13 @@ test_that("tableSequenceRatios - gt output", {
                         hide = "cdm_name")
   )
 
-  CDMConnector::cdmDisconnect(cdm)
+
 })
 
 test_that("tableSequenceRatios - tibble output", {
   skip_on_cran()
-  skip_if_not_installed("gt")
-  skip_if_not_installed("flextable")
+  testthat::skip_if_not_installed("gt")
+  testthat::skip_if_not_installed("flextable")
   cdm <- mockCohortSymmetry()
   cdm <- generateSequenceCohortSet(cdm = cdm,
                                    indexTable = "cohort_1",
@@ -64,13 +64,13 @@ test_that("tableSequenceRatios - tibble output", {
   tibble_res <- tableSequenceRatios(res, type = "tibble")
 
   expect_true("data.frame" %in% (tibble_res %>% class()))
-  CDMConnector::cdmDisconnect(cdm)
+
 })
 
 test_that("tableSequenceRatios - flextable output", {
   skip_on_cran()
-  skip_if_not_installed("gt")
-  skip_if_not_installed("flextable")
+  testthat::skip_if_not_installed("gt")
+  testthat::skip_if_not_installed("flextable")
   cdm <- mockCohortSymmetry()
   cdm <- generateSequenceCohortSet(cdm = cdm,
                                    indexTable = "cohort_1",
@@ -116,5 +116,5 @@ test_that("tableSequenceRatios - flextable output", {
                         hide = "cdm_name")
   )
 
-  CDMConnector::cdmDisconnect(cdm)
+
 })

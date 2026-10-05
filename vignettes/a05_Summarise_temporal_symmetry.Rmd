@@ -19,96 +19,74 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r, include = FALSE}
-if (Sys.getenv("EUNOMIA_DATA_FOLDER") == "") Sys.setenv("EUNOMIA_DATA_FOLDER" = tempdir())
-if (!dir.exists(Sys.getenv("EUNOMIA_DATA_FOLDER"))) dir.create(Sys.getenv("EUNOMIA_DATA_FOLDER"))
-if (!CDMConnector::eunomiaIsAvailable()) CDMConnector::downloadEunomiaData()
-```
-
 # Introduction
-In this vignette we will explore the functionality and arguments of `summariseTemporalSymmetry()` function. This function uses `cdm$intersect` introduced in the previous vignette **Step 1. Generate a sequence cohort** to produce aggregated statistics containing the frequency for different time gaps between the initiation of the marker and the initiation of the index (`marker_date` $-$ `index_date`). The work of this function is best illustrated via an example. 
+In this vignette we will explore the functionality and arguments of `summariseTemporalSymmetry()` function. This function uses `cdm$intersect` introduced in the previous vignettes to produce aggregated statistics containing the frequency for different time gaps between the initiation of the marker and the initiation of the index (`marker_date` $-$ `index_date`) and can be used to then help visulise the asymmetry between the index and marker cohorts. The work of this function is best illustrated via an example. 
 
 ```{r message= FALSE, warning=FALSE, include=FALSE}
 # Load libraries
-library(CDMConnector)
 library(dplyr)
-library(DBI)
 library(CohortSymmetry)
-library(duckdb)
-library(DrugUtilisation)
+library(CohortConstructor)
+library(omock)
 
-# Connect to the database
-db <- DBI::dbConnect(duckdb::duckdb(), 
-                     dbdir = CDMConnector::eunomiaDir())
-cdm <- cdmFromCon(
-  con = db,
-  cdmSchema = "main",
-  writeSchema = "main"
-)
+# Get mock data from omock
+cdm <- mockCdmFromDataset(datasetName = "GiBleed")
 
-# Generate cohorts
-cdm <- DrugUtilisation::generateIngredientCohortSet(
+# Generate index-marker cohorts
+aspirin_codelist <- CodelistGenerator::getDrugIngredientCodes(
   cdm = cdm,
   name = "aspirin",
-  ingredient = "aspirin")
+  nameStyle = "{concept_name}"
+)
 
-cdm <- DrugUtilisation::generateIngredientCohortSet(
+cdm[["aspirin"]] <- CohortConstructor::conceptCohort(
   cdm = cdm,
-  name = "acetaminophen",
-  ingredient = "acetaminophen")
-```
+  conceptSet = aspirin_codelist,
+  exit = "event_end_date",
+  name = "aspirin")
 
-Recall that in the previous vignette, we've used `cdm$aspirin` and `cdm$acetaminophen` to generate `cdm$intersect` like so:
 
-```{r message= FALSE, warning=FALSE}
+amoxicillin_codelist <- CodelistGenerator::getDrugIngredientCodes(
+  cdm = cdm,
+  name = "amoxicillin",
+  nameStyle = "{concept_name}"
+)
+
+cdm[["amoxicillin"]] <- CohortConstructor::conceptCohort(
+  cdm = cdm,
+  conceptSet = amoxicillin_codelist,
+  exit = "event_end_date",
+  name = "amoxicillin")
+
 # Generate a sequence cohort
 cdm <- generateSequenceCohortSet(
   cdm = cdm,
   indexTable = "aspirin",
-  markerTable = "acetaminophen",
-  name = "intersect",
-  daysPriorObservation = 0,
-  washoutWindow = 0,
-  combinationWindow = c(0,Inf))
+  markerTable = "amoxicillin",
+  name = "intersect")
+
 ```
+
+Recall that in the previous vignette, we've used `cdm$aspirin` and `cdm$acetaminophen` to generate `cdm$intersect`.
 
 # Obtaining temporal symmetry
 
 ```{r message= FALSE, warning=FALSE}
-summariseTemporalSymmetry(cohort = cdm$intersect) |> 
+summariseTemporalSymmetry(cohort = cdm$intersect, days = 30) |> 
   dplyr::glimpse()
 ```
 
-The default unit of the difference of two initiations is measured in months. In this example, the first row is showing there are $6$ cases of *index* happening **after** *marker* with the gap being $29$ months whereas the second row is showing there are $7$ cases of *index* happening **before** *marker* with the gap being $40$ months.
+The default of the difference of two initiations is measured in 30 days. The estimate value is an aggregate count of how many individuals having the *index* happening **after** *marker* and having the *marker* happening **after** *index*
+in 30 day bins.
 
-## Modify the cohort based on `cohort_definition_id`
+## Modify `days`
 
-This parameter is used to subset the cohort table inputted to the `summariseTemporalSymmetry()`. Imagine the user only wants to include `cohort_definition_id` $= 1$ from `cdm$intersect` in the `summariseTemporalSymmetry()`, then one could do the following:
+Recall the default for the days is 30, one could also change this to other numerical numbers such as 7, 60, 90 days for example.
 
 ```{r message= FALSE, warning=FALSE}
 summariseTemporalSymmetry(cohort = cdm$intersect,
-                          cohortId = 1) |> 
+                          days = 60) |> 
   dplyr::glimpse()
 ```
 
-Of course and once again this does nothing because every entry in `cdm$intersect` has `cohort_definition_id` $= 1$.
-
-## Modify `timescale`
-
-Recall the default for the timescale is `month`, one could also change this to either `day` or `year`.
-
-```{r message= FALSE, warning=FALSE}
-summariseTemporalSymmetry(cohort = cdm$intersect,
-                          timescale = "day") |> 
-  dplyr::glimpse()
-```
-
-```{r message= FALSE, warning=FALSE}
-summariseTemporalSymmetry(cohort = cdm$intersect,
-                          timescale = "year") |> 
-  dplyr::glimpse()
-```
-
-```{r message= FALSE, warning=FALSE, eval=FALSE}
-CDMConnector::cdmDisconnect(cdm = cdm)
-```
+We will use the output from this function to then visulise the asymmetry between the index and marker in the next steps of the vignette.

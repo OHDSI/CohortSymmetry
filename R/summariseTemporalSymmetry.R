@@ -6,7 +6,7 @@
 #'
 #' @param cohort A cohort table in the cdm.
 #' @param cohortId The Ids in the cohort that are to be included in the analyses.
-#' @param timescale Timescale for the x axis of the plot (month, day, year).
+#' @param days Numerical timescale for the x axis of the plot in days (Default is 30 days, if users want years put 365, days put 1).
 #'
 #' @return
 #' An aggregated table with difference in time (marker - index) and the relevant
@@ -27,14 +27,16 @@
 #'
 summariseTemporalSymmetry <- function(cohort,
                                       cohortId = NULL,
-                                      timescale = "month") {
+                                      days = 30) {
   # checks
   cdm <- omopgenerics::cdmReference(cohort)
   cdm <- omopgenerics::validateCdmArgument(cdm = cdm)
   cohortId <- omopgenerics::validateCohortIdArgument({{cohortId}}, cohort)
-  omopgenerics::assertChoice(timescale,
-                             choices = c("day", "week","month", "year"),
-                             length = 1)
+  omopgenerics::assertNumeric(days,
+                              integerish = TRUE,
+                              min = 1,
+                              length = 1
+  )
 
   # pulling out data
   index_names <- attr(cohort, "cohort_set") |>
@@ -42,15 +44,25 @@ summariseTemporalSymmetry <- function(cohort,
   marker_names <- attr(cohort, "cohort_set") |>
     dplyr::select("cohort_definition_id", "marker_name")
   cohort_settings <- omopgenerics::settings(cohort)|>
-    dplyr::mutate(timescale = .env$timescale) |>
+    dplyr::mutate(days = .env$days) |>
     dplyr::select(-c("index_id", "marker_id", "index_name", "marker_name"))
+
   settings <- c("cohort_date_range", "days_prior_observation", "washout_window", "index_marker_gap",
-                "combination_window", "moving_average_restriction", "timescale")
+                "combination_window", "moving_average_restriction", "days")
 
   # computing the output
   output <- cohort %>%
-    dplyr::mutate(time = as.numeric(!!CDMConnector::datediff(
-      "index_date", "marker_date", interval = timescale))) |>
+    dplyr::mutate(time = as.numeric(clock::date_count_between(
+      .data$index_date, .data$marker_date, precision = "day"))) |>
+    dplyr::mutate(
+      time = dplyr::case_when(
+        .data$time < 0 ~
+          floor(.data$time / .env$days) * .env$days,
+        .data$time > 0 ~
+          ceiling(.data$time / .env$days) * .env$days,
+        TRUE ~ 0
+      )) |>
+
     dplyr::select("cohort_definition_id", "time") |>
     dplyr::group_by(.data$cohort_definition_id, .data$time) |>
     dplyr::summarise(count = as.integer(dplyr::n())) |>
@@ -64,6 +76,7 @@ summariseTemporalSymmetry <- function(cohort,
       by = c("cohort_definition_id")
     ) |>
     dplyr::compute()
+
 
   if(!is.null(cohortId)) {
     output <- output |>
@@ -106,12 +119,12 @@ summariseTemporalSymmetry <- function(cohort,
                   result_type = "temporal_symmetry",
                   package_name = "CohortSymmetry",
                   package_version = as.character(utils::packageVersion("CohortSymmetry")),
-                  timescale = .env$timescale)
+                  days = .env$days)
 
   # new summarise result
   output_sum <- output_sum |>
     dplyr::left_join(setting, by = c("days_prior_observation", "washout_window",
-                                     "index_marker_gap", "combination_window", "timescale")) |>
+                                     "index_marker_gap", "combination_window", "days")) |>
     dplyr::select(dplyr::all_of(omopgenerics::resultColumns())) |>
     omopgenerics::newSummarisedResult(
       settings = setting

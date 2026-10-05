@@ -4,14 +4,14 @@
 \alias{summariseTemporalSymmetry}
 \title{Summarise temporal symmetry}
 \usage{
-summariseTemporalSymmetry(cohort, cohortId = NULL, timescale = "month")
+summariseTemporalSymmetry(cohort, cohortId = NULL, days = 30)
 }
 \arguments{
 \item{cohort}{A cohort table in the cdm.}
 
 \item{cohortId}{The Ids in the cohort that are to be included in the analyses.}
 
-\item{timescale}{Timescale for the x axis of the plot (month, day, year).}
+\item{days}{Numerical timescale for the x axis of the plot in days (Default is 30 days, if users want years put 365, days put 1).}
 }
 \value{
 An aggregated table with difference in time (marker - index) and the relevant
