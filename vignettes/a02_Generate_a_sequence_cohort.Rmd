@@ -19,51 +19,72 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r, include = FALSE}
-if (Sys.getenv("EUNOMIA_DATA_FOLDER") == "") Sys.setenv("EUNOMIA_DATA_FOLDER" = tempdir())
-if (!dir.exists(Sys.getenv("EUNOMIA_DATA_FOLDER"))) dir.create(Sys.getenv("EUNOMIA_DATA_FOLDER"))
-if (!CDMConnector::eunomiaIsAvailable()) CDMConnector::downloadEunomiaData()
-```
-
 # Introduction
 
 In this vignette we will explore the functionalities of `generateSequenceCohort()`.
 
 ## Create a cdm object
 
-CohortSymmetry package is designed to work with data mapped to OMOP, so the first step is to create a reference to the data using the CDMConnector package. We will use the Eunomia dataset for the subsequent examples.
+The CohortSymmetry package is designed to work with data mapped to OMOP CDM, so the first step is to create a mock database using the [omock package](https://ohdsi.github.io/omock/). We will use the Eunomia dataset within omock for the subsequent examples. There are other synthetic datasets within omock that users can also use to get familiar with CohortSymmetry before applying to their own database. See the [omock vignette](https://ohdsi.github.io/omock/) for more details.
 
 ```{r message= FALSE, warning=FALSE}
-library(CDMConnector)
-library(dplyr)
-library(DBI)
+library(omock)
 library(CohortSymmetry)
-library(duckdb)
 
-db <- DBI::dbConnect(duckdb::duckdb(), 
-                     dbdir = CDMConnector::eunomiaDir())
-cdm <- cdmFromCon(
-  con = db,
-  cdmSchema = "main",
-  writeSchema = "main"
-)
+cdm <- mockCdmFromDataset(datasetName = "GiBleed")
+
 ```
 
 ## Instantiate two cohorts in the cdm reference
 
-CohortSymmetry package requires that the cdm object contains two cohort tables: the index cohort and the marker cohort. There are a lot of different ways to create these cohorts, and it will depend on what the index cohort and marker cohort represent. Here, we use the DrugUtilisation package to generate two drug cohorts in the cdm object however we recommend using CohortConstructor. For illustrative purposes, we will carry out SSA on aspirin (index_cohort) against acetaminophen (marker_cohort).
+CohortSymmetry package requires that the cdm object contains two cohort tables: the index cohort and the marker cohort. There are a lot of different ways to create these cohorts, and it will depend on what the index cohort and marker cohort represent. If one wants to generate two drugs cohorts in cdm, we recommend using [CohortConstructor R package](https://ohdsi.github.io/CohortConstructor/) however, the [DrugUtilisation R package](https://darwin-eu.github.io/DrugUtilisation/) can also be used. However a user will need to specify the gap eras for each of the cohorts i.e. a gap era set to 30 would collapse episodes together if they are within 30 days of each other for example please see the individual packages on how to implement this if required. Here is the example code for CohortConstructor:
 
 ```{r message= FALSE, warning=FALSE}
-library(DrugUtilisation)
-cdm <- DrugUtilisation::generateIngredientCohortSet(
+library(dplyr)
+library(CodelistGenerator)
+library(CohortConstructor)
+
+aspirin_codelist <- CodelistGenerator::getDrugIngredientCodes(
   cdm = cdm,
+  name = "aspirin",
+  nameStyle = "{concept_name}"
+)
+
+cdm[["aspirin"]] <- CohortConstructor::conceptCohort(
+  cdm = cdm,
+  conceptSet = aspirin_codelist,
+  exit = "event_end_date",
+  name = "aspirin")
+
+
+amoxicillin_codelist <- CodelistGenerator::getDrugIngredientCodes(
+  cdm = cdm,
+  name = "amoxicillin",
+  nameStyle = "{concept_name}"
+)
+
+cdm[["amoxicillin"]] <- CohortConstructor::conceptCohort(
+  cdm = cdm,
+  conceptSet = amoxicillin_codelist,
+  exit = "event_end_date",
+  name = "amoxicillin")
+
+```
+
+Here is some example code for DrugUtilisation:
+```{r message= FALSE, warning=FALSE}
+library(DrugUtilisation)
+
+cdm <- DrugUtilisation::generateIngredientCohortSet(
+  cdm = cdm, 
   name = "aspirin",
   ingredient = "aspirin")
 
 cdm <- DrugUtilisation::generateIngredientCohortSet(
   cdm = cdm,
-  name = "acetaminophen",
-  ingredient = "acetaminophen")
+  name = "amoxicillin",
+  ingredient = "amoxicillin")
+
 ```
 
 # Generate a sequence cohort
@@ -89,7 +110,7 @@ See that only the first event/episode (for both the index and the marker) is inc
 cdm <- generateSequenceCohortSet(
   cdm = cdm,
   indexTable = "aspirin",
-  markerTable = "acetaminophen",
+  markerTable = "amoxicillin",
   name = "intersect",
   cohortDateRange = as.Date(c(NA, NA)), 
   daysPriorObservation = 0, 
@@ -120,7 +141,7 @@ The user may also wish to subset the index table and marker table based on their
 cdm <- generateSequenceCohortSet(
   cdm = cdm,
   indexTable = "aspirin",
-  markerTable = "acetaminophen",
+  markerTable = "amoxicillin",
   name = "intersect",
   cohortDateRange = as.Date(c(NA, NA)),
   indexId = 1,
@@ -158,7 +179,7 @@ See an example of the usage below, where we have restricted the `cohortDateRange
 cdm <- generateSequenceCohortSet(
   cdm = cdm,
   indexTable = "aspirin",
-  markerTable = "acetaminophen",
+  markerTable = "amoxicillin",
   name = "intersect_study_period",
   daysPriorObservation = 0,
   washoutWindow = 0,
@@ -182,7 +203,7 @@ The number of days of prior history required can be implemented using the argume
 cdm <- generateSequenceCohortSet(
   cdm = cdm,
   indexTable = "aspirin",
-  markerTable = "acetaminophen",
+  markerTable = "amoxicillin",
   name = "intersect_prior_obs",
   cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
   daysPriorObservation = 365,
@@ -205,7 +226,7 @@ This functionality can be implemented using the `washoutWindow` argument. See an
 cdm <- generateSequenceCohortSet(
   cdm = cdm,
   indexTable = "aspirin",
-  markerTable = "acetaminophen",
+  markerTable = "amoxicillin",
   name = "intersect_washout",
   cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
   daysPriorObservation = 365,
@@ -238,7 +259,7 @@ In the `generateSequenceCohortSet()` function, this is implemented using the `co
 cdm <- generateSequenceCohortSet(
   cdm = cdm,
   indexTable = "aspirin",
-  markerTable = "acetaminophen",
+  markerTable = "amoxicillin",
   name = "intersect_changed_cw",
   cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
   daysPriorObservation = 365,
@@ -284,14 +305,10 @@ An example of the `indexGap` argument to impose this restriction, for example is
 cdm <- generateSequenceCohortSet(
   cdm = cdm,
   indexTable = "aspirin",
-  markerTable = "acetaminophen",
+  markerTable = "amoxicillin",
   name = "intersect_",
   cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
   daysPriorObservation = 365,
   washoutWindow = 365,
   indexMarkerGap = 7)
-```
-
-```{r message= FALSE, warning=FALSE, eval=FALSE}
-CDMConnector::cdmDisconnect(cdm = cdm)
 ```

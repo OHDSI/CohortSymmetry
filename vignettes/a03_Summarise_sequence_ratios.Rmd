@@ -19,57 +19,56 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r, include = FALSE}
-if (Sys.getenv("EUNOMIA_DATA_FOLDER") == "") Sys.setenv("EUNOMIA_DATA_FOLDER" = tempdir())
-if (!dir.exists(Sys.getenv("EUNOMIA_DATA_FOLDER"))) dir.create(Sys.getenv("EUNOMIA_DATA_FOLDER"))
-if (!CDMConnector::eunomiaIsAvailable())
-  CDMConnector::downloadEunomiaData()
-```
-
 # Introduction
-In this vignette we will explore the functionality and arguments of `summariseSequenceRatios()` function, which is used to generate the sequence ratios of the SSA. As this function uses the output of `generateSequenceCohortSet()` function (explained in detail in the vignette: **Step 1. Generate a sequence cohort**), we will pick up the explanation from where we left off in the previous vignette. 
+In this vignette we will explore the functionality and arguments of `summariseSequenceRatios()` function, which is used to generate the sequence ratios of the SSA. As this function uses the output of `generateSequenceCohortSet()` function (explained in detail in the vignette: **Step 1. Generate a sequence cohort**), we will pick up the explanation from where we left off in the previous vignette. However, in this case we are now using the default settings of the package.
 
 ```{r message= FALSE, warning=FALSE, include=FALSE}
 # Load libraries
-library(CDMConnector)
 library(dplyr)
-library(DBI)
 library(CohortSymmetry)
-library(duckdb)
-library(DrugUtilisation)
+library(CohortConstructor)
+library(omock)
 
-# Connect to the database
-db <- DBI::dbConnect(duckdb::duckdb(), 
-                     dbdir = CDMConnector::eunomiaDir())
-cdm <- cdmFromCon(
-  con = db,
-  cdmSchema = "main",
-  writeSchema = "main"
-)
+# Get mock data from omock
+cdm <- mockCdmFromDataset(datasetName = "GiBleed")
 
-cdm <- DrugUtilisation::generateIngredientCohortSet(
+# Generate index-marker cohorts
+aspirin_codelist <- CodelistGenerator::getDrugIngredientCodes(
   cdm = cdm,
   name = "aspirin",
-  ingredient = "aspirin")
+  nameStyle = "{concept_name}"
+)
 
-cdm <- DrugUtilisation::generateIngredientCohortSet(
+cdm[["aspirin"]] <- CohortConstructor::conceptCohort(
   cdm = cdm,
-  name = "acetaminophen",
-  ingredient = "acetaminophen")
+  conceptSet = aspirin_codelist,
+  exit = "event_end_date",
+  name = "aspirin")
+
+
+amoxicillin_codelist <- CodelistGenerator::getDrugIngredientCodes(
+  cdm = cdm,
+  name = "amoxicillin",
+  nameStyle = "{concept_name}"
+)
+
+cdm[["amoxicillin"]] <- CohortConstructor::conceptCohort(
+  cdm = cdm,
+  conceptSet = amoxicillin_codelist,
+  exit = "event_end_date",
+  name = "amoxicillin")
+
 ```
 
-Recall that in the previous vignette: Step 1. Generate a sequence cohort, we've generated `cdm$aspirin` and `cdm$acetaminophen` before and using them we could generate `cdm$intersect` like so:
+Recall that in the previous vignette: Step 1. Generate a sequence cohort, we've generated `cdm$aspirin` and `cdm$amoxicillin` before and using them we could generate `cdm$intersect` like so:
 
 ```{r message= FALSE, warning=FALSE}
 # Generate a sequence cohort
 cdm <- generateSequenceCohortSet(
   cdm = cdm,
   indexTable = "aspirin",
-  markerTable = "acetaminophen",
-  name = "intersect",
-  daysPriorObservation = 0,
-  washoutWindow = 0,
-  combinationWindow = c(0,Inf))
+  markerTable = "amoxicillin",
+  name = "intersect")
 ```
 
 
@@ -83,7 +82,3 @@ summariseSequenceRatios(
 ```
 
 The obtained output has a summarised result format. In the later vignette (**Step 3. Visualise results**) we will explore how to visualise the results in a more intuitive way. 
-
-```{r message= FALSE, warning=FALSE, eval=FALSE}
-CDMConnector::cdmDisconnect(cdm = cdm)
-```

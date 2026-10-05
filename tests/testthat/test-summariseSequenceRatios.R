@@ -1,5 +1,5 @@
 test_that("summariseSequenceRatios", {
-  skip_if_not_installed("omock")
+  testthat::skip_if_not_installed("omock")
   indexCohort <- dplyr::tibble(
     cohort_definition_id = c(1, 1, 1, 1, 1, 2, 2, 2, 2, 2),
     subject_id = c(1, 4, 2, 3, 5, 5, 4, 3, 6, 1),
@@ -61,11 +61,11 @@ test_that("summariseSequenceRatios", {
       cohort = cdm$joined_cohorts,
       confidenceInterval = -101)
   )
-    CDMConnector::cdmDisconnect(cdm = cdm)
+
 })
 
 test_that("summariseSequenceRatios - testing ratios and CIs, Example 1", {
-  skip_if_not_installed("omock")
+  testthat::skip_if_not_installed("omock")
   indexCohort <- dplyr::tibble(
     cohort_definition_id = c(1, 1, 1, 1, 1, 2, 2, 2, 2, 2),
     subject_id = c(1, 4, 2, 3, 5, 5, 4, 3, 6, 1),
@@ -159,11 +159,11 @@ test_that("summariseSequenceRatios - testing ratios and CIs, Example 1", {
     dplyr::mutate(crude_ci_check = .data$sequence_ratio_crude_lower_CI <= .data$sequence_ratio_crude_upper_CI)
 
   expect_true(all(as.integer(int$crude_ci_check== T)))
-  CDMConnector::cdmDisconnect(cdm)
+
   })
 
 test_that("summariseSequenceRatios - testing ratios and CIs, Example 2", {
-  skip_if_not_installed("omock")
+  testthat::skip_if_not_installed("omock")
   indexCohort <- dplyr::tibble(
     cohort_definition_id = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
     subject_id = c(1, 4, 2, 3, 5, 7, 8, 9, 6, 10),
@@ -228,7 +228,7 @@ test_that("summariseSequenceRatios - testing ratios and CIs, Example 2", {
 
   expect_true(all(as.integer(int$crude_ci_check== T)))
   expect_true(all(as.integer(int$adjusted_ci_check== T)))
-  CDMConnector::cdmDisconnect(cdm)
+
 })
 
 test_that("summariseSequenceRatios - testing CI", {
@@ -437,7 +437,6 @@ test_that("summariseSequenceRatios - testing CI", {
          as.numeric())
   )
 
-  CDMConnector::cdmDisconnect(cdm)
 })
 
 test_that("summariseSequenceRatios - testing cohortId", {
@@ -542,7 +541,6 @@ test_that("summariseSequenceRatios - testing cohortId", {
     2
   )
 
-  CDMConnector::cdmDisconnect(cdm)
 })
 
 test_that("summariseSequenceRatios - testing moving average restriction, ex1", {
@@ -622,7 +620,6 @@ test_that("summariseSequenceRatios - testing moving average restriction, ex1", {
          as.numeric())
   )
 
-  CDMConnector::cdmDisconnect(cdm)
 })
 
 test_that("summariseSequenceRatios - testing moving average restriction, ex2", {
@@ -775,7 +772,6 @@ test_that("summariseSequenceRatios - testing moving average restriction, ex2", {
          as.numeric())
   )
 
-  CDMConnector::cdmDisconnect(cdm)
 })
 
 test_that("edge case 1", {
@@ -813,7 +809,7 @@ test_that("edge case 1", {
   expect_error(
     result <- summariseSequenceRatios(cohort = cdm$joined_cohorts)
   )
-  CDMConnector::cdmDisconnect(cdm = cdm)
+
 })
 
 test_that("edge case 2", {
@@ -851,7 +847,7 @@ test_that("edge case 2", {
   expect_warning(
     result <- summariseSequenceRatios(cohort = cdm$joined_cohorts)
   )
-  CDMConnector::cdmDisconnect(cdm = cdm)
+
 })
 
 test_that("edge case 3", {
@@ -889,7 +885,7 @@ test_that("edge case 3", {
   expect_warning(
     result <- summariseSequenceRatios(cohort = cdm$joined_cohorts)
   )
-  CDMConnector::cdmDisconnect(cdm = cdm)
+
 })
 
 test_that("Inf CI", {

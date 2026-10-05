@@ -46,15 +46,17 @@ Suggests:
     tidyselect,
     knitr,
     dbplyr (>= 2.5.0),
-    omock (>= 0.3.1),
     visOmopResults (>= 1.5.1),
+    DrugUtilisation (>= 0.7.0),
+    CohortConstructor (>= 0.6.3),
+    CodelistGenerator (>= 3.1.0),
     flextable,
     gt,
     ggplot2,
     duckdb,
+    CDMConnector,
     rmarkdown
 Imports: 
-    CDMConnector (>= 1.7.0),
     dplyr,
     PatientProfiles (>= 1.0.0),
     rlang,
@@ -62,9 +64,8 @@ Imports:
     tidyr,
     stats,
     here,
+    omock (>= 0.6.2),
     omopgenerics (>= 1.0.0),
-    DrugUtilisation (>= 0.7.0),
-    CodelistGenerator (>= 3.1.0),
     clock
 Config/testthat/edition: 3
 URL: https://ohdsi.github.io/CohortSymmetry/

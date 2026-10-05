@@ -4,13 +4,7 @@
 \alias{mockCohortSymmetry}
 \title{Creates mock cdm object for testing}
 \usage{
-mockCohortSymmetry(
-  seed = 1,
-  indexCohort = NULL,
-  markerCohort = NULL,
-  con = NULL,
-  schema = "main"
-)
+mockCohortSymmetry(seed = 1, indexCohort = NULL, markerCohort = NULL)
 }
 \arguments{
 \item{seed}{The seed to be inputted.}
@@ -20,10 +14,6 @@ Default is NULL, which means the default indexCohort is being used.}
 
 \item{markerCohort}{The tibble of your marker cohort.
 Default is NULL, which means the default markerCohort is being used.}
-
-\item{con}{Connection detail.}
-
-\item{schema}{Name of your write schema.}
 }
 \value{
 A mock cdm object contains your index and marker cohort

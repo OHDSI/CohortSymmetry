@@ -65,7 +65,7 @@ tableTemporalSymmetry <- function(result,
 
   result_visualised <- result |>
     omopgenerics::addSettings() |>
-    dplyr::mutate(estimate_name = paste0(.data$timescale, "ly_count"),
+    dplyr::mutate(estimate_name = paste0(.data$days, "_days_ly_count"),
                   variable_level = as.integer(.data$variable_level)) |>
     dplyr::group_by(.data$group_level) |>
     dplyr::arrange(.data$variable_level) |>

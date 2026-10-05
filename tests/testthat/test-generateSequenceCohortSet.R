@@ -11,7 +11,7 @@ test_that("check output table name", {
       "index_date") %in%
       colnames(cdm$output)
   ))
-  CDMConnector::cdmDisconnect(cdm)
+
 }
 )
 
@@ -28,12 +28,12 @@ test_that("check output format, colnames", {
       "index_date") %in%
       colnames(cdm$joined_cohorts)
   ))
-  CDMConnector::cdmDisconnect(cdm)
+
 }
 )
 
 test_that("one ID against one ID, example 1", {
-  skip_if_not_installed("omock")
+  testthat::skip_if_not_installed("omock")
   cdm <- mockCohortSymmetry()
   cdm <- generateSequenceCohortSet(cdm,
                                    name = "joined_cohorts",
@@ -51,7 +51,7 @@ test_that("one ID against one ID, example 1", {
   loc <- cdm$joined_cohorts %>% dplyr::collect()
   expect_true(all(loc$cohort_start_date == pmin(loc$index_date, loc$marker_date)))
   expect_true(all(loc$cohort_start_date < loc$cohort_end_date))
-  CDMConnector::cdmDisconnect(cdm)
+
   }
 )
 
@@ -71,12 +71,11 @@ test_that("one ID against one ID, example 2", {
   expect_true(all(abs(loc$marker_date - loc$index_date) <= 365))
   expect_true((loc %>% dplyr::filter(index_name=="cohort_2" & marker_name=="cohort_2") %>% dplyr::tally() %>% dplyr::pull(n)) == 1)
   expect_false((loc %>% dplyr::filter(index_name=="cohort_1" & marker_name=="cohort_2") %>% dplyr::tally() %>% dplyr::pull(n)) > 0)
-  CDMConnector::cdmDisconnect(cdm)
 }
 )
 
 test_that("one ID against one ID, example 3", {
-  skip_if_not_installed("omock")
+  testthat::skip_if_not_installed("omock")
   cdm <- mockCohortSymmetry()
   cdm <- generateSequenceCohortSet(cdm,
                                    name = "joined_cohorts",
@@ -93,7 +92,7 @@ test_that("one ID against one ID, example 3", {
     dplyr::collect()
   expect_true(all(abs(loc$marker_date - loc$index_date) <= 365))
   expect_true((loc %>% dplyr::filter(index_name=="cohort_1" & marker_name=="cohort_2") %>% dplyr::tally() %>% dplyr::pull(n))== 3)
-  CDMConnector::cdmDisconnect(cdm)
+
 }
 )
 
@@ -155,7 +154,6 @@ test_that("multiple entries per person", {
   expect_true(all(loc %>% dplyr::group_by(subject_id) %>% dplyr::tally() %>% dplyr::select(n) == 1))
   expect_true(nrow(loc)==1)
 
-  CDMConnector::cdmDisconnect(cdm = cdm)
 }
 )
 
@@ -214,7 +212,6 @@ test_that("change combinationWindow one ID against one ID, example 1", {
   expect_true((loc %>% dplyr::filter(index_name=="cohort_1" & marker_name=="cohort_2") %>% dplyr:: tally() %>% dplyr:: pull(n)) == 2)
   expect_true(all(loc$cohort_end_date-loc$cohort_start_date>7 & loc$cohort_end_date-loc$cohort_start_date<365))
 
-  CDMConnector::cdmDisconnect(cdm)
 }
 )
 
@@ -274,7 +271,6 @@ test_that("change combinationWindow one ID against one ID, example 2", {
   expect_true((loc %>% dplyr::filter(index_name!="cohort_3") %>% dplyr:: tally() %>% dplyr:: pull(n)) == 0)
   expect_true((loc %>% dplyr::filter(marker_name!="cohort_1") %>% dplyr:: tally() %>% dplyr:: pull(n)) == 0)
 
-  CDMConnector::cdmDisconnect(cdm)
 }
 )
 
@@ -305,7 +301,7 @@ test_that("all IDs against all IDs", {
 
   # same start date exclusion
   expect_false(1 %in% (loc %>% dplyr::filter(index_name=="cohort_3", marker_name=="cohort_2") %>% dplyr::pull(subject_id)))
-  CDMConnector::cdmDisconnect(cdm)
+
   }
 )
 
@@ -352,7 +348,7 @@ test_that("one index (rsp. marker) ID against all marker (rsp. index) IDs", {
 
   expect_false("cohort_2" %in% (loc %>% dplyr::pull(marker_name)))
   expect_false("cohort_3" %in% (loc %>% dplyr::pull(marker_name)))
-  CDMConnector::cdmDisconnect(cdm)
+
 }
 )
 
@@ -381,7 +377,7 @@ test_that("a subset of IDs against a subset of IDs", {
 
   expect_false("cohort_3" %in% (loc %>% dplyr::pull(index_name)))
   expect_false("cohort_1" %in% (loc %>% dplyr::pull(marker_name)))
-  CDMConnector::cdmDisconnect(cdm)
+
   }
 )
 
@@ -463,7 +459,6 @@ test_that("example of changed combinationWindow", {
   expect_true(loc %>% dplyr::tally() %>% dplyr::pull(n) == 1) #inf gives more values
   expect_true(loc %>% dplyr::select(subject_id) %>% dplyr::pull() == 3)
 
-  CDMConnector::cdmDisconnect(cdm)
   })
 
 # priorObservation
@@ -556,7 +551,7 @@ test_that("priorObservation and cohortDateRange", {
   )
  # expect_equal(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n), 3)
   expect_true(all(cdm$joined_cohorts %>% dplyr::pull(subject_id) %in% c(1, 2, 4)))
-  CDMConnector::cdmDisconnect(cdm)
+
 })
 
 # washoutWindow
@@ -716,7 +711,7 @@ test_that("tests involving washout", {
     as.Date("2014-01-01")
   )
 
-  CDMConnector::cdmDisconnect(cdm = cdm)
+
 })
 
 test_that("tests involving indexMarkerGap", {
@@ -813,7 +808,7 @@ test_that("tests involving indexMarkerGap", {
 
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n)==1)
 
-  CDMConnector::cdmDisconnect(cdm)
+
 }
 )
 ################################# Input Validation ################################
@@ -827,7 +822,8 @@ test_that("unsuccessful examples - Inf prior observation", {
                                          markerTable = "cohort2",
                                          daysPriorObservation = Inf
   ))
-  CDMConnector::cdmDisconnect(cdm)
+
+
 })
 
 test_that("warning examples - name not in the right form", {
@@ -839,7 +835,8 @@ test_that("warning examples - name not in the right form", {
                                          markerTable = "cohort_2",
                                          daysPriorObservation = 0
   ))
-  CDMConnector::cdmDisconnect(cdm)
+
+
 })
 
 test_that("unsuccessful examples - indexTable not strings", {
@@ -851,7 +848,8 @@ test_that("unsuccessful examples - indexTable not strings", {
                                          markerTable = "cohort2",
                                          daysPriorObservation = 0
   ))
-  CDMConnector::cdmDisconnect(cdm)
+
+
 })
 
 test_that("unsuccessful examples - markerTable not strings", {
@@ -863,7 +861,8 @@ test_that("unsuccessful examples - markerTable not strings", {
                                          markerTable = cohort2,
                                          daysPriorObservation = 0
   ))
-  CDMConnector::cdmDisconnect(cdm)
+
+
 })
 
 test_that("unsuccessful examples - daysPriorObservation is not numeric", {
@@ -881,7 +880,8 @@ test_that("unsuccessful examples - daysPriorObservation is not numeric", {
                                          markerTable = "cohort2",
                                          daysPriorObservation = 2.5
   ))
-  CDMConnector::cdmDisconnect(cdm)
+
+
 })
 
 test_that("unsuccessful examples - Ids outside of range", {
@@ -899,7 +899,7 @@ test_that("unsuccessful examples - Ids outside of range", {
                                          markerTable = "cohort2",
                                          markerId = 2
   ))
-  CDMConnector::cdmDisconnect(cdm)
+
 })
 
 test_that("unsuccessful examples - tables not in the CDM", {
@@ -911,7 +911,7 @@ test_that("unsuccessful examples - tables not in the CDM", {
                                          markerTable = "cohort3",
                                          indexId = 2
   ))
-  CDMConnector::cdmDisconnect(cdm)
+
 })
 
 test_that("mock db: unsuccessful examples - tables not in the right format", {
@@ -922,7 +922,7 @@ test_that("mock db: unsuccessful examples - tables not in the right format", {
                                          indexTable = "cohort1",
                                          markerTable = "drug_exposure"
   ))
-  CDMConnector::cdmDisconnect(cdm)
+
 })
 
 test_that("mock db: unsuccessful examples - tables not in the right format", {
@@ -933,7 +933,7 @@ test_that("mock db: unsuccessful examples - tables not in the right format", {
                                          indexTable = "cohort1",
                                          markerTable = "drug_exposure"
   ))
-  CDMConnector::cdmDisconnect(cdm)
+
 })
 
 test_that("unsuccessful examples - negative parameters", {
@@ -957,7 +957,7 @@ test_that("unsuccessful examples - negative parameters", {
                                          markerTable = "drug_exposure",
                                          combinationWindow = c(-200,-100)
   ))
-  CDMConnector::cdmDisconnect(cdm)
+
 })
 
 test_that("generateSequenceCohortSet - inputValidation", {
@@ -994,11 +994,13 @@ test_that("generateSequenceCohortSet - inputValidation", {
       name = "joined_cohorts",
       indexTable = "cohort_1",
       markerTable = "cohort_2",
-      cohortDateRange = c(as.Date("2002-01-01"),1),
+      cohortDateRange = c(1,1),
       washoutWindow = 365,
       daysPriorObservation = 0,
       combinationWindow = c(0, Inf)
-    ))
+    )
+    )
+
   expect_error(
     generateSequenceCohortSet(
       cdm = cdm,
@@ -1031,5 +1033,5 @@ test_that("generateSequenceCohortSet - inputValidation", {
       combinationWindow = c(Inf, Inf)
     )
   )
-  CDMConnector::cdmDisconnect(cdm)
+
 })

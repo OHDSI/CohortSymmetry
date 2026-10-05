@@ -1,5 +1,6 @@
 test_that("SQL Server", {
   skip_on_cran()
+  testthat::skip_if_not_installed("CDMConnector")
   skip_if(Sys.getenv("SQL_SERVER_DRIVER") == "")
 
   db <- DBI::dbConnect(odbc::odbc(),
@@ -41,13 +42,13 @@ expect_no_error(cdm <- generateSequenceCohortSet(cdm,
 
 expect_true(nrow(cdm$joined_cohorts %>% dplyr::collect()) > 0)
 
-CDMConnector::dropTable(cdm, tidyselect::starts_with("csyim"))
+omopgenerics::dropSourceTable(cdm, tidyselect::starts_with("csyim"))
 
-CDMConnector::cdmDisconnect(cdm)
 })
 
 test_that("Redshift", {
   skip_on_cran()
+  testthat::skip_if_not_installed("CDMConnector")
   skip_if(Sys.getenv("CDM5_REDSHIFT_DBNAME") == "")
   db <- DBI::dbConnect(RPostgres::Redshift(),
                        dbname   = Sys.getenv("CDM5_REDSHIFT_DBNAME"),

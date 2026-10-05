@@ -56,7 +56,6 @@ test_that("attrition: output structure", {
   expect_true(nrow(omopgenerics::attrition(cdm$joined_cohorts) |>
                      dplyr::filter(cohort_definition_id=="1"))== "5")
 
-  CDMConnector::cdmDisconnect(cdm)
 })
 
 test_that("attrition: cohortDateRange", {
@@ -148,7 +147,6 @@ test_that("attrition: cohortDateRange", {
   expect_true(all(omopgenerics::attrition(cdm$joined_cohorts) |>
                     dplyr::select(number_records) == 2))
 
-  CDMConnector::cdmDisconnect(cdm)
 })
 
 test_that("attrition: combinationWindow", {
@@ -316,7 +314,6 @@ test_that("attrition: combinationWindow", {
                       as.numeric()),
                    5)
 
-  CDMConnector::cdmDisconnect(cdm)
 })
 
 test_that("attrition: indexMarkerGap", {
@@ -408,7 +405,6 @@ test_that("attrition: indexMarkerGap", {
                    c(3, 4, 5)
   )
 
-  CDMConnector::cdmDisconnect(cdm = cdm)
 })
 
 test_that("attrition: daysPriorObservation", {
@@ -473,7 +469,7 @@ test_that("attrition: daysPriorObservation", {
                    c(1,2)
   )
 
-  CDMConnector::cdmDisconnect(cdm = cdm)
+
 })
 
 test_that("attrition: washoutWindow", {
@@ -613,7 +609,6 @@ test_that("attrition: washoutWindow", {
                      as.numeric(),
                    0)
 
-  CDMConnector::cdmDisconnect(cdm = cdm)
 })
 
 test_that("attrition: complete example 1", {
@@ -790,7 +785,6 @@ test_that("attrition: complete example 1", {
                    0
   )
 
-  CDMConnector::cdmDisconnect(cdm = cdm)
 })
 
 test_that("attrition: complete example 2", {
@@ -967,5 +961,4 @@ test_that("attrition: complete example 2", {
                    0
   )
 
-  CDMConnector::cdmDisconnect(cdm = cdm)
 })

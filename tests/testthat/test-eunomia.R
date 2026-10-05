@@ -1,6 +1,10 @@
 test_that("eunomia - generateSequenceCohortSet", {
   skip_on_cran()
+  testthat::skip_if_not_installed("CDMConnector")
+  testthat::skip_if_not_installed("duckdb")
   testthat::skip_if_not_installed("flextable")
+  testthat::skip_if_not_installed("DrugUtilisation")
+
 
   if (Sys.getenv("EUNOMIA_DATA_FOLDER") == "") {
     Sys.setenv("EUNOMIA_DATA_FOLDER" = tempdir())
