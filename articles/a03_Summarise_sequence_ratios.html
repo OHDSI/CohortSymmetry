@@ -83,21 +83,19 @@ generate the sequence ratios of the SSA. As this function uses the
 output of <code><a href="../reference/generateSequenceCohortSet.html">generateSequenceCohortSet()</a></code> function (explained
 in detail in the vignette: <strong>Step 1. Generate a sequence
 cohort</strong>), we will pick up the explanation from where we left off
-in the previous vignette.</p>
+in the previous vignette. However, in this case we are now using the
+default settings of the package.</p>
 <p>Recall that in the previous vignette: Step 1. Generate a sequence
 cohort, we’ve generated <code>cdm$aspirin</code> and
-<code>cdm$acetaminophen</code> before and using them we could generate
+<code>cdm$amoxicillin</code> before and using them we could generate
 <code>cdm$intersect</code> like so:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Generate a sequence cohort</span></span>
 <span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generateSequenceCohortSet.html">generateSequenceCohortSet</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
 <span>  indexTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
-<span>  markerTable <span class="op">=</span> <span class="st">"acetaminophen"</span>,</span>
-<span>  name <span class="op">=</span> <span class="st">"intersect"</span>,</span>
-<span>  daysPriorObservation <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  washoutWindow <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  combinationWindow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="cn">Inf</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  markerTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
+<span>  name <span class="op">=</span> <span class="st">"intersect"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="obtain-sequence-ratios">Obtain sequence ratios<a class="anchor" aria-label="anchor" href="#obtain-sequence-ratios"></a>
@@ -113,23 +111,21 @@ corresponding confidence intervals) using
 <span><span class="co">#&gt; Rows: 11</span></span>
 <span><span class="co">#&gt; Columns: 13</span></span>
 <span><span class="co">#&gt; $ result_id        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1</span></span>
-<span><span class="co">#&gt; $ cdm_name         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Synthea"<span style="color: #949494;">, </span>"Synthea"<span style="color: #949494;">, </span>"Synthea"<span style="color: #949494;">, </span>"Synthea"<span style="color: #949494;">, </span>"Synthea"…</span></span>
+<span><span class="co">#&gt; $ cdm_name         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "GiBleed"<span style="color: #949494;">, </span>"GiBleed"<span style="color: #949494;">, </span>"GiBleed"<span style="color: #949494;">, </span>"GiBleed"<span style="color: #949494;">, </span>"GiBleed"…</span></span>
 <span><span class="co">#&gt; $ group_name       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "index_cohort_name &amp;&amp;&amp; marker_cohort_name"<span style="color: #949494;">, </span>"index_co…</span></span>
-<span><span class="co">#&gt; $ group_level      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "aspirin &amp;&amp;&amp; acetaminophen"<span style="color: #949494;">, </span>"aspirin &amp;&amp;&amp; acetaminoph…</span></span>
+<span><span class="co">#&gt; $ group_level      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "aspirin &amp;&amp;&amp; amoxicillin"<span style="color: #949494;">, </span>"aspirin &amp;&amp;&amp; amoxicillin"<span style="color: #949494;">,</span>…</span></span>
 <span><span class="co">#&gt; $ strata_name      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"…</span></span>
 <span><span class="co">#&gt; $ strata_level     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"…</span></span>
 <span><span class="co">#&gt; $ variable_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "index"<span style="color: #949494;">, </span>"index"<span style="color: #949494;">, </span>"marker"<span style="color: #949494;">, </span>"marker"<span style="color: #949494;">, </span>"null"<span style="color: #949494;">, </span>"crude"…</span></span>
 <span><span class="co">#&gt; $ variable_level   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "first_pharmac"<span style="color: #949494;">, </span>"first_pharmac"<span style="color: #949494;">, </span>"first_pharmac"<span style="color: #949494;">, </span>"f…</span></span>
 <span><span class="co">#&gt; $ estimate_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "count"<span style="color: #949494;">, </span>"percentage"<span style="color: #949494;">, </span>"count"<span style="color: #949494;">, </span>"percentage"<span style="color: #949494;">, </span>"point_…</span></span>
 <span><span class="co">#&gt; $ estimate_type    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "integer"<span style="color: #949494;">, </span>"numeric"<span style="color: #949494;">, </span>"integer"<span style="color: #949494;">, </span>"numeric"<span style="color: #949494;">, </span>"numeric"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1235"<span style="color: #949494;">, </span>"64.4"<span style="color: #949494;">, </span>"682"<span style="color: #949494;">, </span>"35.6"<span style="color: #949494;">, </span>"1.71279724211865"<span style="color: #949494;">, </span>"1…</span></span>
+<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "42"<span style="color: #949494;">, </span>"58.3"<span style="color: #949494;">, </span>"30"<span style="color: #949494;">, </span>"41.7"<span style="color: #949494;">, </span>"1.04487150121398"<span style="color: #949494;">, </span>"1.4"…</span></span>
 <span><span class="co">#&gt; $ additional_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"<span style="color: #949494;">, </span>"overall"…</span></span></code></pre></div>
 <p>The obtained output has a summarised result format. In the later
 vignette (<strong>Step 3. Visualise results</strong>) we will explore
 how to visualise the results in a more intuitive way.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">CDMConnector</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/cdmDisconnect.html" class="external-link">cdmDisconnect</a></span><span class="op">(</span>cdm <span class="op">=</span> <span class="va">cdm</span><span class="op">)</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

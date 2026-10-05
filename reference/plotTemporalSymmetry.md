@@ -8,8 +8,8 @@ It provides a ggplot of the temporal symmetry of two or more cohorts.
 plotTemporalSymmetry(
   result,
   plotTitle = NULL,
-  labs = c("Time (months)", "Individuals (N)"),
-  xlim = c(-12, 12),
+  labs = c("Time (days)", "Individuals (N)"),
+  xlim = c(-365, 365),
   colours = c("blue", "red"),
   scales = "free"
 )
@@ -54,31 +54,12 @@ A plot for the temporal symmetry of cohorts.
 # \donttest{
 library(CohortSymmetry)
 cdm <- mockCohortSymmetry()
-#> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmpAJx4TN/duckdb
-#> This is removed when the R session ends.
-#> • Extensions are re-downloaded each session.
-#> • Secrets are lost.
-#> ℹ Run duckdb(shared_home = TRUE) (or create ~/.duckdb) to keep them (suitable for most users).
-#> ℹ Run duckdb(shared_home = FALSE) to accept the temporary directory (and silence this message).
-#> ℹ See ?duckdb_storage for details and alternatives.
-#> Creating a new cdm
-#> Uploading table person (5 rows) - [1/11]
-#> Uploading table observation_period (5 rows) - [2/11]
-#> Uploading table cdm_source (1 rows) - [3/11]
-#> Uploading table concept (3361 rows) - [4/11]
-#> Uploading table vocabulary (65 rows) - [5/11]
-#> Uploading table concept_relationship (117257 rows) - [6/11]
-#> Uploading table concept_synonym (3895 rows) - [7/11]
-#> Uploading table concept_ancestor (1327 rows) - [8/11]
-#> Uploading table drug_strength (45 rows) - [9/11]
-#> Uploading table cohort_1 (10 rows) - [10/11]
-#> Uploading table cohort_2 (11 rows) - [11/11]
 cdm <- generateSequenceCohortSet(cdm = cdm,
                                  indexTable = "cohort_1",
                                  markerTable = "cohort_2",
                                  name = "joined_cohort")
 temporal_symmetry <- summariseTemporalSymmetry(cohort = cdm$joined_cohort)
+#> `days` cast to character.
 plotTemporalSymmetry(result = temporal_symmetry)
 
 CDMConnector::cdmDisconnect(cdm = cdm)

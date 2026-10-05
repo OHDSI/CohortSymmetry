@@ -9,10 +9,11 @@ this function uses the output of
 [`generateSequenceCohortSet()`](https://ohdsi.github.io/CohortSymmetry/reference/generateSequenceCohortSet.md)
 function (explained in detail in the vignette: **Step 1. Generate a
 sequence cohort**), we will pick up the explanation from where we left
-off in the previous vignette.
+off in the previous vignette. However, in this case we are now using the
+default settings of the package.
 
 Recall that in the previous vignette: Step 1. Generate a sequence
-cohort, we’ve generated `cdm$aspirin` and `cdm$acetaminophen` before and
+cohort, we’ve generated `cdm$aspirin` and `cdm$amoxicillin` before and
 using them we could generate `cdm$intersect` like so:
 
 ``` r
@@ -21,11 +22,8 @@ using them we could generate `cdm$intersect` like so:
 cdm <- generateSequenceCohortSet(
   cdm = cdm,
   indexTable = "aspirin",
-  markerTable = "acetaminophen",
-  name = "intersect",
-  daysPriorObservation = 0,
-  washoutWindow = 0,
-  combinationWindow = c(0,Inf))
+  markerTable = "amoxicillin",
+  name = "intersect")
 ```
 
 ## Obtain sequence ratios
@@ -44,16 +42,16 @@ summariseSequenceRatios(
 #> Rows: 11
 #> Columns: 13
 #> $ result_id        <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-#> $ cdm_name         <chr> "Synthea", "Synthea", "Synthea", "Synthea", "Synthea"…
+#> $ cdm_name         <chr> "GiBleed", "GiBleed", "GiBleed", "GiBleed", "GiBleed"…
 #> $ group_name       <chr> "index_cohort_name &&& marker_cohort_name", "index_co…
-#> $ group_level      <chr> "aspirin &&& acetaminophen", "aspirin &&& acetaminoph…
+#> $ group_level      <chr> "aspirin &&& amoxicillin", "aspirin &&& amoxicillin",…
 #> $ strata_name      <chr> "overall", "overall", "overall", "overall", "overall"…
 #> $ strata_level     <chr> "overall", "overall", "overall", "overall", "overall"…
 #> $ variable_name    <chr> "index", "index", "marker", "marker", "null", "crude"…
 #> $ variable_level   <chr> "first_pharmac", "first_pharmac", "first_pharmac", "f…
 #> $ estimate_name    <chr> "count", "percentage", "count", "percentage", "point_…
 #> $ estimate_type    <chr> "integer", "numeric", "integer", "numeric", "numeric"…
-#> $ estimate_value   <chr> "1235", "64.4", "682", "35.6", "1.71279724211865", "1…
+#> $ estimate_value   <chr> "42", "58.3", "30", "41.7", "1.04487150121398", "1.4"…
 #> $ additional_name  <chr> "overall", "overall", "overall", "overall", "overall"…
 #> $ additional_level <chr> "overall", "overall", "overall", "overall", "overall"…
 ```
@@ -61,8 +59,3 @@ summariseSequenceRatios(
 The obtained output has a summarised result format. In the later
 vignette (**Step 3. Visualise results**) we will explore how to
 visualise the results in a more intuitive way.
-
-``` r
-
-CDMConnector::cdmDisconnect(cdm = cdm)
-```

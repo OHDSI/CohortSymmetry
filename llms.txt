@@ -21,26 +21,24 @@ pak::pak("OHDSI/CohortSymmetry")
 
 ### Create a reference to data in the OMOP CDM format
 
-The CohortSymmetry package is designed to work with data in the OMOP CDM
-(Common Data Model) format, so our first step is to create a reference
-to the data using the `CDMConnector` package.
+The CohortSymmetry package is designed to work with data mapped to OMOP
+CDM, so the first step is to create a mock database using the [omock
+package](https://ohdsi.github.io/omock/). We will use the Eunomia
+dataset within omock for the subsequent examples. There are other
+synthetic datasets within omock that users can also use to get familiar
+with CohortSymmetry before applying to their own database. See the
+[omock vignette](https://ohdsi.github.io/omock/) for more details.
 
-As an example, we will be using Eunomia data set.
+As an example, we will be using Eunomia GIBleed data set.
 
 ``` r
 
-library(CDMConnector)
 library(dplyr)
 library(DBI)
-library(duckdb)
- 
-db <- DBI::dbConnect(duckdb::duckdb(), 
-                     dbdir = CDMConnector::eunomiaDir())
-cdm <- cdmFromCon(
-  con = db,
-  cdmSchema = "main",
-  writeSchema = "main"
-)
+library(omock)
+library(CohortSymmetry)
+
+cdm <- mockCdmFromDataset(datasetName = "GiBleed")
 ```
 
 ### Step 0: Instantiate two cohorts in the cdm reference
@@ -159,14 +157,14 @@ cdm <- generateSequenceCohortSet(
 
 cdm$aspirin_amoxicillin %>% 
   dplyr::glimpse()
-#> Rows: ??
+#> Rows: 72
 #> Columns: 6
 #> $ cohort_definition_id <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-#> $ subject_id           <int> 280, 307, 310, 1340, 144, 1813, 2621, 3436, 4867,…
-#> $ cohort_start_date    <date> 1946-10-16, 1979-10-27, 1951-09-06, 1912-10-22, …
-#> $ cohort_end_date      <date> 1947-03-20, 1979-11-02, 1952-08-08, 1912-12-29, …
-#> $ index_date           <date> 1946-10-16, 1979-10-27, 1951-09-06, 1912-10-22, …
-#> $ marker_date          <date> 1947-03-20, 1979-11-02, 1952-08-08, 1912-12-29, …
+#> $ subject_id           <int> 1536, 1340, 2801, 4121, 4867, 1054, 2813, 331, 34…
+#> $ cohort_start_date    <date> 1912-08-25, 1912-10-22, 1923-06-17, 1925-09-28, …
+#> $ cohort_end_date      <date> 1913-01-27, 1912-12-29, 1923-11-09, 1925-11-18, …
+#> $ index_date           <date> 1912-08-25, 1912-10-22, 1923-11-09, 1925-11-18, …
+#> $ marker_date          <date> 1913-01-27, 1912-12-29, 1923-06-17, 1925-09-28, …
 ```
 
 ### Step 2: summariseSequenceRatios
@@ -185,7 +183,7 @@ res %>% glimpse()
 #> Rows: 11
 #> Columns: 13
 #> $ result_id        <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-#> $ cdm_name         <chr> "Synthea", "Synthea", "Synthea", "Synthea", "Synthea"…
+#> $ cdm_name         <chr> "GiBleed", "GiBleed", "GiBleed", "GiBleed", "GiBleed"…
 #> $ group_name       <chr> "index_cohort_name &&& marker_cohort_name", "index_co…
 #> $ group_level      <chr> "aspirin &&& amoxicillin", "aspirin &&& amoxicillin",…
 #> $ strata_name      <chr> "overall", "overall", "overall", "overall", "overall"…
@@ -239,7 +237,8 @@ sequence_ratio_plot
 ![](reference/figures/plotSequenceRatios.png)
 
 The user also has the freedom to plot temporal trend to review the
-asymmetry between index and marker:
+asymmetry between index and marker. The argument days (default 30 days)
+allows the user to create specific breaks for this plot:
 
 ``` r
 
@@ -254,13 +253,6 @@ temporal_symmetry_plot
 ```
 
 ![](reference/figures/plotTemporalSymmetry.png)
-
-### Disconnect from the cdm database connection
-
-``` r
-
-CDMConnector::cdmDisconnect(cdm = cdm)
-```
 
 # Package index
 

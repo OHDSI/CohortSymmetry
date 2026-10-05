@@ -38,43 +38,36 @@ First, let’s load the relevant libraries.
 
 ``` r
 
-library(CDMConnector)
-library(dplyr)
-library(DBI)
 library(omock)
 library(CohortSymmetry)
-library(duckdb)
 library(visOmopResults)
+library(dplyr)
 ```
 
 The CohortSymmetry package works with data mapped to the OMOP CDM.
-Hence, the initial step involves connecting to a database. As an
-example, we will be using Omock package to generate a mock database with
-two mock cohorts: the **index_cohort** and the **marker_cohort**.
+Hence, the initial step involves connecting to a database which is user
+and database specific. As an example, we will be using omock package
+which can call various synthetic databases. We will use the GIBleed data
+to create two cohorts: the **index_cohort** and the **marker_cohort**.
 
 ``` r
 
-cdm <- emptyCdmReference(cdmName = "mock") |>
-  mockPerson(nPerson = 100) |>
-  mockObservationPeriod() |>
-  mockCohort(
-    name = "index_cohort",
-    numberCohorts = 1,
-    cohortName = c("index_cohort"),
-    seed = 1,
-  ) |>
-  mockCohort(
-    name = "marker_cohort",
-    numberCohorts = 1,
-    cohortName = c("marker_cohort"), 
-    seed = 2
-  )
 
-con <- dbConnect(duckdb::duckdb())
-cdm <- copyCdmTo(con = con, cdm = cdm, schema = "main", overwrite = T)
+cdm <- mockCdmFromDataset(datasetName = "GiBleed")
+
+cdm <- DrugUtilisation::generateIngredientCohortSet(
+  cdm = cdm, 
+  name = "index",
+  ingredient = "aspirin")
+
+cdm <- DrugUtilisation::generateIngredientCohortSet(
+  cdm = cdm,
+  name = "marker",
+  ingredient = c("amoxicillin"))
 ```
 
-Once we have established a connection to the database, we can use the
+Once we have our data and created the index and marker cohorts, we can
+use the
 [`generateSequenceCohortSet()`](https://ohdsi.github.io/CohortSymmetry/reference/generateSequenceCohortSet.md)
 function to find the intersection of the two cohorts. This function will
 provide us with the individuals who appear in both cohorts, which will
@@ -84,10 +77,10 @@ be named **intersect** - another cohort in the cdm reference.
 
 cdm <- generateSequenceCohortSet(
   cdm = cdm,
-  indexTable = "index_cohort",
-  markerTable = "marker_cohort",
+  indexTable = "index",
+  markerTable = "marker",
   name = "intersect",
-  combinationWindow = c(0, Inf)
+  combinationWindow = c(0, 365)
 )
 ```
 
@@ -100,14 +93,14 @@ the **index_cohort** and the **marker_cohort**, respectively.
 
 cdm$intersect |> 
   dplyr::glimpse()
-#> Rows: ??
+#> Rows: 72
 #> Columns: 6
 #> $ cohort_definition_id <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-#> $ subject_id           <int> 1, 15, 32, 81, 17, 65, 75, 53, 6, 73, 28, 25, 40,…
-#> $ cohort_start_date    <date> 2006-05-09, 2002-04-25, 2011-05-27, 2000-11-07, …
-#> $ cohort_end_date      <date> 2006-05-31, 2009-06-23, 2015-06-04, 2005-08-03, …
-#> $ index_date           <date> 2006-05-31, 2002-04-25, 2011-05-27, 2005-08-03, …
-#> $ marker_date          <date> 2006-05-09, 2009-06-23, 2015-06-04, 2000-11-07, …
+#> $ subject_id           <int> 1536, 1340, 2801, 4121, 4867, 1054, 2813, 331, 34…
+#> $ cohort_start_date    <date> 1912-08-25, 1912-10-22, 1923-06-17, 1925-09-28, …
+#> $ cohort_end_date      <date> 1913-01-27, 1912-12-29, 1923-11-09, 1925-11-18, …
+#> $ index_date           <date> 1912-08-25, 1912-10-22, 1923-11-09, 1925-11-18, …
+#> $ marker_date          <date> 1913-01-27, 1912-12-29, 1923-06-17, 1925-09-28, …
 ```
 
 Once we have the intersect cohort, you are able to explore the temporal
@@ -119,7 +112,7 @@ and
 
 temporal_symmetry <- summariseTemporalSymmetry(
   cohort = cdm$intersect, 
-  timescale = "year")
+  days = 30)
 ```
 
 The result can be viewed using table and plot functions.

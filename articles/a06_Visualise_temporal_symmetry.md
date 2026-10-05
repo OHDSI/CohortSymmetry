@@ -45,16 +45,12 @@ tableTemporalSymmetry(result = temporal_symmetry)
 plotTemporalSymmetry(result = temporal_symmetry)
 ```
 
-![](a06_Visualise_temporal_symmetry_files/figure-html/unnamed-chunk-6-1.png)
+![](a06_Visualise_temporal_symmetry_files/figure-html/unnamed-chunk-5-1.png)
 
 Note that the $`x`$ axis is the time, which we recall to be the
 initiation of the marker minus the initiation of the index. The unit of
-the time difference here is month as this is the default from
+the time difference here is 30 days as this is the default from
 `summarisTemporalSymmetry()`.
 
-``` r
-
-CDMConnector::cdmDisconnect(cdm = cdm)
-```
-
-**That would be the end of the vignette, have fun with the package!**
+**This is the end of the vignette, please cite our paper and let us know
+of any bugs or improvements we can make - have fun with the package!**

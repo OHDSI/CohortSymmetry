@@ -61,13 +61,13 @@ if (requireNamespace("flextable", quietly = TRUE)) {
 
 | Index cohort name | Variable name | Estimate name | Marker cohort name   |
 |-------------------|---------------|---------------|----------------------|
-|                   |               |               | acetaminophen        |
-| Synthea           |               |               |                      |
-| aspirin           | index         | N (%)         | 1,235 (64.40%)       |
-|                   | marker        | N (%)         | 682 (35.60%)         |
-|                   | null          | SR            | 1.71                 |
-|                   | crude         | SR \[CI 95%\] | 1.81 \[1.65 - 1.99\] |
-|                   | adjusted      | SR \[CI 95%\] | 1.06 \[0.96 - 1.16\] |
+|                   |               |               | amoxicillin          |
+| GiBleed           |               |               |                      |
+| aspirin           | index         | N (%)         | 42 (58.30%)          |
+|                   | marker        | N (%)         | 30 (41.70%)          |
+|                   | null          | SR            | 1.04                 |
+|                   | crude         | SR \[CI 95%\] | 1.40 \[0.88 - 2.25\] |
+|                   | adjusted      | SR \[CI 95%\] | 1.34 \[0.84 - 2.15\] |
 
 Or a tibble:
 
@@ -78,13 +78,13 @@ tableSequenceRatios(result = result,
 #> # A tibble: 5 × 5
 #>   `Data source` `Index cohort name` `Variable name` `Estimate name`
 #>   <chr>         <chr>               <chr>           <chr>          
-#> 1 Synthea       aspirin             index           N (%)          
-#> 2 Synthea       aspirin             marker          N (%)          
-#> 3 Synthea       aspirin             null            SR             
-#> 4 Synthea       aspirin             crude           SR [CI 95%]    
-#> 5 Synthea       aspirin             adjusted        SR [CI 95%]    
+#> 1 GiBleed       aspirin             index           N (%)          
+#> 2 GiBleed       aspirin             marker          N (%)          
+#> 3 GiBleed       aspirin             null            SR             
+#> 4 GiBleed       aspirin             crude           SR [CI 95%]    
+#> 5 GiBleed       aspirin             adjusted        SR [CI 95%]    
 #> # ℹ 1 more variable:
-#> #   `[header_name]Marker cohort name\n[header_level]acetaminophen` <chr>
+#> #   `[header_name]Marker cohort name\n[header_level]amoxicillin` <chr>
 ```
 
 ## Plot output of the sequence ratio results
@@ -98,7 +98,7 @@ to visualise the results.
 plotSequenceRatios(result = result)
 ```
 
-![](a04_Visualise_sequence_ratios_files/figure-html/unnamed-chunk-8-1.png)
+![](a04_Visualise_sequence_ratios_files/figure-html/unnamed-chunk-7-1.png)
 
 By default, it plots both the adjusted sequence ratios (and its CIs) and
 crude sequence ratios (and its CIs). One may wish to only plot adjusted
@@ -114,7 +114,7 @@ plotSequenceRatios(result = result,
                    colours = "black")
 ```
 
-![](a04_Visualise_sequence_ratios_files/figure-html/unnamed-chunk-9-1.png)
+![](a04_Visualise_sequence_ratios_files/figure-html/unnamed-chunk-8-1.png)
 
 One could change the colour like so:
 
@@ -125,9 +125,4 @@ plotSequenceRatios(result = result,
                    colours = "red")
 ```
 
-![](a04_Visualise_sequence_ratios_files/figure-html/unnamed-chunk-10-1.png)
-
-``` r
-
-CDMConnector::cdmDisconnect(cdm = cdm)
-```
+![](a04_Visualise_sequence_ratios_files/figure-html/unnamed-chunk-9-1.png)

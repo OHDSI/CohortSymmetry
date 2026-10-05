@@ -87,21 +87,15 @@
 <div class="section level3">
 <h3 id="create-a-reference-to-data-in-the-omop-cdm-format">Create a reference to data in the OMOP CDM format<a class="anchor" aria-label="anchor" href="#create-a-reference-to-data-in-the-omop-cdm-format"></a>
 </h3>
-<p>The CohortSymmetry package is designed to work with data in the OMOP CDM (Common Data Model) format, so our first step is to create a reference to the data using the <code>CDMConnector</code> package.</p>
-<p>As an example, we will be using Eunomia data set.</p>
+<p>The CohortSymmetry package is designed to work with data mapped to OMOP CDM, so the first step is to create a mock database using the <a href="https://ohdsi.github.io/omock/" class="external-link">omock package</a>. We will use the Eunomia dataset within omock for the subsequent examples. There are other synthetic datasets within omock that users can also use to get familiar with CohortSymmetry before applying to their own database. See the <a href="https://ohdsi.github.io/omock/" class="external-link">omock vignette</a> for more details.</p>
+<p>As an example, we will be using Eunomia GIBleed data set.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu.github.io/CDMConnector/" class="external-link">CDMConnector</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dbi.r-dbi.org" class="external-link">DBI</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r.duckdb.org/" class="external-link">duckdb</a></span><span class="op">)</span></span>
-<span> </span>
-<span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu">duckdb</span><span class="fu">::</span><span class="fu"><a href="https://r.duckdb.org/reference/duckdb.html" class="external-link">duckdb</a></span><span class="op">(</span><span class="op">)</span>, </span>
-<span>                     dbdir <span class="op">=</span> <span class="fu">CDMConnector</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/CDMConnector/reference/eunomiaDir.html" class="external-link">eunomiaDir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://darwin-eu.github.io/CDMConnector/reference/cdmFromCon.html" class="external-link">cdmFromCon</a></span><span class="op">(</span></span>
-<span>  con <span class="op">=</span> <span class="va">db</span>,</span>
-<span>  cdmSchema <span class="op">=</span> <span class="st">"main"</span>,</span>
-<span>  writeSchema <span class="op">=</span> <span class="st">"main"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/omock/" class="external-link">omock</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/CohortSymmetry/">CohortSymmetry</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ohdsi.github.io/omock/reference/mockCdmFromDataset.html" class="external-link">mockCdmFromDataset</a></span><span class="op">(</span>datasetName <span class="op">=</span> <span class="st">"GiBleed"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="step-0-instantiate-two-cohorts-in-the-cdm-reference">Step 0: Instantiate two cohorts in the cdm reference<a class="anchor" aria-label="anchor" href="#step-0-instantiate-two-cohorts-in-the-cdm-reference"></a>
@@ -143,7 +137,7 @@
 <span>  nameStyle <span class="op">=</span> <span class="st">"{concept_name}"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">cdm</span><span class="op">[[</span><span class="st">"aspirin"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">CohortConstructor</span><span class="fu">::</span><span class="fu">conceptCohort</span><span class="op">(</span></span>
+<span><span class="va">cdm</span><span class="op">[[</span><span class="st">"aspirin"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">CohortConstructor</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/CohortConstructor/reference/conceptCohort.html" class="external-link">conceptCohort</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
 <span>  conceptSet <span class="op">=</span> <span class="va">aspirin_codelist</span>,</span>
 <span>  exit <span class="op">=</span> <span class="st">"event_end_date"</span>,</span>
@@ -162,7 +156,7 @@
 <span>  nameStyle <span class="op">=</span> <span class="st">"{concept_name}"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">cdm</span><span class="op">[[</span><span class="st">"amoxicillin"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">CohortConstructor</span><span class="fu">::</span><span class="fu">conceptCohort</span><span class="op">(</span></span>
+<span><span class="va">cdm</span><span class="op">[[</span><span class="st">"amoxicillin"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">CohortConstructor</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/CohortConstructor/reference/conceptCohort.html" class="external-link">conceptCohort</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
 <span>  conceptSet <span class="op">=</span> <span class="va">amoxicillin_codelist</span>,</span>
 <span>  exit <span class="op">=</span> <span class="st">"event_end_date"</span>,</span>
@@ -190,14 +184,14 @@
 <span></span>
 <span><span class="va">cdm</span><span class="op">$</span><span class="va">aspirin_amoxicillin</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: ??</span></span>
+<span><span class="co">#&gt; Rows: 72</span></span>
 <span><span class="co">#&gt; Columns: 6</span></span>
 <span><span class="co">#&gt; $ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…</span></span>
-<span><span class="co">#&gt; $ subject_id           &lt;int&gt; 280, 307, 310, 1340, 144, 1813, 2621, 3436, 4867,…</span></span>
-<span><span class="co">#&gt; $ cohort_start_date    &lt;date&gt; 1946-10-16, 1979-10-27, 1951-09-06, 1912-10-22, …</span></span>
-<span><span class="co">#&gt; $ cohort_end_date      &lt;date&gt; 1947-03-20, 1979-11-02, 1952-08-08, 1912-12-29, …</span></span>
-<span><span class="co">#&gt; $ index_date           &lt;date&gt; 1946-10-16, 1979-10-27, 1951-09-06, 1912-10-22, …</span></span>
-<span><span class="co">#&gt; $ marker_date          &lt;date&gt; 1947-03-20, 1979-11-02, 1952-08-08, 1912-12-29, …</span></span></code></pre></div>
+<span><span class="co">#&gt; $ subject_id           &lt;int&gt; 1536, 1340, 2801, 4121, 4867, 1054, 2813, 331, 34…</span></span>
+<span><span class="co">#&gt; $ cohort_start_date    &lt;date&gt; 1912-08-25, 1912-10-22, 1923-06-17, 1925-09-28, …</span></span>
+<span><span class="co">#&gt; $ cohort_end_date      &lt;date&gt; 1913-01-27, 1912-12-29, 1923-11-09, 1925-11-18, …</span></span>
+<span><span class="co">#&gt; $ index_date           &lt;date&gt; 1912-08-25, 1912-10-22, 1923-11-09, 1925-11-18, …</span></span>
+<span><span class="co">#&gt; $ marker_date          &lt;date&gt; 1913-01-27, 1912-12-29, 1923-06-17, 1925-09-28, …</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="step-2-summarisesequenceratios">Step 2: summariseSequenceRatios<a class="anchor" aria-label="anchor" href="#step-2-summarisesequenceratios"></a>
@@ -210,7 +204,7 @@
 <span><span class="co">#&gt; Rows: 11</span></span>
 <span><span class="co">#&gt; Columns: 13</span></span>
 <span><span class="co">#&gt; $ result_id        &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1</span></span>
-<span><span class="co">#&gt; $ cdm_name         &lt;chr&gt; "Synthea", "Synthea", "Synthea", "Synthea", "Synthea"…</span></span>
+<span><span class="co">#&gt; $ cdm_name         &lt;chr&gt; "GiBleed", "GiBleed", "GiBleed", "GiBleed", "GiBleed"…</span></span>
 <span><span class="co">#&gt; $ group_name       &lt;chr&gt; "index_cohort_name &amp;&amp;&amp; marker_cohort_name", "index_co…</span></span>
 <span><span class="co">#&gt; $ group_level      &lt;chr&gt; "aspirin &amp;&amp;&amp; amoxicillin", "aspirin &amp;&amp;&amp; amoxicillin",…</span></span>
 <span><span class="co">#&gt; $ strata_name      &lt;chr&gt; "overall", "overall", "overall", "overall", "overall"…</span></span>
@@ -244,7 +238,7 @@
 <span></span>
 <span><span class="va">sequence_ratio_plot</span></span></code></pre></div>
 <p><img src="reference/figures/plotSequenceRatios.png"></p>
-<p>The user also has the freedom to plot temporal trend to review the asymmetry between index and marker:</p>
+<p>The user also has the freedom to plot temporal trend to review the asymmetry between index and marker. The argument days (default 30 days) allows the user to create specific breaks for this plot:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">temporal_symmetry</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summariseTemporalSymmetry.html">summariseTemporalSymmetry</a></span><span class="op">(</span>cohort <span class="op">=</span> <span class="va">cdm</span><span class="op">$</span><span class="va">aspirin_amoxicillin</span><span class="op">)</span></span>
@@ -255,12 +249,6 @@
 <span></span>
 <span><span class="va">temporal_symmetry_plot</span></span></code></pre></div>
 <p><img src="reference/figures/plotTemporalSymmetry.png"></p>
-</div>
-<div class="section level3">
-<h3 id="disconnect-from-the-cdm-database-connection">Disconnect from the cdm database connection<a class="anchor" aria-label="anchor" href="#disconnect-from-the-cdm-database-connection"></a>
-</h3>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">CDMConnector</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/cdmDisconnect.html" class="external-link">cdmDisconnect</a></span><span class="op">(</span>cdm <span class="op">=</span> <span class="va">cdm</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 </div>
