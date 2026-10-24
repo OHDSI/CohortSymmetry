@@ -59,10 +59,10 @@ cdm[["amoxicillin"]] <- CohortConstructor::conceptCohort(
   name = "amoxicillin")
 
 # Generate a sequence cohort
-cdm <- generateSequenceCohortSet(
+cdm <- sequenceCohort(
   cdm = cdm,
-  indexTable = "aspirin",
-  markerTable = "amoxicillin",
+  indexCohortTable = "aspirin",
+  markerCohortTable = "amoxicillin",
   name = "intersect")
 
 ```

@@ -37,10 +37,10 @@ test_that("eunomia - generateSequenceCohortSet", {
   )
 
   expect_no_error(
-    cdm <- generateSequenceCohortSet(cdm,
+    cdm <- sequenceCohort(cdm,
                                      name = "joined_cohorts",
-                                     indexTable ="cohort1",
-                                     markerTable = "cohort2",
+                                     indexCohortTable ="cohort1",
+                                     markerCohortTable = "cohort2",
                                      combinationWindow = c(0,Inf)))
 
  expect_true(nrow(cdm$joined_cohorts %>% dplyr::collect()) > 0)

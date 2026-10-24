@@ -7,9 +7,9 @@ reference:
 
   - title: "Generate sequence cohorts"
     desc: >
-      Functions for generating sequence cohorts for sequence symmetry analysis.
+      Function for generating sequence cohorts for sequence symmetry analysis.
     contents:
-      - generateSequenceCohortSet
+      - sequenceCohort
 
   - title: "Sequence symmetry analysis"
     desc: >

@@ -24,7 +24,7 @@ controls. The details of SSA and the relevant controls could be found using Prat
 
 The functions you will interact with are:
 
-1.  `generateSequenceCohortSet()`: this function will create a cohort with individuals present in both (the index and the marker) cohorts.
+1.  `sequenceCohort()`: this function will create a cohort with individuals present in both (the index and the marker) cohorts.
 
 2.  `summariseSequenceRatios()`: this function will calculate sequence ratios.
 
@@ -62,13 +62,13 @@ cdm <- DrugUtilisation::generateIngredientCohortSet(
   ingredient = c("amoxicillin"))
 ```
 
-Once we have our data and created the index and marker cohorts, we can use the `generateSequenceCohortSet()` function to find the intersection of the two cohorts. This function will provide us with the individuals who appear in both cohorts, which will be named **intersect** - another cohort in the cdm reference.
+Once we have our data and created the index and marker cohorts, we can use the `sequenceCohort()` function to find the intersection of the two cohorts. This function will provide us with the individuals who appear in both cohorts, which will be named **intersect** - another cohort in the cdm reference.
 
 ```{r message= FALSE, warning=FALSE}
-cdm <- generateSequenceCohortSet(
+cdm <- sequenceCohort(
   cdm = cdm,
-  indexTable = "index",
-  markerTable = "marker",
+  indexCohortTable = "index",
+  markerCohortTable = "marker",
   name = "intersect",
   combinationWindow = c(0, 365)
 )

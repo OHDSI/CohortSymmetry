@@ -24,7 +24,7 @@ In this vignette we will explore the functionality and arguments of a set of fun
 
 - `plotTemporalSymmetry()`: to plot the temporal symmetry.
 
-This function builds-up on previous functions, such as `generateSequenceCohortSet()` and `summariseTemporalSymmetry()` function.
+This function builds-up on previous functions, such as `sequenceCohort()` and `summariseTemporalSymmetry()` function.
 
 ```{r message= FALSE, warning=FALSE, include=FALSE}
 # Load libraries
@@ -63,10 +63,10 @@ cdm[["amoxicillin"]] <- CohortConstructor::conceptCohort(
   name = "amoxicillin")
 
 # Generate a sequence cohort
-cdm <- generateSequenceCohortSet(
+cdm <- sequenceCohort(
   cdm = cdm,
-  indexTable = "aspirin",
-  markerTable = "amoxicillin",
+  indexCohortTable = "aspirin",
+  markerCohortTable = "amoxicillin",
   name = "intersect")
 
 ```
@@ -84,6 +84,7 @@ tableTemporalSymmetry(result = temporal_symmetry)
 ```
 
 <center>
+
 ```{r message= FALSE, warning=FALSE}
 plotTemporalSymmetry(result = temporal_symmetry)
 ```

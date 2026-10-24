@@ -17,10 +17,10 @@
 #' \donttest{
 #' library(CohortSymmetry)
 #' cdm <- mockCohortSymmetry()
-#' cdm <- generateSequenceCohortSet(cdm = cdm,
+#' cdm <- sequenceCohort(cdm = cdm,
 #'                                  name = "joined_cohorts",
-#'                                  indexTable = "cohort_1",
-#'                                  markerTable = "cohort_2")
+#'                                  indexCohortTable = "cohort_1",
+#'                                  markerCohortTable = "cohort_2")
 #' temporal_symmetry <- summariseTemporalSymmetry(cohort = cdm$joined_cohorts)
 #' CDMConnector::cdmDisconnect(cdm)
 #' }
@@ -47,7 +47,7 @@ summariseTemporalSymmetry <- function(cohort,
     dplyr::mutate(days = .env$days) |>
     dplyr::select(-c("index_id", "marker_id", "index_name", "marker_name"))
 
-  settings <- c("cohort_date_range", "days_prior_observation", "washout_window", "index_marker_gap",
+  settings <- c("cohort_date_range", "sequence_prior_observation", "index_marker_washout", "index_marker_gap",
                 "combination_window", "moving_average_restriction", "days")
 
   # computing the output
@@ -123,7 +123,7 @@ summariseTemporalSymmetry <- function(cohort,
 
   # new summarise result
   output_sum <- output_sum |>
-    dplyr::left_join(setting, by = c("days_prior_observation", "washout_window",
+    dplyr::left_join(setting, by = c("sequence_prior_observation", "index_marker_washout",
                                      "index_marker_gap", "combination_window", "days")) |>
     dplyr::select(dplyr::all_of(omopgenerics::resultColumns())) |>
     omopgenerics::newSummarisedResult(

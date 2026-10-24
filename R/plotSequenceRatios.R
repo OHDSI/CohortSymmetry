@@ -20,9 +20,9 @@
 #' \donttest{
 #' library(CohortSymmetry)
 #' cdm <- mockCohortSymmetry()
-#' cdm <- generateSequenceCohortSet(cdm = cdm,
-#'                                  indexTable = "cohort_1",
-#'                                  markerTable = "cohort_2",
+#' cdm <- sequenceCohort(cdm = cdm,
+#'                                  indexCohortTable = "cohort_1",
+#'                                  markerCohortTable = "cohort_2",
 #'                                  name = "joined_cohort")
 #' sequence_ratio <- summariseSequenceRatios(cohort = cdm$joined_cohort)
 #' plotSequenceRatios(result = sequence_ratio)
@@ -73,9 +73,9 @@ plotSequenceRatios <- function(result,
       "pair", "variable_name", "point_estimate",
       "lower_CI", "upper_CI", "cdm_name",
       "cohort_date_range", "combination_window",
-      "confidence_interval", "days_prior_observation",
+      "confidence_interval", "sequence_prior_observation",
       "index_marker_gap", "moving_average_restriction",
-      "washout_window"
+      "index_marker_washout"
     )
 
   if (onlyASR) {

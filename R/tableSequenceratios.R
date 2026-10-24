@@ -20,9 +20,9 @@
 #' \donttest{
 #' library(CohortSymmetry)
 #' cdm <- mockCohortSymmetry()
-#' cdm <- generateSequenceCohortSet(cdm = cdm,
-#'                                  indexTable = "cohort_1",
-#'                                  markerTable = "cohort_2",
+#' cdm <- sequenceCohort(cdm = cdm,
+#'                                  indexCohortTable = "cohort_1",
+#'                                  markerCohortTable = "cohort_2",
 #'                                  name = "joined_cohort")
 #' res <- summariseSequenceRatios(cohort = cdm$joined_cohort)
 #' gtResult <- tableSequenceRatios(res)

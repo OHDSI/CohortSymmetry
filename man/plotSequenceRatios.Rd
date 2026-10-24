@@ -40,9 +40,9 @@ It provides a ggplot of the sequence ratios of index and marker cohorts.
 \donttest{
 library(CohortSymmetry)
 cdm <- mockCohortSymmetry()
-cdm <- generateSequenceCohortSet(cdm = cdm,
-                                 indexTable = "cohort_1",
-                                 markerTable = "cohort_2",
+cdm <- sequenceCohort(cdm = cdm,
+                                 indexCohortTable = "cohort_1",
+                                 markerCohortTable = "cohort_2",
                                  name = "joined_cohort")
 sequence_ratio <- summariseSequenceRatios(cohort = cdm$joined_cohort)
 plotSequenceRatios(result = sequence_ratio)
