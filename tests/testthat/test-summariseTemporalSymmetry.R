@@ -2,11 +2,11 @@ test_that("test summariseTemporalSymmetry", {
 
   cdm <- mockCohortSymmetry()
 
-  cdm <- generateSequenceCohortSet(
+  cdm <- sequenceCohort(
     cdm = cdm,
     name = "joined_cohorts",
-    indexTable = "cohort_1",
-    markerTable = "cohort_2"
+    indexCohortTable = "cohort_1",
+    markerCohortTable = "cohort_2"
   )
 
   temporal_symmetry <-
@@ -66,11 +66,11 @@ test_that("test summariseTemporalSymmetry", {
 test_that("test cohortId",{
   skip_on_cran()
   cdm <- mockCohortSymmetry()
-  cdm <- generateSequenceCohortSet(
+  cdm <- sequenceCohort(
     cdm = cdm,
     name = "joined_cohorts",
-    indexTable = "cohort_1",
-    markerTable = "cohort_2"
+    indexCohortTable = "cohort_1",
+    markerCohortTable = "cohort_2"
   )
 
     result <- summariseTemporalSymmetry(cohort = cdm$joined_cohorts,
@@ -90,11 +90,11 @@ test_that("test cohortId",{
 test_that("input validation",{
   skip_on_cran()
   cdm <- mockCohortSymmetry()
-  cdm <- generateSequenceCohortSet(
+  cdm <- sequenceCohort(
     cdm = cdm,
     name = "joined_cohorts",
-    indexTable = "cohort_1",
-    markerTable = "cohort_2"
+    indexCohortTable = "cohort_1",
+    markerCohortTable = "cohort_2"
   )
 
   expect_no_error(

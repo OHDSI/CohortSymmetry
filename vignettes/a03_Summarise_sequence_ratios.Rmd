@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 ```
 
 # Introduction
-In this vignette we will explore the functionality and arguments of `summariseSequenceRatios()` function, which is used to generate the sequence ratios of the SSA. As this function uses the output of `generateSequenceCohortSet()` function (explained in detail in the vignette: **Step 1. Generate a sequence cohort**), we will pick up the explanation from where we left off in the previous vignette. However, in this case we are now using the default settings of the package.
+In this vignette we will explore the functionality and arguments of `summariseSequenceRatios()` function, which is used to generate the sequence ratios of the SSA. As this function uses the output of `sequenceCohort()` function (explained in detail in the vignette: **Step 1. Generate a sequence cohort**), we will pick up the explanation from where we left off in the previous vignette. However, in this case we are now using the default settings of the package.
 
 ```{r message= FALSE, warning=FALSE, include=FALSE}
 # Load libraries
@@ -64,10 +64,10 @@ Recall that in the previous vignette: Step 1. Generate a sequence cohort, we've 
 
 ```{r message= FALSE, warning=FALSE}
 # Generate a sequence cohort
-cdm <- generateSequenceCohortSet(
+cdm <- sequenceCohort(
   cdm = cdm,
-  indexTable = "aspirin",
-  markerTable = "amoxicillin",
+  indexCohortTable = "aspirin",
+  markerCohortTable = "amoxicillin",
   name = "intersect")
 ```
 

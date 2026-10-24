@@ -2,11 +2,11 @@ test_that("tableSequenceRatios - gt output", {
   testthat::skip_if_not_installed("gt")
   testthat::skip_if_not_installed("flextable")
   cdm <- mockCohortSymmetry()
-  cdm <- generateSequenceCohortSet(cdm = cdm,
-                                   indexTable = "cohort_1",
-                                   indexId = 1,
-                                   markerTable = "cohort_2",
-                                   markerId = 3,
+  cdm <- sequenceCohort(cdm = cdm,
+                                   indexCohortTable = "cohort_1",
+                                   indexCohortId = 1,
+                                   markerCohortTable = "cohort_2",
+                                   markerCohortId = 3,
                                    name = "joined_cohort")
 
   res <- summariseSequenceRatios(cohort = cdm$joined_cohort)
@@ -48,11 +48,11 @@ test_that("tableSequenceRatios - tibble output", {
   testthat::skip_if_not_installed("gt")
   testthat::skip_if_not_installed("flextable")
   cdm <- mockCohortSymmetry()
-  cdm <- generateSequenceCohortSet(cdm = cdm,
-                                   indexTable = "cohort_1",
-                                   indexId = 1,
-                                   markerTable = "cohort_2",
-                                   markerId = 3,
+  cdm <- sequenceCohort(cdm = cdm,
+                                   indexCohortTable = "cohort_1",
+                                   indexCohortId = 1,
+                                   markerCohortTable = "cohort_2",
+                                   markerCohortId = 3,
                                    name = "joined_cohort")
 
   res <- summariseSequenceRatios(cohort = cdm$joined_cohort)
@@ -72,11 +72,11 @@ test_that("tableSequenceRatios - flextable output", {
   testthat::skip_if_not_installed("gt")
   testthat::skip_if_not_installed("flextable")
   cdm <- mockCohortSymmetry()
-  cdm <- generateSequenceCohortSet(cdm = cdm,
-                                   indexTable = "cohort_1",
-                                   indexId = 1,
-                                   markerTable = "cohort_2",
-                                   markerId = 3,
+  cdm <- sequenceCohort(cdm = cdm,
+                                   indexCohortTable = "cohort_1",
+                                   indexCohortId = 1,
+                                   markerCohortTable = "cohort_2",
+                                   markerCohortId = 3,
                                    name = "joined_cohort")
 
   res <- summariseSequenceRatios(cohort = cdm$joined_cohort)

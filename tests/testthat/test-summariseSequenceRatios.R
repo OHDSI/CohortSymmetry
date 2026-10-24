@@ -33,10 +33,10 @@ test_that("summariseSequenceRatios", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   markerTable = "cohort_2")
+                                   indexCohortTable = "cohort_1",
+                                   markerCohortTable = "cohort_2")
 
   expect_warning(
     expect_no_error(
@@ -99,10 +99,10 @@ test_that("summariseSequenceRatios - testing ratios and CIs, Example 1", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   markerTable = "cohort_2")
+                                   indexCohortTable = "cohort_1",
+                                   markerCohortTable = "cohort_2")
 
   suppressWarnings(
     res <- summariseSequenceRatios(
@@ -148,8 +148,8 @@ test_that("summariseSequenceRatios - testing ratios and CIs, Example 1", {
                        values_from = "estimate_value") |>
     dplyr::left_join(res |> omopgenerics::settings())
 
-  expect_true(all(res$days_prior_observation==365))
-  expect_true(all(res$washout_window==365))
+  expect_true(all(res$sequence_prior_observation==365))
+  expect_true(all(res$index_marker_washout==365))
   expect_true(all(res$combination_window == "0, 365"))
   expect_true(all(res$index_marker_gap=="Inf"))
   expect_true(all(res$confidence_interval==95))
@@ -197,10 +197,10 @@ test_that("summariseSequenceRatios - testing ratios and CIs, Example 2", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   markerTable = "cohort_2")
+                                   indexCohortTable = "cohort_1",
+                                   markerCohortTable = "cohort_2")
 
   res <- summariseSequenceRatios(
     cohort = cdm$joined_cohorts)
@@ -213,8 +213,8 @@ test_that("summariseSequenceRatios - testing ratios and CIs, Example 2", {
                        values_from = "estimate_value") |>
     dplyr::left_join(res |> omopgenerics::settings(), by = c("result_id"))
 
-  expect_true(all(res$days_prior_observation==365))
-  expect_true(all(res$washout_window==365))
+  expect_true(all(res$sequence_prior_observation==365))
+  expect_true(all(res$index_marker_washout==365))
   expect_true(all(res$combination_window == "0, 365"))
   expect_true(all(res$index_marker_gap=="Inf"))
   expect_true(all(res$confidence_interval==95))
@@ -266,10 +266,10 @@ test_that("summariseSequenceRatios - testing CI", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   markerTable = "cohort_2")
+                                   indexCohortTable = "cohort_1",
+                                   markerCohortTable = "cohort_2")
 
   res_90 <- summariseSequenceRatios(
     cohort = cdm$joined_cohorts,
@@ -474,11 +474,11 @@ test_that("summariseSequenceRatios - testing cohortId", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   markerTable = "cohort_2",
-                                   daysPriorObservation = 0,
+                                   indexCohortTable = "cohort_1",
+                                   markerCohortTable = "cohort_2",
+                                   sequencePriorObservation = 0,
                                    combinationWindow = c(0, Inf))
 
   expect_no_error(
@@ -579,11 +579,11 @@ test_that("summariseSequenceRatios - testing moving average restriction, ex1", {
                             markerCohort = markerCohort)
 
   expect_no_error(
-    cdm <- generateSequenceCohortSet(cdm = cdm,
+    cdm <- sequenceCohort(cdm = cdm,
                                      name = "joined_cohorts",
-                                     indexTable = "cohort_1",
-                                     markerTable = "cohort_2",
-                                     daysPriorObservation = 0,
+                                     indexCohortTable = "cohort_1",
+                                     markerCohortTable = "cohort_2",
+                                     sequencePriorObservation = 0,
                                      combinationWindow = c(0, 730))
   )
 
@@ -658,11 +658,11 @@ test_that("summariseSequenceRatios - testing moving average restriction, ex2", {
                             markerCohort = markerCohort)
 
   expect_no_error(
-    cdm <- generateSequenceCohortSet(cdm = cdm,
+    cdm <- sequenceCohort(cdm = cdm,
                                      name = "joined_cohorts",
-                                     indexTable = "cohort_1",
-                                     markerTable = "cohort_2",
-                                     daysPriorObservation = 0,
+                                     indexCohortTable = "cohort_1",
+                                     markerCohortTable = "cohort_2",
+                                     sequencePriorObservation = 0,
                                      combinationWindow = c(0, Inf))
   )
 
@@ -698,11 +698,11 @@ test_that("summariseSequenceRatios - testing moving average restriction, ex2", {
          as.numeric())
   ))
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   markerTable = "cohort_2",
-                                   daysPriorObservation = 0,
+                                   indexCohortTable = "cohort_1",
+                                   markerCohortTable = "cohort_2",
+                                   sequencePriorObservation = 0,
                                    combinationWindow = c(0, Inf))
 
   res_90 <- summariseSequenceRatios(
@@ -799,11 +799,11 @@ test_that("edge case 1", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   markerTable = "cohort_2",
-                                   daysPriorObservation = 0,
+                                   indexCohortTable = "cohort_1",
+                                   markerCohortTable = "cohort_2",
+                                   sequencePriorObservation = 0,
                                    combinationWindow = c(0, Inf))
 
   expect_error(
@@ -837,11 +837,11 @@ test_that("edge case 2", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   markerTable = "cohort_2",
-                                   daysPriorObservation = 0,
+                                   indexCohortTable = "cohort_1",
+                                   markerCohortTable = "cohort_2",
+                                   sequencePriorObservation = 0,
                                    combinationWindow = c(0, Inf))
 
   expect_warning(
@@ -875,11 +875,11 @@ test_that("edge case 3", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   markerTable = "cohort_2",
-                                   daysPriorObservation = 0,
+                                   indexCohortTable = "cohort_1",
+                                   markerCohortTable = "cohort_2",
+                                   sequencePriorObservation = 0,
                                    combinationWindow = c(0, Inf))
 
   expect_warning(
@@ -927,10 +927,10 @@ test_that("Inf CI", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   markerTable = "cohort_2")
+                                   indexCohortTable = "cohort_1",
+                                   markerCohortTable = "cohort_2")
 
   expect_warning(
     res <- summariseSequenceRatios(cohort = cdm$joined_cohorts)

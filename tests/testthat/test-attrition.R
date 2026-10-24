@@ -33,10 +33,10 @@ test_that("attrition: output structure", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   markerTable = "cohort_2")
+                                   indexCohortTable = "cohort_1",
+                                   markerCohortTable = "cohort_2")
 
   expect_true(all(c(
     "cohort_definition_id", "number_records", "number_subjects",
@@ -93,14 +93,14 @@ test_that("attrition: cohortDateRange", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                                             markerCohort = markerCohort)
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   indexId = 1,
-                                   markerTable = "cohort_2",
-                                   markerId = 3,
-                                   daysPriorObservation = 0,
-                                   washoutWindow = 0,
+                                   indexCohortTable = "cohort_1",
+                                   indexCohortId = 1,
+                                   markerCohortTable = "cohort_2",
+                                   markerCohortId = 3,
+                                   sequencePriorObservation = 0,
+                                   indexMarkerWashout = 0,
                                    combinationWindow = c(0, Inf))
 
   expect_true(all(c(
@@ -113,14 +113,14 @@ test_that("attrition: cohortDateRange", {
   expect_true(all(omopgenerics::attrition(cdm$joined_cohorts) |>
                     dplyr::select(number_records) == 5))
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   indexId = 1,
-                                   markerTable = "cohort_2",
-                                   markerId = 3,
-                                   daysPriorObservation = 0,
-                                   washoutWindow = 0,
+                                   indexCohortTable = "cohort_1",
+                                   indexCohortId = 1,
+                                   markerCohortTable = "cohort_2",
+                                   markerCohortId = 3,
+                                   sequencePriorObservation = 0,
+                                   indexMarkerWashout = 0,
                                    cohortDateRange=as.Date(c("2019-12-01", "2022-12-31")),
                                    combinationWindow = c(0, Inf))
 
@@ -134,14 +134,14 @@ test_that("attrition: cohortDateRange", {
   expect_true(all(omopgenerics::attrition(cdm$joined_cohorts) |>
                     dplyr::select(number_records) == 2))
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   indexId = 1,
-                                   markerTable = "cohort_2",
-                                   markerId = 3,
-                                   daysPriorObservation = 0,
-                                   washoutWindow = 0,
+                                   indexCohortTable = "cohort_1",
+                                   indexCohortId = 1,
+                                   markerCohortTable = "cohort_2",
+                                   markerCohortId = 3,
+                                   sequencePriorObservation = 0,
+                                   indexMarkerWashout = 0,
                                    cohortDateRange=as.Date(c("2019-12-01", "2022-12-31")))
 
   expect_true(all(omopgenerics::attrition(cdm$joined_cohorts) |>
@@ -184,14 +184,14 @@ test_that("attrition: combinationWindow", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                                             markerCohort = markerCohort)
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   indexId=1,
-                                   markerTable = "cohort_2",
-                                   markerId=3,
-                                   daysPriorObservation = 0,
-                                   washoutWindow = 0,
+                                   indexCohortTable = "cohort_1",
+                                   indexCohortId=1,
+                                   markerCohortTable = "cohort_2",
+                                   markerCohortId=3,
+                                   sequencePriorObservation = 0,
+                                   indexMarkerWashout = 0,
                                    combinationWindow = c(30,365))
 
   expect_identical(omopgenerics::attrition(cdm$joined_cohorts) |>
@@ -237,14 +237,14 @@ test_that("attrition: combinationWindow", {
                       as.numeric()),
                    c(1,3,4,5))
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   indexId=1,
-                                   markerTable = "cohort_2",
-                                   markerId=3,
-                                   daysPriorObservation = 0,
-                                   washoutWindow = 0,
+                                   indexCohortTable = "cohort_1",
+                                   indexCohortId=1,
+                                   markerCohortTable = "cohort_2",
+                                   markerCohortId=3,
+                                   sequencePriorObservation = 0,
+                                   indexMarkerWashout = 0,
                                    combinationWindow = c(0,90))
 
   expect_identical(omopgenerics::attrition(cdm$joined_cohorts) |>
@@ -282,26 +282,26 @@ test_that("attrition: combinationWindow", {
                      as.numeric(),
                    2)
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts_3",
-                                   indexTable = "cohort_1",
-                                   indexId=2,
-                                   markerTable = "cohort_2",
-                                   markerId=3,
-                                   daysPriorObservation = 0,
-                                   washoutWindow = 0,
+                                   indexCohortTable = "cohort_1",
+                                   indexCohortId=2,
+                                   markerCohortTable = "cohort_2",
+                                   markerCohortId=3,
+                                   sequencePriorObservation = 0,
+                                   indexMarkerWashout = 0,
                                    combinationWindow = c(0, Inf))
 
   expect_true(all(omopgenerics::attrition(cdm$joined_cohorts_3) |>
                     dplyr::select(excluded_records) |>
                     dplyr::pull(excluded_records)==0))
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts_3",
-                                   indexTable = "cohort_1",
-                                   indexId=2,
-                                   markerTable = "cohort_2",
-                                   markerId=3)
+                                   indexCohortTable = "cohort_1",
+                                   indexCohortId=2,
+                                   markerCohortTable = "cohort_2",
+                                   markerCohortId=3)
 
 
   expect_true(omopgenerics::attrition(cdm$joined_cohorts_3) |>
@@ -351,14 +351,14 @@ test_that("attrition: indexMarkerGap", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts_2",
-                                   indexTable = "cohort_1",
-                                   indexId=1,
-                                   markerTable = "cohort_2",
-                                   markerId=3,
-                                   daysPriorObservation = 0,
-                                   washoutWindow = 0,
+                                   indexCohortTable = "cohort_1",
+                                   indexCohortId=1,
+                                   markerCohortTable = "cohort_2",
+                                   markerCohortId=3,
+                                   sequencePriorObservation = 0,
+                                   indexMarkerWashout = 0,
                                    combinationWindow = c(0, Inf),
                                    indexMarkerGap=60)
 
@@ -374,14 +374,14 @@ test_that("attrition: indexMarkerGap", {
                    c(2,5)
                    )
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts_3",
-                                   indexTable = "cohort_1",
-                                   indexId=2,
-                                   markerTable = "cohort_2",
-                                   markerId=3,
-                                   daysPriorObservation = 0,
-                                   washoutWindow = 0,
+                                   indexCohortTable = "cohort_1",
+                                   indexCohortId=2,
+                                   markerCohortTable = "cohort_2",
+                                   markerCohortId=3,
+                                   sequencePriorObservation = 0,
+                                   indexMarkerWashout = 0,
                                    combinationWindow = c(0, Inf),
                                    indexMarkerGap = 365)
 
@@ -407,7 +407,7 @@ test_that("attrition: indexMarkerGap", {
 
 })
 
-test_that("attrition: daysPriorObservation", {
+test_that("attrition: sequencePriorObservation", {
   skip_on_cran()
   indexCohort <- dplyr::tibble(
     cohort_definition_id = c(1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 1),
@@ -442,14 +442,14 @@ test_that("attrition: daysPriorObservation", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                                             markerCohort = markerCohort)
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   indexId=2,
-                                   markerTable = "cohort_2",
-                                   markerId=3,
-                                   washoutWindow = 0,
-                                   daysPriorObservation = 1460,
+                                   indexCohortTable = "cohort_1",
+                                   indexCohortId=2,
+                                   markerCohortTable = "cohort_2",
+                                   markerCohortId=3,
+                                   indexMarkerWashout = 0,
+                                   sequencePriorObservation = 1460,
                                    combinationWindow = c(0, Inf))
 
   expect_true(omopgenerics::attrition(cdm$joined_cohorts) |>
@@ -472,7 +472,7 @@ test_that("attrition: daysPriorObservation", {
 
 })
 
-test_that("attrition: washoutWindow", {
+test_that("attrition: indexMarkerWashout", {
   skip_on_cran()
   indexCohort <- dplyr::tibble(
     cohort_definition_id = c(1, 1, 1, 1, 1, 2, 2, 2, 2, 2),
@@ -507,12 +507,12 @@ test_that("attrition: washoutWindow", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   markerTable = "cohort_2",
-                                   daysPriorObservation = 0,
-                                   washoutWindow = 0,
+                                   indexCohortTable = "cohort_1",
+                                   markerCohortTable = "cohort_2",
+                                   sequencePriorObservation = 0,
+                                   indexMarkerWashout = 0,
                                    combinationWindow = c(0, Inf))
 
   expect_true(all(c(omopgenerics::attrition(cdm$joined_cohorts) |>
@@ -527,14 +527,14 @@ test_that("attrition: washoutWindow", {
                      as.numeric(),
                    8)
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   indexId = 1,
-                                   markerTable = "cohort_2",
-                                   markerId = 3,
-                                   daysPriorObservation = 0,
-                                   washoutWindow = 0,
+                                   indexCohortTable = "cohort_1",
+                                   indexCohortId = 1,
+                                   markerCohortTable = "cohort_2",
+                                   markerCohortId = 3,
+                                   sequencePriorObservation = 0,
+                                   indexMarkerWashout = 0,
                                    combinationWindow = c(0, Inf))
 
   expect_identical(cdm$joined_cohorts |>
@@ -546,14 +546,14 @@ test_that("attrition: washoutWindow", {
   expect_true(all(omopgenerics::attrition(cdm$joined_cohorts) |>
                     dplyr::pull(excluded_subjects)==0))
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   indexId = 1,
-                                   markerTable = "cohort_2",
-                                   markerId = 3,
-                                   daysPriorObservation = 0,
-                                   washoutWindow = 0,
+                                   indexCohortTable = "cohort_1",
+                                   indexCohortId = 1,
+                                   markerCohortTable = "cohort_2",
+                                   markerCohortId = 3,
+                                   sequencePriorObservation = 0,
+                                   indexMarkerWashout = 0,
                                    cohortDateRange = as.Date(c("2015-01-01", NA)),
                                    combinationWindow = c(0, Inf))
 
@@ -566,14 +566,14 @@ test_that("attrition: washoutWindow", {
   expect_true(all(omopgenerics::attrition(cdm$joined_cohorts) |>
                     dplyr::pull(excluded_subjects)==0))
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   indexId = 1,
-                                   markerTable = "cohort_2",
-                                   markerId = 3,
-                                   daysPriorObservation = 0,
-                                   washoutWindow = 0,
+                                   indexCohortTable = "cohort_1",
+                                   indexCohortId = 1,
+                                   markerCohortTable = "cohort_2",
+                                   markerCohortId = 3,
+                                   sequencePriorObservation = 0,
+                                   indexMarkerWashout = 0,
                                    cohortDateRange = as.Date(c("2012-01-01", NA)),
                                    combinationWindow = c(0, Inf))
 
@@ -586,16 +586,16 @@ test_that("attrition: washoutWindow", {
   expect_true(all(omopgenerics::attrition(cdm$joined_cohorts) |>
                     dplyr::pull(excluded_subjects)==0))
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   indexId = 1,
-                                   markerTable = "cohort_2",
-                                   markerId = 3,
-                                   daysPriorObservation = 0,
+                                   indexCohortTable = "cohort_1",
+                                   indexCohortId = 1,
+                                   markerCohortTable = "cohort_2",
+                                   markerCohortId = 3,
+                                   sequencePriorObservation = 0,
                                    cohortDateRange = as.Date(c("2012-01-01", NA)),
                                    combinationWindow = c(0, Inf),
-                                   washoutWindow = 365)
+                                   indexMarkerWashout = 365)
 
   expect_identical(omopgenerics::attrition(cdm$joined_cohorts) |>
                      dplyr::filter(reason == "Initial qualifying events") |>
@@ -676,12 +676,12 @@ test_that("attrition: complete example 1", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   markerTable = "cohort_2",
-                                   daysPriorObservation = 365,
-                                   washoutWindow = 30,
+                                   indexCohortTable = "cohort_1",
+                                   markerCohortTable = "cohort_2",
+                                   sequencePriorObservation = 365,
+                                   indexMarkerWashout = 30,
                                    indexMarkerGap = 30,
                                    combinationWindow = c(0, 30)
                                    )
@@ -852,13 +852,13 @@ test_that("attrition: complete example 2", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- generateSequenceCohortSet(cdm = cdm,
+  cdm <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
-                                   indexTable = "cohort_1",
-                                   markerTable = "cohort_2",
+                                   indexCohortTable = "cohort_1",
+                                   markerCohortTable = "cohort_2",
                                    cohortDateRange = c(as.Date("2010-01-02"), NA),
-                                   daysPriorObservation = 365,
-                                   washoutWindow = 30,
+                                   sequencePriorObservation = 365,
+                                   indexMarkerWashout = 30,
                                    indexMarkerGap = 30,
                                    combinationWindow = c(0, 90))
 

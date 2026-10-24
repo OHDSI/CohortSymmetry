@@ -38,9 +38,9 @@ It provides a ggplot of the temporal symmetry of two or more cohorts.
 \donttest{
 library(CohortSymmetry)
 cdm <- mockCohortSymmetry()
-cdm <- generateSequenceCohortSet(cdm = cdm,
-                                 indexTable = "cohort_1",
-                                 markerTable = "cohort_2",
+cdm <- sequenceCohort(cdm = cdm,
+                                 indexCohortTable = "cohort_1",
+                                 markerCohortTable = "cohort_2",
                                  name = "joined_cohort")
 temporal_symmetry <- summariseTemporalSymmetry(cohort = cdm$joined_cohort)
 plotTemporalSymmetry(result = temporal_symmetry)

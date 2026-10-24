@@ -24,7 +24,7 @@ In this vignette we will explore the functionality and arguments of a set of fun
 - `tableSequenceRatios()`: to generate a table summarising the results.
 - `plotSequenceRatios()`: to plot the sequence ratios.
 
-This function builds-up on previous functions, such as `generateSequenceCohortSet()` and `summariseSequenceRatios()` function (explained in detail in previous vignettes: **Step 1. Generate a sequence cohort** and **Step 2. Obtain the sequence ratios** respectively). Hence, we will pick up the explanation from where we left off in the previous vignette. 
+This function builds-up on previous functions, such as `sequenceCohort()` and `summariseSequenceRatios()` function (explained in detail in previous vignettes: **Step 1. Generate a sequence cohort** and **Step 2. Obtain the sequence ratios** respectively). Hence, we will pick up the explanation from where we left off in the previous vignette. 
 
 ```{r message= FALSE, warning=FALSE, include=FALSE}
 # Load libraries
@@ -63,10 +63,10 @@ cdm[["amoxicillin"]] <- CohortConstructor::conceptCohort(
   name = "amoxicillin")
 
 # Generate a sequence cohort
-cdm <- generateSequenceCohortSet(
+cdm <- sequenceCohort(
   cdm = cdm,
-  indexTable = "aspirin",
-  markerTable = "amoxicillin",
+  indexCohortTable = "aspirin",
+  markerCohortTable = "amoxicillin",
   name = "intersect")
 
 ```

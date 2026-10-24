@@ -15,10 +15,10 @@
 #' \donttest{
 #' library(CohortSymmetry)
 #' cdm <- mockCohortSymmetry()
-#' cdm <- generateSequenceCohortSet(cdm = cdm,
+#' cdm <- sequenceCohort(cdm = cdm,
 #'                                  name = "joined_cohorts",
-#'                                  indexTable = "cohort_1",
-#'                                  markerTable = "cohort_2")
+#'                                  indexCohortTable = "cohort_1",
+#'                                  markerCohortTable = "cohort_2")
 #' pssa_result <- summariseSequenceRatios(cohort = cdm$joined_cohorts)
 #' pssa_result
 #' CDMConnector::cdmDisconnect(cdm)
@@ -77,7 +77,7 @@ summariseSequenceRatios <- function(cohort,
             precision = "day"
           ))) |>
         dplyr::collect() |>
-        dplyr::group_by(.data$days_first, .data$index_id, .data$index_name, .data$marker_id, .data$marker_name, .data$cohort_date_range, .data$days_prior_observation, .data$washout_window, .data$index_marker_gap, .data$combination_window, .data$moving_average_restriction) |>
+        dplyr::group_by(.data$days_first, .data$index_id, .data$index_name, .data$marker_id, .data$marker_name, .data$cohort_date_range, .data$sequence_prior_observation, .data$index_marker_washout, .data$index_marker_gap, .data$combination_window, .data$moving_average_restriction) |>
         dplyr::summarise(marker_first = sum(.data$order_ba, na.rm = T), index_first = sum((!.data$order_ba), na.rm = T), .groups = "drop") |>
         dplyr::ungroup()
 
@@ -93,7 +93,7 @@ summariseSequenceRatios <- function(cohort,
 
       meta_info <-
         temporary_cohort |>
-        dplyr::group_by(.data$index_id, .data$index_name, .data$marker_id, .data$marker_name, .data$cohort_date_range, .data$days_prior_observation, .data$washout_window, .data$index_marker_gap, .data$combination_window, .data$moving_average_restriction) |>
+        dplyr::group_by(.data$index_id, .data$index_name, .data$marker_id, .data$marker_name, .data$cohort_date_range, .data$sequence_prior_observation, .data$index_marker_washout, .data$index_marker_gap, .data$combination_window, .data$moving_average_restriction) |>
         dplyr::summarise(marker_first = sum(.data$marker_first), index_first = sum(.data$index_first), .groups = "drop") |>
         dplyr::ungroup()
 
@@ -110,7 +110,7 @@ summariseSequenceRatios <- function(cohort,
                       "nsr",
                       "csr", "lower_csr_ci", "upper_csr_ci",
                       "asr", "lower_asr_ci", "upper_asr_ci", "cohort_date_range",
-                      "days_prior_observation", "washout_window", "index_marker_gap", "combination_window",
+                      "sequence_prior_observation", "index_marker_washout", "index_marker_gap", "combination_window",
                       "moving_average_restriction", "confidence_interval")
       output <- rbind(output, partial_result)
     }

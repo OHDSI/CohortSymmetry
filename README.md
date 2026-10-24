@@ -144,23 +144,22 @@ cdm[["amoxicillin"]] <- CohortConstructor::conceptCohort(
 #> ✔ Cohort amoxicillin created.
 ```
 
-### Step 1: generateSequenceCohortSet
+### Step 1: sequenceCohort
 
 In order to initiate the calculations, the two cohorts tables need to be
-intersected using `generateSequenceCohortSet()`. This process will
-output all the individuals who appeared on both tables according to a
-user-specified parameters. This includes `cohortDateRange`,
-`combinationWindow`, `washoutWindow`, `indexMarkerGap` and
-`daysPriorObservation`. More details on these parameters are found on
-the vignette.
+intersected using `sequenceCohort()`. This process will output all the
+individuals who appeared on both tables according to a user-specified
+parameters. This includes `cohortDateRange`, `combinationWindow`,
+`indexMarkerWashout`, `indexMarkerGap` and `sequencePriorObservation`.
+More details on these parameters are found on the vignette.
 
 ``` r
 library(CohortSymmetry)
  
-cdm <- generateSequenceCohortSet(
+cdm <- sequenceCohort(
   cdm = cdm,
-  indexTable = "aspirin",
-  markerTable = "amoxicillin",
+  indexCohortTable = "aspirin",
+  markerCohortTable = "amoxicillin",
   name = "aspirin_amoxicillin"
 )
 
@@ -179,10 +178,9 @@ cdm$aspirin_amoxicillin %>%
 ### Step 2: summariseSequenceRatios
 
 To get the sequence ratios, we would need the output of the
-generateSequenceCohortSet() function to be fed into
-`summariseSequenceRatios()` The output of this process contains
-CSR(crude sequence ratio), ASR(adjusted sequence ratio) and confidence
-intervals.
+sequenceCohort() function to be fed into `summariseSequenceRatios()` The
+output of this process contains CSR(crude sequence ratio), ASR(adjusted
+sequence ratio) and confidence intervals.
 
 ``` r
 res <- summariseSequenceRatios(cohort = cdm$aspirin_amoxicillin)

@@ -1,5 +1,5 @@
 getSummarisedResult <- function(x) {
-  settings <- c("cohort_date_range", "days_prior_observation", "washout_window", "index_marker_gap",
+  settings <- c("cohort_date_range", "sequence_prior_observation", "index_marker_washout", "index_marker_gap",
                 "combination_window", "moving_average_restriction", "confidence_interval")
   x_sum <- x |>
     dplyr::mutate(
@@ -56,7 +56,7 @@ getSummarisedResult <- function(x) {
                   package_version = as.character(utils::packageVersion("CohortSymmetry")))
 
   x_sum <- x_sum |>
-    dplyr::left_join(setting, by = c("days_prior_observation", "washout_window",
+    dplyr::left_join(setting, by = c("sequence_prior_observation", "index_marker_washout",
                      "index_marker_gap", "combination_window", "moving_average_restriction", "confidence_interval")) |>
     dplyr::select(dplyr::all_of(omopgenerics::resultColumns())) |>
     omopgenerics::newSummarisedResult(

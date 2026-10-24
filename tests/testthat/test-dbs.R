@@ -34,10 +34,10 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               overwrite = TRUE)
 
-expect_no_error(cdm <- generateSequenceCohortSet(cdm,
+expect_no_error(cdm <- sequenceCohort(cdm,
                                                  name = "joined_cohorts",
-                                                 indexTable ="csyim_index",
-                                                 markerTable = "csyim_marker",
+                                                 indexCohortTable ="csyim_index",
+                                                 markerCohortTable = "csyim_marker",
                                                  combinationWindow = c(0,Inf)))
 
 expect_true(nrow(cdm$joined_cohorts %>% dplyr::collect()) > 0)
@@ -78,11 +78,11 @@ test_that("Redshift", {
                                                    limit = "all",
                                                    overwrite = TRUE)
 
-  expect_no_error(cdm <- generateSequenceCohortSet(cdm,
-                                                   name = "joined_cohorts",
-                                                   indexTable ="csyim_index",
-                                                   markerTable = "csyim_marker",
-                                                   combinationWindow = c(0,Inf)))
+  expect_no_error(cdm <- sequenceCohort(cdm,
+                                        name = "joined_cohorts",
+                                        indexCohortTable ="csyim_index",
+                                        markerCohortTable = "csyim_marker",
+                                        combinationWindow = c(0,Inf)))
 
   expect_true(nrow(cdm$joined_cohorts %>% dplyr::collect()) > 0)
 
