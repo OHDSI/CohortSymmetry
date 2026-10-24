@@ -39,7 +39,7 @@ output."><meta property="og:image" content="https://ohdsi.github.io/CohortSymmet
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>A formatted visualization of sequence_symmetry objects.</h1>
-      <small class="dont-index">Source: <a href="https://github.com/OHDSI/CohortSymmetry/blob/main/R/tableSequenceratios.R" class="external-link"><code>R/tableSequenceratios.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/OHDSI/CohortSymmetry/blob/main/R/tableSequenceRatios.R" class="external-link"><code>R/tableSequenceRatios.R</code></a></small>
       <div class="d-none name"><code>tableSequenceRatios.Rd</code></div>
     </div>
 
@@ -100,9 +100,9 @@ See visOmopResults package for more information on how to use this parameter.</p
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/CohortSymmetry/">CohortSymmetry</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="mockCohortSymmetry.html">mockCohortSymmetry</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="generateSequenceCohortSet.html">generateSequenceCohortSet</a></span><span class="op">(</span>cdm <span class="op">=</span> <span class="va">cdm</span>,</span></span>
-<span class="r-in"><span>                                 indexTable <span class="op">=</span> <span class="st">"cohort_1"</span>,</span></span>
-<span class="r-in"><span>                                 markerTable <span class="op">=</span> <span class="st">"cohort_2"</span>,</span></span>
+<span class="r-in"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span>cdm <span class="op">=</span> <span class="va">cdm</span>,</span></span>
+<span class="r-in"><span>                                 indexCohortTable <span class="op">=</span> <span class="st">"cohort_1"</span>,</span></span>
+<span class="r-in"><span>                                 markerCohortTable <span class="op">=</span> <span class="st">"cohort_2"</span>,</span></span>
 <span class="r-in"><span>                                 name <span class="op">=</span> <span class="st">"joined_cohort"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="summariseSequenceRatios.html">summariseSequenceRatios</a></span><span class="op">(</span>cohort <span class="op">=</span> <span class="va">cdm</span><span class="op">$</span><span class="va">joined_cohort</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>For at least some combinations, index is always before marker or marker always</span>

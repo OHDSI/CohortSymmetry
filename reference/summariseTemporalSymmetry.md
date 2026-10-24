@@ -35,10 +35,10 @@ relevant counts.
 # \donttest{
 library(CohortSymmetry)
 cdm <- mockCohortSymmetry()
-cdm <- generateSequenceCohortSet(cdm = cdm,
+cdm <- sequenceCohort(cdm = cdm,
                                  name = "joined_cohorts",
-                                 indexTable = "cohort_1",
-                                 markerTable = "cohort_2")
+                                 indexCohortTable = "cohort_1",
+                                 markerCohortTable = "cohort_2")
 temporal_symmetry <- summariseTemporalSymmetry(cohort = cdm$joined_cohorts)
 #> `days` cast to character.
 CDMConnector::cdmDisconnect(cdm)

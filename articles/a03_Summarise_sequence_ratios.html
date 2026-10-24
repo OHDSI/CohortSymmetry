@@ -80,21 +80,21 @@
 <p>In this vignette we will explore the functionality and arguments of
 <code><a href="../reference/summariseSequenceRatios.html">summariseSequenceRatios()</a></code> function, which is used to
 generate the sequence ratios of the SSA. As this function uses the
-output of <code><a href="../reference/generateSequenceCohortSet.html">generateSequenceCohortSet()</a></code> function (explained
-in detail in the vignette: <strong>Step 1. Generate a sequence
-cohort</strong>), we will pick up the explanation from where we left off
-in the previous vignette. However, in this case we are now using the
-default settings of the package.</p>
+output of <code><a href="../reference/sequenceCohort.html">sequenceCohort()</a></code> function (explained in detail in
+the vignette: <strong>Step 1. Generate a sequence cohort</strong>), we
+will pick up the explanation from where we left off in the previous
+vignette. However, in this case we are now using the default settings of
+the package.</p>
 <p>Recall that in the previous vignette: Step 1. Generate a sequence
 cohort, we’ve generated <code>cdm$aspirin</code> and
 <code>cdm$amoxicillin</code> before and using them we could generate
 <code>cdm$intersect</code> like so:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Generate a sequence cohort</span></span>
-<span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generateSequenceCohortSet.html">generateSequenceCohortSet</a></span><span class="op">(</span></span>
+<span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
-<span>  indexTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
-<span>  markerTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
+<span>  indexCohortTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
+<span>  markerCohortTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">"intersect"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">

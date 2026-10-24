@@ -169,16 +169,16 @@
 <span><span class="co">#&gt; ✔ Cohort amoxicillin created.</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="step-1-generatesequencecohortset">Step 1: generateSequenceCohortSet<a class="anchor" aria-label="anchor" href="#step-1-generatesequencecohortset"></a>
+<h3 id="step-1-sequencecohort">Step 1: sequenceCohort<a class="anchor" aria-label="anchor" href="#step-1-sequencecohort"></a>
 </h3>
-<p>In order to initiate the calculations, the two cohorts tables need to be intersected using <code><a href="reference/generateSequenceCohortSet.html">generateSequenceCohortSet()</a></code>. This process will output all the individuals who appeared on both tables according to a user-specified parameters. This includes <code>cohortDateRange</code>, <code>combinationWindow</code>, <code>washoutWindow</code>, <code>indexMarkerGap</code> and <code>daysPriorObservation</code>. More details on these parameters are found on the vignette.</p>
+<p>In order to initiate the calculations, the two cohorts tables need to be intersected using <code><a href="reference/sequenceCohort.html">sequenceCohort()</a></code>. This process will output all the individuals who appeared on both tables according to a user-specified parameters. This includes <code>cohortDateRange</code>, <code>combinationWindow</code>, <code>indexMarkerWashout</code>, <code>indexMarkerGap</code> and <code>sequencePriorObservation</code>. More details on these parameters are found on the vignette.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/CohortSymmetry/">CohortSymmetry</a></span><span class="op">)</span></span>
 <span> </span>
-<span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/generateSequenceCohortSet.html">generateSequenceCohortSet</a></span><span class="op">(</span></span>
+<span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
-<span>  indexTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
-<span>  markerTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
+<span>  indexCohortTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
+<span>  markerCohortTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">"aspirin_amoxicillin"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -196,7 +196,7 @@
 <div class="section level3">
 <h3 id="step-2-summarisesequenceratios">Step 2: summariseSequenceRatios<a class="anchor" aria-label="anchor" href="#step-2-summarisesequenceratios"></a>
 </h3>
-<p>To get the sequence ratios, we would need the output of the generateSequenceCohortSet() function to be fed into <code><a href="reference/summariseSequenceRatios.html">summariseSequenceRatios()</a></code> The output of this process contains CSR(crude sequence ratio), ASR(adjusted sequence ratio) and confidence intervals.</p>
+<p>To get the sequence ratios, we would need the output of the sequenceCohort() function to be fed into <code><a href="reference/summariseSequenceRatios.html">summariseSequenceRatios()</a></code> The output of this process contains CSR(crude sequence ratio), ASR(adjusted sequence ratio) and confidence intervals.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summariseSequenceRatios.html">summariseSequenceRatios</a></span><span class="op">(</span>cohort <span class="op">=</span> <span class="va">cdm</span><span class="op">$</span><span class="va">aspirin_amoxicillin</span><span class="op">)</span></span>
 <span> </span>

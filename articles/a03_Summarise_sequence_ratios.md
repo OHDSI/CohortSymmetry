@@ -6,7 +6,7 @@ In this vignette we will explore the functionality and arguments of
 [`summariseSequenceRatios()`](https://ohdsi.github.io/CohortSymmetry/reference/summariseSequenceRatios.md)
 function, which is used to generate the sequence ratios of the SSA. As
 this function uses the output of
-[`generateSequenceCohortSet()`](https://ohdsi.github.io/CohortSymmetry/reference/generateSequenceCohortSet.md)
+[`sequenceCohort()`](https://ohdsi.github.io/CohortSymmetry/reference/sequenceCohort.md)
 function (explained in detail in the vignette: **Step 1. Generate a
 sequence cohort**), we will pick up the explanation from where we left
 off in the previous vignette. However, in this case we are now using the
@@ -19,10 +19,10 @@ using them we could generate `cdm$intersect` like so:
 ``` r
 
 # Generate a sequence cohort
-cdm <- generateSequenceCohortSet(
+cdm <- sequenceCohort(
   cdm = cdm,
-  indexTable = "aspirin",
-  markerTable = "amoxicillin",
+  indexCohortTable = "aspirin",
+  markerCohortTable = "amoxicillin",
   name = "intersect")
 ```
 

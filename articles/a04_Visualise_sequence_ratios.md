@@ -13,7 +13,7 @@ functions:
   to plot the sequence ratios.
 
 This function builds-up on previous functions, such as
-[`generateSequenceCohortSet()`](https://ohdsi.github.io/CohortSymmetry/reference/generateSequenceCohortSet.md)
+[`sequenceCohort()`](https://ohdsi.github.io/CohortSymmetry/reference/sequenceCohort.md)
 and
 [`summariseSequenceRatios()`](https://ohdsi.github.io/CohortSymmetry/reference/summariseSequenceRatios.md)
 function (explained in detail in previous vignettes: **Step 1. Generate

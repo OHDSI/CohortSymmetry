@@ -8,7 +8,7 @@ using Pratt et al (2015).
 
 The functions you will interact with are:
 
-1.  [`generateSequenceCohortSet()`](https://ohdsi.github.io/CohortSymmetry/reference/generateSequenceCohortSet.md):
+1.  [`sequenceCohort()`](https://ohdsi.github.io/CohortSymmetry/reference/sequenceCohort.md):
     this function will create a cohort with individuals present in both
     (the index and the marker) cohorts.
 
@@ -68,17 +68,17 @@ cdm <- DrugUtilisation::generateIngredientCohortSet(
 
 Once we have our data and created the index and marker cohorts, we can
 use the
-[`generateSequenceCohortSet()`](https://ohdsi.github.io/CohortSymmetry/reference/generateSequenceCohortSet.md)
+[`sequenceCohort()`](https://ohdsi.github.io/CohortSymmetry/reference/sequenceCohort.md)
 function to find the intersection of the two cohorts. This function will
 provide us with the individuals who appear in both cohorts, which will
 be named **intersect** - another cohort in the cdm reference.
 
 ``` r
 
-cdm <- generateSequenceCohortSet(
+cdm <- sequenceCohort(
   cdm = cdm,
-  indexTable = "index",
-  markerTable = "marker",
+  indexCohortTable = "index",
+  markerCohortTable = "marker",
   name = "intersect",
   combinationWindow = c(0, 365)
 )

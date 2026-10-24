@@ -78,7 +78,7 @@
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>In this vignette we will explore the functionalities of
-<code>generateSequenceCohort()</code>.</p>
+<code><a href="../reference/sequenceCohort.html">sequenceCohort()</a></code>.</p>
 <div class="section level3">
 <h3 id="create-a-cdm-object">Create a cdm object<a class="anchor" aria-label="anchor" href="#create-a-cdm-object"></a>
 </h3>
@@ -157,12 +157,12 @@ Here is the example code for CohortConstructor:</p>
 <h2 id="generate-a-sequence-cohort">Generate a sequence cohort<a class="anchor" aria-label="anchor" href="#generate-a-sequence-cohort"></a>
 </h2>
 <p>In order to initiate the calculations, the two cohorts tables need to
-be intersected using <code><a href="../reference/generateSequenceCohortSet.html">generateSequenceCohortSet()</a></code>. This
-process will output all the individuals who appear on both tables
-subject to different parameters. Each parameter corresponds to a
-specific requirement. The parameters for this function include
-<code>cohortDateRange</code>, <code>daysPriorObservation</code>,
-<code>washoutWindow</code>, <code>indexMarkerGap</code> and
+be intersected using <code><a href="../reference/sequenceCohort.html">sequenceCohort()</a></code>. This process will
+output all the individuals who appear on both tables subject to
+different parameters. Each parameter corresponds to a specific
+requirement. The parameters for this function include
+<code>cohortDateRange</code>, <code>sequencePriorObservation</code>,
+<code>IndexMarkerWashout</code>, <code>indexMarkerGap</code> and
 <code>combinationWindow</code>. Let’s go through examples to see how
 each parameter works.</p>
 <div class="section level3">
@@ -181,14 +181,14 @@ cohort, all the subjects are included in the analysis. We can get a
 sequence cohort without including any particular requirement like
 so:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generateSequenceCohortSet.html">generateSequenceCohortSet</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
-<span>  indexTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
-<span>  markerTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
+<span>  indexCohortTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
+<span>  markerCohortTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">"intersect"</span>,</span>
 <span>  cohortDateRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>, </span>
-<span>  daysPriorObservation <span class="op">=</span> <span class="fl">0</span>, </span>
-<span>  washoutWindow <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  sequencePriorObservation <span class="op">=</span> <span class="fl">0</span>, </span>
+<span>  indexMarkerWashout <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  indexMarkerGap <span class="op">=</span> <span class="cn">Inf</span>, </span>
 <span>  combinationWindow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="cn">Inf</span><span class="op">)</span><span class="op">)</span> </span>
 <span></span>
@@ -232,26 +232,27 @@ could do the following:</p>
 <span><span class="co">#&gt;   cohort_definition_id cohort_name     index_id index_name marker_id marker_name</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">*</span>                <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>                    1 index_aspirin_…        1 aspirin            1 amoxicillin</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 7 more variables: cohort_date_range &lt;chr&gt;, days_prior_observation &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   washout_window &lt;chr&gt;, index_marker_gap &lt;chr&gt;, combination_window &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 7 more variables: cohort_date_range &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   sequence_prior_observation &lt;chr&gt;, index_marker_washout &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   index_marker_gap &lt;chr&gt;, combination_window &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   moving_average_restriction &lt;chr&gt;, nsr &lt;dbl&gt;</span></span></span></code></pre></div>
 <p>The user may also wish to subset the index table and marker table
-based on their cohort_definition_id using <code>indexId</code> and
-<code>markerId</code> respectively. For example, the following code only
-includes <code>cohort_definidtion_id</code>
+based on their cohort_definition_id using <code>indexCohortId</code> and
+<code>markerCohortId</code> respectively. For example, the following
+code only includes <code>cohort_definidtion_id</code>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">= 1</annotation></semantics></math>
 from both the index and the marker table.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generateSequenceCohortSet.html">generateSequenceCohortSet</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
-<span>  indexTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
-<span>  markerTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
+<span>  indexCohortTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
+<span>  markerCohortTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">"intersect"</span>,</span>
 <span>  cohortDateRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  indexId <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  markerId <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  daysPriorObservation <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  washoutWindow <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  indexCohortId <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  markerCohortId <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  sequencePriorObservation <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  indexMarkerWashout <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  indexMarkerGap <span class="op">=</span> <span class="cn">Inf</span>,</span>
 <span>  combinationWindow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="cn">Inf</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -279,13 +280,13 @@ within the study period.</p>
 <p>See an example of the usage below, where we have restricted the
 <code>cohortDateRange</code> within 01/01/1950 until 01/01/1969.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generateSequenceCohortSet.html">generateSequenceCohortSet</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
-<span>  indexTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
-<span>  markerTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
+<span>  indexCohortTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
+<span>  markerCohortTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">"intersect_study_period"</span>,</span>
-<span>  daysPriorObservation <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  washoutWindow <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  sequencePriorObservation <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  indexMarkerWashout <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  indexMarkerGap <span class="op">=</span> <span class="cn">Inf</span>,</span>
 <span>  cohortDateRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1950-01-01"</span>,<span class="st">"1969-01-01"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -306,17 +307,17 @@ happening within the study period does not have more than (or equal to)
 <img src="3-PriorObservation.png" class="r-plt" alt="" width="80%">
 </center>
 <p>The number of days of prior history required can be implemented using
-the argument <code>daysPriorObservation</code>. See an example
+the argument <code>sequencePriorObservation</code>. See an example
 below:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generateSequenceCohortSet.html">generateSequenceCohortSet</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
-<span>  indexTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
-<span>  markerTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
+<span>  indexCohortTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
+<span>  markerCohortTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">"intersect_prior_obs"</span>,</span>
 <span>  cohortDateRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1950-01-01"</span>,<span class="st">"1969-01-01"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  daysPriorObservation <span class="op">=</span> <span class="fl">365</span>,</span>
-<span>  washoutWindow <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  sequencePriorObservation <span class="op">=</span> <span class="fl">365</span>,</span>
+<span>  indexMarkerWashout <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  indexMarkerGap <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -332,16 +333,16 @@ and marker respectively.</p>
 <img src="4-washoutPeriod.png" class="r-plt" alt="" width="80%">
 </center>
 <p>This functionality can be implemented using the
-<code>washoutWindow</code> argument. See an example below:</p>
+<code>indexMarkerWashout</code> argument. See an example below:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generateSequenceCohortSet.html">generateSequenceCohortSet</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
-<span>  indexTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
-<span>  markerTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
+<span>  indexCohortTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
+<span>  markerCohortTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">"intersect_washout"</span>,</span>
 <span>  cohortDateRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1950-01-01"</span>,<span class="st">"1969-01-01"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  daysPriorObservation <span class="op">=</span> <span class="fl">365</span>,</span>
-<span>  washoutWindow <span class="op">=</span> <span class="fl">365</span>,</span>
+<span>  sequencePriorObservation <span class="op">=</span> <span class="fl">365</span>,</span>
+<span>  indexMarkerWashout <span class="op">=</span> <span class="fl">365</span>,</span>
 <span>  indexMarkerGap <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -367,9 +368,9 @@ from the analysis.
 <center>
 <img src="5-combinationWindow_numbers.png" class="r-plt" alt="" width="80%">
 </center>
-<p>In the <code><a href="../reference/generateSequenceCohortSet.html">generateSequenceCohortSet()</a></code> function, this is
-implemented using the <code>combinationWindow</code> argument. Notice
-that in the previous examples, as we did not want any combination window
+<p>In the <code><a href="../reference/sequenceCohort.html">sequenceCohort()</a></code> function, this is implemented
+using the <code>combinationWindow</code> argument. Notice that in the
+previous examples, as we did not want any combination window
 requirement, we have set this argument to
 <code>combinationWindow = c(0,Inf)</code>, but the default is
 <code>combinationWindow = c(0, 365)</code>. In the following example, we
@@ -377,14 +378,14 @@ explore subject_id 80 and 187 to see the functionality of this argument.
 When using no restriction for the combination window, both are included
 in the <strong>intersect_changed_cw</strong> cohort:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generateSequenceCohortSet.html">generateSequenceCohortSet</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
-<span>  indexTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
-<span>  markerTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
+<span>  indexCohortTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
+<span>  markerCohortTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">"intersect_changed_cw"</span>,</span>
 <span>  cohortDateRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1950-01-01"</span>,<span class="st">"1969-01-01"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  daysPriorObservation <span class="op">=</span> <span class="fl">365</span>,</span>
-<span>  washoutWindow <span class="op">=</span> <span class="fl">365</span>,</span>
+<span>  sequencePriorObservation <span class="op">=</span> <span class="fl">365</span>,</span>
+<span>  indexMarkerWashout <span class="op">=</span> <span class="fl">365</span>,</span>
 <span>  indexMarkerGap <span class="op">=</span> <span class="cn">Inf</span>,</span>
 <span>  combinationWindow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="cn">Inf</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -438,14 +439,14 @@ a<code>indexMarkerGap = 120</code> would be used for this argument.</p>
 <p>An example of the <code>indexGap</code> argument to impose this
 restriction, for example is shown below:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generateSequenceCohortSet.html">generateSequenceCohortSet</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
-<span>  indexTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
-<span>  markerTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
+<span>  indexCohortTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
+<span>  markerCohortTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">"intersect_"</span>,</span>
 <span>  cohortDateRange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1950-01-01"</span>,<span class="st">"1969-01-01"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  daysPriorObservation <span class="op">=</span> <span class="fl">365</span>,</span>
-<span>  washoutWindow <span class="op">=</span> <span class="fl">365</span>,</span>
+<span>  sequencePriorObservation <span class="op">=</span> <span class="fl">365</span>,</span>
+<span>  indexMarkerWashout <span class="op">=</span> <span class="fl">365</span>,</span>
 <span>  indexMarkerGap <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>

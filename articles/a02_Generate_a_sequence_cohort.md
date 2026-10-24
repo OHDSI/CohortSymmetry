@@ -3,7 +3,7 @@
 ## Introduction
 
 In this vignette we will explore the functionalities of
-`generateSequenceCohort()`.
+[`sequenceCohort()`](https://ohdsi.github.io/CohortSymmetry/reference/sequenceCohort.md).
 
 ### Create a cdm object
 
@@ -92,11 +92,11 @@ cdm <- DrugUtilisation::generateIngredientCohortSet(
 
 In order to initiate the calculations, the two cohorts tables need to be
 intersected using
-[`generateSequenceCohortSet()`](https://ohdsi.github.io/CohortSymmetry/reference/generateSequenceCohortSet.md).
+[`sequenceCohort()`](https://ohdsi.github.io/CohortSymmetry/reference/sequenceCohort.md).
 This process will output all the individuals who appear on both tables
 subject to different parameters. Each parameter corresponds to a
 specific requirement. The parameters for this function include
-`cohortDateRange`, `daysPriorObservation`, `washoutWindow`,
+`cohortDateRange`, `sequencePriorObservation`, `IndexMarkerWashout`,
 `indexMarkerGap` and `combinationWindow`. Let’s go through examples to
 see how each parameter works.
 
@@ -116,14 +116,14 @@ sequence cohort without including any particular requirement like so:
 
 ``` r
 
-cdm <- generateSequenceCohortSet(
+cdm <- sequenceCohort(
   cdm = cdm,
-  indexTable = "aspirin",
-  markerTable = "amoxicillin",
+  indexCohortTable = "aspirin",
+  markerCohortTable = "amoxicillin",
   name = "intersect",
   cohortDateRange = as.Date(c(NA, NA)), 
-  daysPriorObservation = 0, 
-  washoutWindow = 0,
+  sequencePriorObservation = 0, 
+  indexMarkerWashout = 0,
   indexMarkerGap = Inf, 
   combinationWindow = c(0,Inf)) 
 
@@ -164,29 +164,30 @@ attr(cdm$intersect, "cohort_set")
 #>   cohort_definition_id cohort_name     index_id index_name marker_id marker_name
 #> *                <int> <chr>              <int> <chr>          <int> <chr>      
 #> 1                    1 index_aspirin_…        1 aspirin            1 amoxicillin
-#> # ℹ 7 more variables: cohort_date_range <chr>, days_prior_observation <chr>,
-#> #   washout_window <chr>, index_marker_gap <chr>, combination_window <chr>,
+#> # ℹ 7 more variables: cohort_date_range <chr>,
+#> #   sequence_prior_observation <chr>, index_marker_washout <chr>,
+#> #   index_marker_gap <chr>, combination_window <chr>,
 #> #   moving_average_restriction <chr>, nsr <dbl>
 ```
 
 The user may also wish to subset the index table and marker table based
-on their cohort_definition_id using `indexId` and `markerId`
+on their cohort_definition_id using `indexCohortId` and `markerCohortId`
 respectively. For example, the following code only includes
 `cohort_definidtion_id` $`= 1`$ from both the index and the marker
 table.
 
 ``` r
 
-cdm <- generateSequenceCohortSet(
+cdm <- sequenceCohort(
   cdm = cdm,
-  indexTable = "aspirin",
-  markerTable = "amoxicillin",
+  indexCohortTable = "aspirin",
+  markerCohortTable = "amoxicillin",
   name = "intersect",
   cohortDateRange = as.Date(c(NA, NA)),
-  indexId = 1,
-  markerId = 1,
-  daysPriorObservation = 0,
-  washoutWindow = 0,
+  indexCohortId = 1,
+  markerCohortId = 1,
+  sequencePriorObservation = 0,
+  indexMarkerWashout = 0,
   indexMarkerGap = Inf,
   combinationWindow = c(0,Inf))
 ```
@@ -216,13 +217,13 @@ See an example of the usage below, where we have restricted the
 
 ``` r
 
-cdm <- generateSequenceCohortSet(
+cdm <- sequenceCohort(
   cdm = cdm,
-  indexTable = "aspirin",
-  markerTable = "amoxicillin",
+  indexCohortTable = "aspirin",
+  markerCohortTable = "amoxicillin",
   name = "intersect_study_period",
-  daysPriorObservation = 0,
-  washoutWindow = 0,
+  sequencePriorObservation = 0,
+  indexMarkerWashout = 0,
   indexMarkerGap = Inf,
   cohortDateRange = as.Date(c("1950-01-01","1969-01-01")))
 ```
@@ -243,18 +244,18 @@ happening within the study period does not have more than (or equal to)
 ![](3-PriorObservation.png)
 
 The number of days of prior history required can be implemented using
-the argument `daysPriorObservation`. See an example below:
+the argument `sequencePriorObservation`. See an example below:
 
 ``` r
 
-cdm <- generateSequenceCohortSet(
+cdm <- sequenceCohort(
   cdm = cdm,
-  indexTable = "aspirin",
-  markerTable = "amoxicillin",
+  indexCohortTable = "aspirin",
+  markerCohortTable = "amoxicillin",
   name = "intersect_prior_obs",
   cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
-  daysPriorObservation = 365,
-  washoutWindow = 0,
+  sequencePriorObservation = 365,
+  indexMarkerWashout = 0,
   indexMarkerGap = Inf)
 ```
 
@@ -268,19 +269,19 @@ marker respectively.
 
 ![](4-washoutPeriod.png)
 
-This functionality can be implemented using the `washoutWindow`
+This functionality can be implemented using the `indexMarkerWashout`
 argument. See an example below:
 
 ``` r
 
-cdm <- generateSequenceCohortSet(
+cdm <- sequenceCohort(
   cdm = cdm,
-  indexTable = "aspirin",
-  markerTable = "amoxicillin",
+  indexCohortTable = "aspirin",
+  markerCohortTable = "amoxicillin",
   name = "intersect_washout",
   cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
-  daysPriorObservation = 365,
-  washoutWindow = 365,
+  sequencePriorObservation = 365,
+  indexMarkerWashout = 365,
   indexMarkerGap = Inf)
 ```
 
@@ -304,7 +305,7 @@ fulfill this condition, they are excluded from the analysis.
 ![](5-combinationWindow_numbers.png)
 
 In the
-[`generateSequenceCohortSet()`](https://ohdsi.github.io/CohortSymmetry/reference/generateSequenceCohortSet.md)
+[`sequenceCohort()`](https://ohdsi.github.io/CohortSymmetry/reference/sequenceCohort.md)
 function, this is implemented using the `combinationWindow` argument.
 Notice that in the previous examples, as we did not want any combination
 window requirement, we have set this argument to
@@ -316,14 +317,14 @@ the **intersect_changed_cw** cohort:
 
 ``` r
 
-cdm <- generateSequenceCohortSet(
+cdm <- sequenceCohort(
   cdm = cdm,
-  indexTable = "aspirin",
-  markerTable = "amoxicillin",
+  indexCohortTable = "aspirin",
+  markerCohortTable = "amoxicillin",
   name = "intersect_changed_cw",
   cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
-  daysPriorObservation = 365,
-  washoutWindow = 365,
+  sequencePriorObservation = 365,
+  indexMarkerWashout = 365,
   indexMarkerGap = Inf,
   combinationWindow = c(0, Inf))
 
@@ -380,13 +381,13 @@ example is shown below:
 
 ``` r
 
-cdm <- generateSequenceCohortSet(
+cdm <- sequenceCohort(
   cdm = cdm,
-  indexTable = "aspirin",
-  markerTable = "amoxicillin",
+  indexCohortTable = "aspirin",
+  markerCohortTable = "amoxicillin",
   name = "intersect_",
   cohortDateRange = as.Date(c("1950-01-01","1969-01-01")),
-  daysPriorObservation = 365,
-  washoutWindow = 365,
+  sequencePriorObservation = 365,
+  indexMarkerWashout = 365,
   indexMarkerGap = 7)
 ```

@@ -2,10 +2,9 @@
 
 ## Generate sequence cohorts
 
-Functions for generating sequence cohorts for sequence symmetry
-analysis.
+Function for generating sequence cohorts for sequence symmetry analysis.
 
-- [`generateSequenceCohortSet()`](https://ohdsi.github.io/CohortSymmetry/reference/generateSequenceCohortSet.md)
+- [`sequenceCohort()`](https://ohdsi.github.io/CohortSymmetry/reference/sequenceCohort.md)
   : Intersecting the index and marker cohorts prior to calculating
   Sequence Symmetry Ratios
 
