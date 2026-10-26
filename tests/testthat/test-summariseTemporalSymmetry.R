@@ -2,7 +2,7 @@ test_that("test summariseTemporalSymmetry", {
 
   cdm <- mockCohortSymmetry()
 
-  cdm <- sequenceCohort(
+  cdm$joined_cohorts <- sequenceCohort(
     cdm = cdm,
     name = "joined_cohorts",
     indexCohortTable = "cohort_1",
@@ -66,7 +66,7 @@ test_that("test summariseTemporalSymmetry", {
 test_that("test cohortId",{
   skip_on_cran()
   cdm <- mockCohortSymmetry()
-  cdm <- sequenceCohort(
+  cdm$joined_cohorts <- sequenceCohort(
     cdm = cdm,
     name = "joined_cohorts",
     indexCohortTable = "cohort_1",
@@ -90,7 +90,7 @@ test_that("test cohortId",{
 test_that("input validation",{
   skip_on_cran()
   cdm <- mockCohortSymmetry()
-  cdm <- sequenceCohort(
+  cdm$joined_cohorts <- sequenceCohort(
     cdm = cdm,
     name = "joined_cohorts",
     indexCohortTable = "cohort_1",

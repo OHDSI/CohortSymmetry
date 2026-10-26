@@ -16,7 +16,7 @@ test_that("plot working", {
       seed = 33
     )
 
-  cdm <- sequenceCohort(cdm, "index_cohort", "marker_cohort", "joined_cohort", combinationWindow = c(0, Inf))
+  cdm$joined_cohort <- sequenceCohort(cdm, "index_cohort", "marker_cohort", "joined_cohort", combinationWindow = c(0, Inf))
 
   result <- summariseTemporalSymmetry(cohort = cdm$joined_cohort, days = 30)
   plotTS <- plotTemporalSymmetry(result = result)
@@ -52,7 +52,7 @@ test_that("expected errors", {
       seed = 33
     )
 
-  cdm <- sequenceCohort(cdm, "index_cohort", "marker_cohort", "joined_cohort", combinationWindow = c(0, Inf))
+  cdm$joined_cohort <- sequenceCohort(cdm, "index_cohort", "marker_cohort", "joined_cohort", combinationWindow = c(0, Inf))
 
   result <- summariseTemporalSymmetry(cohort = cdm$joined_cohort)
   expect_error(plotTemporalSymmetry("cdm", "joined_cohort"))
@@ -107,7 +107,7 @@ test_that("empty result error",{
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- sequenceCohort(cdm = cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable = "cohort_1",
                                    markerCohortTable = "cohort_2")

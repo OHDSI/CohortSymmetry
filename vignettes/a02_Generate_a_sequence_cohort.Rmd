@@ -107,7 +107,7 @@ knitr::include_graphics(here("vignettes/1-NoRestrictions.png"))
 See that only the first event/episode (for both the index and the marker) is included in the analysis. As there is no restriction criteria and all the individuals have an episode in the index and the marker cohort, all the subjects are included in the analysis. We can get a sequence cohort without including any particular requirement like so:
 
 ```{r message= FALSE, warning=FALSE}
-cdm <- sequenceCohort(
+cdm$intersect <- sequenceCohort(
   cdm = cdm,
   indexCohortTable = "aspirin",
   markerCohortTable = "amoxicillin",
@@ -138,7 +138,7 @@ attr(cdm$intersect, "cohort_set")
 The user may also wish to subset the index table and marker table based on their cohort_definition_id using `indexCohortId` and `markerCohortId` respectively. For example, the following code only includes `cohort_definidtion_id` $= 1$ from both the index and the marker table.
 
 ```{r message= FALSE, warning=FALSE, eval=FALSE}
-cdm <- sequenceCohort(
+cdm$intersect <- sequenceCohort(
   cdm = cdm,
   indexCohortTable = "aspirin",
   markerCohortTable = "amoxicillin",
@@ -176,7 +176,7 @@ The study period can be restricted using the `cohortDateRange` argument, which i
 See an example of the usage below, where we have restricted the `cohortDateRange` within 01/01/1950 until 01/01/1969.
 
 ```{r message= FALSE, warning=FALSE, eval=FALSE}
-cdm <- sequenceCohort(
+cdm$intersect <- sequenceCohort(
   cdm = cdm,
   indexCohortTable = "aspirin",
   markerCohortTable = "amoxicillin",
@@ -200,7 +200,7 @@ knitr::include_graphics(here("vignettes/3-PriorObservation.png"))
 The number of days of prior history required can be implemented using the argument `sequencePriorObservation`. See an example below:
 
 ```{r message= FALSE, warning=FALSE, eval=FALSE}
-cdm <- sequenceCohort(
+cdm$intersect <- sequenceCohort(
   cdm = cdm,
   indexCohortTable = "aspirin",
   markerCohortTable = "amoxicillin",
@@ -223,7 +223,7 @@ knitr::include_graphics(here("vignettes/4-washoutPeriod.png"))
 This functionality can be implemented using the `indexMarkerWashout` argument. See an example below:
 
 ```{r message= FALSE, warning=FALSE, eval=FALSE}
-cdm <- sequenceCohort(
+cdm$intersect <- sequenceCohort(
   cdm = cdm,
   indexCohortTable = "aspirin",
   markerCohortTable = "amoxicillin",
@@ -256,7 +256,7 @@ knitr::include_graphics(here("vignettes/5-combinationWindow_numbers.png"))
 In the `sequenceCohort()` function, this is implemented using the `combinationWindow` argument. Notice that in the previous examples, as we did not want any combination window requirement, we have set this argument to `combinationWindow = c(0,Inf)`, but the default is `combinationWindow = c(0, 365)`. In the following example, we explore subject_id 80 and 187 to see the functionality of this argument. When using no restriction for the combination window, both are included in the **intersect_changed_cw** cohort:
 
 ```{r message= FALSE, warning=FALSE, eval=FALSE}
-cdm <- sequenceCohort(
+cdm$intersect <- sequenceCohort(
   cdm = cdm,
   indexCohortTable = "aspirin",
   markerCohortTable = "amoxicillin",
@@ -302,7 +302,7 @@ However, this setting can be updated to implement a continued exposure interval 
 An example of the `indexGap` argument to impose this restriction, for example is shown below:
 
 ```{r message= FALSE, warning=FALSE, eval=FALSE}
-cdm <- sequenceCohort(
+cdm$intersect <- sequenceCohort(
   cdm = cdm,
   indexCohortTable = "aspirin",
   markerCohortTable = "amoxicillin",

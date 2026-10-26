@@ -33,7 +33,7 @@ test_that("summariseSequenceRatios", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- sequenceCohort(cdm = cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable = "cohort_1",
                                    markerCohortTable = "cohort_2")
@@ -99,7 +99,7 @@ test_that("summariseSequenceRatios - testing ratios and CIs, Example 1", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- sequenceCohort(cdm = cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable = "cohort_1",
                                    markerCohortTable = "cohort_2")
@@ -197,7 +197,7 @@ test_that("summariseSequenceRatios - testing ratios and CIs, Example 2", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- sequenceCohort(cdm = cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable = "cohort_1",
                                    markerCohortTable = "cohort_2")
@@ -266,7 +266,7 @@ test_that("summariseSequenceRatios - testing CI", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- sequenceCohort(cdm = cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable = "cohort_1",
                                    markerCohortTable = "cohort_2")
@@ -474,7 +474,7 @@ test_that("summariseSequenceRatios - testing cohortId", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- sequenceCohort(cdm = cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable = "cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -579,7 +579,7 @@ test_that("summariseSequenceRatios - testing moving average restriction, ex1", {
                             markerCohort = markerCohort)
 
   expect_no_error(
-    cdm <- sequenceCohort(cdm = cdm,
+    cdm$joined_cohorts <- sequenceCohort(cdm = cdm,
                                      name = "joined_cohorts",
                                      indexCohortTable = "cohort_1",
                                      markerCohortTable = "cohort_2",
@@ -658,7 +658,7 @@ test_that("summariseSequenceRatios - testing moving average restriction, ex2", {
                             markerCohort = markerCohort)
 
   expect_no_error(
-    cdm <- sequenceCohort(cdm = cdm,
+    cdm$joined_cohorts <- sequenceCohort(cdm = cdm,
                                      name = "joined_cohorts",
                                      indexCohortTable = "cohort_1",
                                      markerCohortTable = "cohort_2",
@@ -698,7 +698,7 @@ test_that("summariseSequenceRatios - testing moving average restriction, ex2", {
          as.numeric())
   ))
 
-  cdm <- sequenceCohort(cdm = cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable = "cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -799,7 +799,7 @@ test_that("edge case 1", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- sequenceCohort(cdm = cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable = "cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -837,7 +837,7 @@ test_that("edge case 2", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- sequenceCohort(cdm = cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable = "cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -875,7 +875,7 @@ test_that("edge case 3", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- sequenceCohort(cdm = cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable = "cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -927,7 +927,7 @@ test_that("Inf CI", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- sequenceCohort(cdm = cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm = cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable = "cohort_1",
                                    markerCohortTable = "cohort_2")

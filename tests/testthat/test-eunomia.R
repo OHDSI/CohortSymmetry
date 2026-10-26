@@ -37,7 +37,7 @@ test_that("eunomia - generateSequenceCohortSet", {
   )
 
   expect_no_error(
-    cdm <- sequenceCohort(cdm,
+    cdm$joined_cohorts <- sequenceCohort(cdm,
                                      name = "joined_cohorts",
                                      indexCohortTable ="cohort1",
                                      markerCohortTable = "cohort2",

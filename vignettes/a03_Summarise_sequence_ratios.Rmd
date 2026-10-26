@@ -64,7 +64,7 @@ Recall that in the previous vignette: Step 1. Generate a sequence cohort, we've 
 
 ```{r message= FALSE, warning=FALSE}
 # Generate a sequence cohort
-cdm <- sequenceCohort(
+cdm$intersect <- sequenceCohort(
   cdm = cdm,
   indexCohortTable = "aspirin",
   markerCohortTable = "amoxicillin",

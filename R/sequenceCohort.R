@@ -30,14 +30,13 @@
 #' \donttest{
 #' library(CohortSymmetry)
 #' cdm <- mockCohortSymmetry()
-#' cdm <- sequenceCohort(
+#' cdm$joined_cohorts <- sequenceCohort(
 #'   cdm = cdm,
 #'   name = "joined_cohorts",
 #'   indexCohortTable = "cohort_1",
 #'   markerCohortTable = "cohort_2"
 #' )
 #'  cdm$joined_cohorts
-#'  CDMConnector::cdmDisconnect(cdm = cdm)
 #' }
 sequenceCohort <- function(cdm,
                                       indexCohortTable,
@@ -384,5 +383,5 @@ sequenceCohort <- function(cdm,
   cdm <- omopgenerics::dropSourceTable(cdm = cdm, name = "ids")
   omopgenerics::dropSourceTable(cdm = cdm, name = dplyr::starts_with(nsr_name))
 
-  return(cdm)
+  return(cdm[[name]])
 }
