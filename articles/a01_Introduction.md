@@ -2,9 +2,8 @@
 
 CohortSymmetry provides tools to perform Sequence Symmetry Analysis
 (SSA). Before using the package, it is highly recommended that this
-method is tested beforehand against well-known positive and negative
-controls. The details of SSA and the relevant controls could be found
-using Pratt et al (2015).
+method is tested beforehand against a selection of positive and negative
+controls on a users specific database.
 
 The functions you will interact with are:
 
@@ -52,18 +51,36 @@ to create two cohorts: the **index_cohort** and the **marker_cohort**.
 
 ``` r
 
+library(dplyr)
+library(CodelistGenerator)
+library(CohortConstructor)
 
 cdm <- mockCdmFromDataset(datasetName = "GiBleed")
 
-cdm <- DrugUtilisation::generateIngredientCohortSet(
-  cdm = cdm, 
-  name = "index",
-  ingredient = "aspirin")
-
-cdm <- DrugUtilisation::generateIngredientCohortSet(
+index_codelist <- CodelistGenerator::getDrugIngredientCodes(
   cdm = cdm,
-  name = "marker",
-  ingredient = c("amoxicillin"))
+  name = "aspirin",
+  nameStyle = "{concept_name}"
+)
+
+cdm[["index"]] <- CohortConstructor::conceptCohort(
+  cdm = cdm,
+  conceptSet = index_codelist,
+  exit = "event_end_date",
+  name = "index")
+
+
+marker_codelist <- CodelistGenerator::getDrugIngredientCodes(
+  cdm = cdm,
+  name = "amoxicillin",
+  nameStyle = "{concept_name}"
+)
+
+cdm[["marker"]] <- CohortConstructor::conceptCohort(
+  cdm = cdm,
+  conceptSet = marker_codelist,
+  exit = "event_end_date",
+  name = "marker")
 ```
 
 Once we have our data and created the index and marker cohorts, we can

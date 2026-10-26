@@ -76,9 +76,8 @@
     
 <p>CohortSymmetry provides tools to perform Sequence Symmetry Analysis
 (SSA). Before using the package, it is highly recommended that this
-method is tested beforehand against well-known positive and negative
-controls. The details of SSA and the relevant controls could be found
-using Pratt et al (2015).</p>
+method is tested beforehand against a selection of positive and negative
+controls on a users specific database.</p>
 <p>The functions you will interact with are:</p>
 <ol style="list-style-type: decimal">
 <li><p><code><a href="../reference/sequenceCohort.html">sequenceCohort()</a></code>: this function will create a cohort
@@ -112,18 +111,36 @@ which can call various synthetic databases. We will use the GIBleed data
 to create two cohorts: the <strong>index_cohort</strong> and the
 <strong>marker_cohort</strong>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu.github.io/CodelistGenerator/" class="external-link">CodelistGenerator</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/CohortConstructor/" class="external-link">CohortConstructor</a></span><span class="op">)</span></span>
+<span></span>
 <span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ohdsi.github.io/omock/reference/mockCdmFromDataset.html" class="external-link">mockCdmFromDataset</a></span><span class="op">(</span>datasetName <span class="op">=</span> <span class="st">"GiBleed"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu">DrugUtilisation</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/DrugUtilisation/reference/generateIngredientCohortSet.html" class="external-link">generateIngredientCohortSet</a></span><span class="op">(</span></span>
-<span>  cdm <span class="op">=</span> <span class="va">cdm</span>, </span>
-<span>  name <span class="op">=</span> <span class="st">"index"</span>,</span>
-<span>  ingredient <span class="op">=</span> <span class="st">"aspirin"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu">DrugUtilisation</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/DrugUtilisation/reference/generateIngredientCohortSet.html" class="external-link">generateIngredientCohortSet</a></span><span class="op">(</span></span>
+<span><span class="va">index_codelist</span> <span class="op">&lt;-</span> <span class="fu">CodelistGenerator</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/CodelistGenerator/reference/getDrugIngredientCodes.html" class="external-link">getDrugIngredientCodes</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
-<span>  name <span class="op">=</span> <span class="st">"marker"</span>,</span>
-<span>  ingredient <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"amoxicillin"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  name <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
+<span>  nameStyle <span class="op">=</span> <span class="st">"{concept_name}"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cdm</span><span class="op">[[</span><span class="st">"index"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">CohortConstructor</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/CohortConstructor/reference/conceptCohort.html" class="external-link">conceptCohort</a></span><span class="op">(</span></span>
+<span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
+<span>  conceptSet <span class="op">=</span> <span class="va">index_codelist</span>,</span>
+<span>  exit <span class="op">=</span> <span class="st">"event_end_date"</span>,</span>
+<span>  name <span class="op">=</span> <span class="st">"index"</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">marker_codelist</span> <span class="op">&lt;-</span> <span class="fu">CodelistGenerator</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/CodelistGenerator/reference/getDrugIngredientCodes.html" class="external-link">getDrugIngredientCodes</a></span><span class="op">(</span></span>
+<span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
+<span>  name <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
+<span>  nameStyle <span class="op">=</span> <span class="st">"{concept_name}"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cdm</span><span class="op">[[</span><span class="st">"marker"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">CohortConstructor</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/CohortConstructor/reference/conceptCohort.html" class="external-link">conceptCohort</a></span><span class="op">(</span></span>
+<span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
+<span>  conceptSet <span class="op">=</span> <span class="va">marker_codelist</span>,</span>
+<span>  exit <span class="op">=</span> <span class="st">"event_end_date"</span>,</span>
+<span>  name <span class="op">=</span> <span class="st">"marker"</span><span class="op">)</span></span></code></pre></div>
 <p>Once we have our data and created the index and marker cohorts, we
 can use the <code><a href="../reference/sequenceCohort.html">sequenceCohort()</a></code> function to find the
 intersection of the two cohorts. This function will provide us with the

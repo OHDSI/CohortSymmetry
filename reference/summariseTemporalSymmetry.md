@@ -40,7 +40,6 @@ cdm <- sequenceCohort(cdm = cdm,
                                  indexCohortTable = "cohort_1",
                                  markerCohortTable = "cohort_2")
 temporal_symmetry <- summariseTemporalSymmetry(cohort = cdm$joined_cohorts)
-#> `days` cast to character.
 CDMConnector::cdmDisconnect(cdm)
 # }
 ```

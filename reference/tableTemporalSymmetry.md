@@ -60,7 +60,6 @@ cdm <- sequenceCohort(cdm = cdm,
                                  markerCohortTable = "cohort_2",
                                  name = "joined_cohort")
 res <- summariseTemporalSymmetry(cohort = cdm$joined_cohort)
-#> `days` cast to character.
 gtResult <- tableTemporalSymmetry(result = res)
 CDMConnector::cdmDisconnect(cdm = cdm)
 # }

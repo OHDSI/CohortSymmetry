@@ -96,7 +96,7 @@ intersected using
 This process will output all the individuals who appear on both tables
 subject to different parameters. Each parameter corresponds to a
 specific requirement. The parameters for this function include
-`cohortDateRange`, `sequencePriorObservation`, `IndexMarkerWashout`,
+`cohortDateRange`, `sequencePriorObservation`, `indexMarkerWashout`,
 `indexMarkerGap` and `combinationWindow`. Let’s go through examples to
 see how each parameter works.
 
