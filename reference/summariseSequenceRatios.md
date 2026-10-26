@@ -33,7 +33,7 @@ A local table with all the analyses.
 # \donttest{
 library(CohortSymmetry)
 cdm <- mockCohortSymmetry()
-cdm <- sequenceCohort(cdm = cdm,
+cdm$joined_cohorts <- sequenceCohort(cdm = cdm,
                                  name = "joined_cohorts",
                                  indexCohortTable = "cohort_1",
                                  markerCohortTable = "cohort_2")
@@ -60,6 +60,5 @@ pssa_result
 #> # ℹ 7 more variables: variable_name <chr>, variable_level <chr>,
 #> #   estimate_name <chr>, estimate_type <chr>, estimate_value <chr>,
 #> #   additional_name <chr>, additional_level <chr>
-CDMConnector::cdmDisconnect(cdm)
 # }
 ```

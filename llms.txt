@@ -2,9 +2,10 @@
 
 The goal of CohortSymmetry is to carry out the necessary calculations
 for Sequence Symmetry Analysis (SSA). It is highly recommended that this
-method is tested beforehand against well-known positive and negative
-controls. Such controls could be found using [Pratt et al
-(2015)](https://pubmed.ncbi.nlm.nih.gov/25907076/).
+method is tested beforehand against several positive and negative
+controls on a users specific database. Examples of controls could be
+found from [Pratt et al
+(2015)](https://pubmed.ncbi.nlm.nih.gov/25907076/) and the literature.
 
 ## Installation
 
@@ -47,45 +48,20 @@ This will be entirely user’s choice on how to generate such cohorts.
 Minimally, this package requires two cohort tables in the cdm reference,
 namely the index_cohort and the marker_cohort.
 
-If one wants to generate two drugs cohorts in cdm, the [DrugUtilisation
-R package](https://darwin-eu.github.io/DrugUtilisation/) can be used or
-we recommend using [CohortConstructor R
-package](https://ohdsi.github.io/CohortConstructor/). However a user
-will need to specify the gap eras for each of the cohorts i.e. a gap era
-set to 30 would collapse episodes together if they are within 30 days of
-each other for example please see the individual packages on how to
-implement this if required.
+If one wants to generate two drugs cohorts in cdm, we recommend using
+[CohortConstructor R
+package](https://ohdsi.github.io/CohortConstructor/) however the
+[DrugUtilisation R
+package](https://darwin-eu.github.io/DrugUtilisation/) can also be used.
+However a user will need to specify the gap eras for each of the cohorts
+i.e. a gap era set to 30 would collapse episodes together if they are
+within 30 days of each other for example please see the individual
+packages on how to implement this if required.
 
 For merely illustration purposes, we will carry out SSA on aspirin
 (index_cohort) against amoxicillin (marker_cohort). Multiple markers can
 be instantiated in the marker cohort and each one will be tested against
 the index cohort.
-
-Using the drug utilisation package:
-
-``` r
-
-library(dplyr)
-library(DrugUtilisation)
-
-cdm <- DrugUtilisation::generateIngredientCohortSet(
-  cdm = cdm, 
-  name = "aspirin",
-  ingredient = "aspirin")
-#> ℹ Subsetting drug_exposure table
-#> ℹ Checking whether any record needs to be dropped.
-#> ℹ Collapsing overlaping records.
-#> ℹ Collapsing records with gapEra = 1 days.
-
-cdm <- DrugUtilisation::generateIngredientCohortSet(
-  cdm = cdm,
-  name = "amoxicillin",
-  ingredient = "amoxicillin")
-#> ℹ Subsetting drug_exposure table
-#> ℹ Checking whether any record needs to be dropped.
-#> ℹ Collapsing overlaping records.
-#> ℹ Collapsing records with gapEra = 1 days.
-```
 
 Using CohortConstructor R package (recommended):
 
@@ -133,6 +109,32 @@ cdm[["amoxicillin"]] <- CohortConstructor::conceptCohort(
 #> ✔ Cohort amoxicillin created.
 ```
 
+Using the drug utilisation package:
+
+``` r
+
+library(dplyr)
+library(DrugUtilisation)
+
+cdm <- DrugUtilisation::generateIngredientCohortSet(
+  cdm = cdm, 
+  name = "aspirin",
+  ingredient = "aspirin")
+#> ℹ Subsetting drug_exposure table
+#> ℹ Checking whether any record needs to be dropped.
+#> ℹ Collapsing overlaping records.
+#> ℹ Collapsing records with gapEra = 1 days.
+
+cdm <- DrugUtilisation::generateIngredientCohortSet(
+  cdm = cdm,
+  name = "amoxicillin",
+  ingredient = "amoxicillin")
+#> ℹ Subsetting drug_exposure table
+#> ℹ Checking whether any record needs to be dropped.
+#> ℹ Collapsing overlaping records.
+#> ℹ Collapsing records with gapEra = 1 days.
+```
+
 ### Step 1: sequenceCohort
 
 In order to initiate the calculations, the two cohorts tables need to be
@@ -148,7 +150,7 @@ parameters are found on the vignette.
 
 library(CohortSymmetry)
  
-cdm <- sequenceCohort(
+cdm$aspirin_amoxicillin <- sequenceCohort(
   cdm = cdm,
   indexCohortTable = "aspirin",
   markerCohortTable = "amoxicillin",

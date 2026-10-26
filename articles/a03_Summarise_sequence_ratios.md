@@ -19,7 +19,7 @@ using them we could generate `cdm$intersect` like so:
 ``` r
 
 # Generate a sequence cohort
-cdm <- sequenceCohort(
+cdm$intersect <- sequenceCohort(
   cdm = cdm,
   indexCohortTable = "aspirin",
   markerCohortTable = "amoxicillin",

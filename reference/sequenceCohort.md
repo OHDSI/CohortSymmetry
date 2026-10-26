@@ -88,7 +88,7 @@ A table within the cdm reference.
 # \donttest{
 library(CohortSymmetry)
 cdm <- mockCohortSymmetry()
-cdm <- sequenceCohort(
+cdm$joined_cohorts <- sequenceCohort(
   cdm = cdm,
   name = "joined_cohorts",
   indexCohortTable = "cohort_1",
@@ -110,6 +110,5 @@ cdm <- sequenceCohort(
 #> 10                    6          2 2022-05-22        2022-05-25      2022-05-22
 #> 11                    5          2 2022-05-22        2022-05-31      2022-05-22
 #> # ℹ 1 more variable: marker_date <date>
- CDMConnector::cdmDisconnect(cdm = cdm)
 # }
 ```

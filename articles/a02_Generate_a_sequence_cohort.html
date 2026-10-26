@@ -181,7 +181,7 @@ cohort, all the subjects are included in the analysis. We can get a
 sequence cohort without including any particular requirement like
 so:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">cdm</span><span class="op">$</span><span class="va">intersect</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
 <span>  indexCohortTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
 <span>  markerCohortTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
@@ -243,7 +243,7 @@ code only includes <code>cohort_definidtion_id</code>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">= 1</annotation></semantics></math>
 from both the index and the marker table.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">cdm</span><span class="op">$</span><span class="va">intersect</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
 <span>  indexCohortTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
 <span>  markerCohortTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
@@ -280,7 +280,7 @@ within the study period.</p>
 <p>See an example of the usage below, where we have restricted the
 <code>cohortDateRange</code> within 01/01/1950 until 01/01/1969.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">cdm</span><span class="op">$</span><span class="va">intersect</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
 <span>  indexCohortTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
 <span>  markerCohortTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
@@ -310,7 +310,7 @@ happening within the study period does not have more than (or equal to)
 the argument <code>sequencePriorObservation</code>. See an example
 below:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">cdm</span><span class="op">$</span><span class="va">intersect</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
 <span>  indexCohortTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
 <span>  markerCohortTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
@@ -335,7 +335,7 @@ and marker respectively.</p>
 <p>This functionality can be implemented using the
 <code>indexMarkerWashout</code> argument. See an example below:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">cdm</span><span class="op">$</span><span class="va">intersect</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
 <span>  indexCohortTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
 <span>  markerCohortTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
@@ -378,7 +378,7 @@ explore subject_id 80 and 187 to see the functionality of this argument.
 When using no restriction for the combination window, both are included
 in the <strong>intersect_changed_cw</strong> cohort:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">cdm</span><span class="op">$</span><span class="va">intersect</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
 <span>  indexCohortTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
 <span>  markerCohortTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>
@@ -439,7 +439,7 @@ a<code>indexMarkerGap = 120</code> would be used for this argument.</p>
 <p>An example of the <code>indexGap</code> argument to impose this
 restriction, for example is shown below:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">cdm</span><span class="op">$</span><span class="va">intersect</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sequenceCohort.html">sequenceCohort</a></span><span class="op">(</span></span>
 <span>  cdm <span class="op">=</span> <span class="va">cdm</span>,</span>
 <span>  indexCohortTable <span class="op">=</span> <span class="st">"aspirin"</span>,</span>
 <span>  markerCohortTable <span class="op">=</span> <span class="st">"amoxicillin"</span>,</span>

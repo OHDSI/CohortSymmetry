@@ -92,7 +92,7 @@ be named **intersect** - another cohort in the cdm reference.
 
 ``` r
 
-cdm <- sequenceCohort(
+cdm$intersect <- sequenceCohort(
   cdm = cdm,
   indexCohortTable = "index",
   markerCohortTable = "marker",

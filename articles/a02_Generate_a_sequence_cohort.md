@@ -116,7 +116,7 @@ sequence cohort without including any particular requirement like so:
 
 ``` r
 
-cdm <- sequenceCohort(
+cdm$intersect <- sequenceCohort(
   cdm = cdm,
   indexCohortTable = "aspirin",
   markerCohortTable = "amoxicillin",
@@ -178,7 +178,7 @@ table.
 
 ``` r
 
-cdm <- sequenceCohort(
+cdm$intersect <- sequenceCohort(
   cdm = cdm,
   indexCohortTable = "aspirin",
   markerCohortTable = "amoxicillin",
@@ -217,7 +217,7 @@ See an example of the usage below, where we have restricted the
 
 ``` r
 
-cdm <- sequenceCohort(
+cdm$intersect <- sequenceCohort(
   cdm = cdm,
   indexCohortTable = "aspirin",
   markerCohortTable = "amoxicillin",
@@ -248,7 +248,7 @@ the argument `sequencePriorObservation`. See an example below:
 
 ``` r
 
-cdm <- sequenceCohort(
+cdm$intersect <- sequenceCohort(
   cdm = cdm,
   indexCohortTable = "aspirin",
   markerCohortTable = "amoxicillin",
@@ -274,7 +274,7 @@ argument. See an example below:
 
 ``` r
 
-cdm <- sequenceCohort(
+cdm$intersect <- sequenceCohort(
   cdm = cdm,
   indexCohortTable = "aspirin",
   markerCohortTable = "amoxicillin",
@@ -317,7 +317,7 @@ the **intersect_changed_cw** cohort:
 
 ``` r
 
-cdm <- sequenceCohort(
+cdm$intersect <- sequenceCohort(
   cdm = cdm,
   indexCohortTable = "aspirin",
   markerCohortTable = "amoxicillin",
@@ -381,7 +381,7 @@ example is shown below:
 
 ``` r
 
-cdm <- sequenceCohort(
+cdm$intersect <- sequenceCohort(
   cdm = cdm,
   indexCohortTable = "aspirin",
   markerCohortTable = "amoxicillin",

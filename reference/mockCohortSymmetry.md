@@ -44,6 +44,5 @@ cdm
 #> • cohort tables: cohort_1, cohort_2
 #> • achilles tables: -
 #> • other tables: -
-CDMConnector::cdmDisconnect(cdm = cdm)
 # }
 ```
