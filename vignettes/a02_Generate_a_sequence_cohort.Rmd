@@ -89,7 +89,7 @@ cdm <- DrugUtilisation::generateIngredientCohortSet(
 
 # Generate a sequence cohort
 
-In order to initiate the calculations, the two cohorts tables need to be intersected using `sequenceCohort()`. This process will output all the individuals who appear on both tables subject to different parameters. Each parameter corresponds to a specific requirement. The parameters for this function include `cohortDateRange`, `sequencePriorObservation`, `IndexMarkerWashout`, `indexMarkerGap` and `combinationWindow`. Let's go through examples to see how each parameter works.
+In order to initiate the calculations, the two cohorts tables need to be intersected using `sequenceCohort()`. This process will output all the individuals who appear on both tables subject to different parameters. Each parameter corresponds to a specific requirement. The parameters for this function include `cohortDateRange`, `sequencePriorObservation`, `indexMarkerWashout`, `indexMarkerGap` and `combinationWindow`. Let's go through examples to see how each parameter works.
 
 ## No specific requirements
 

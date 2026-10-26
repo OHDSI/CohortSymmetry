@@ -43,8 +43,8 @@ summariseTemporalSymmetry <- function(cohort,
     dplyr::select("cohort_definition_id", "index_name", "index_id", "marker_id")
   marker_names <- attr(cohort, "cohort_set") |>
     dplyr::select("cohort_definition_id", "marker_name")
-  cohort_settings <- omopgenerics::settings(cohort)|>
-    dplyr::mutate(days = .env$days) |>
+  cohort_settings <- omopgenerics::settings(cohort) |>
+    dplyr::mutate(days = as.character(.env$days)) |>
     dplyr::select(-c("index_id", "marker_id", "index_name", "marker_name"))
 
   settings <- c("cohort_date_range", "sequence_prior_observation", "index_marker_washout", "index_marker_gap",
@@ -114,12 +114,14 @@ summariseTemporalSymmetry <- function(cohort,
     dplyr::select(c(-"cohort_name", -"cohort_definition_id"))
 
   setting <- output_sum |>
-    dplyr::distinct(dplyr::across(dplyr::all_of(c(settings)))) |>
-    dplyr::mutate(result_id = as.integer(dplyr::row_number()),
-                  result_type = "temporal_symmetry",
-                  package_name = "CohortSymmetry",
-                  package_version = as.character(utils::packageVersion("CohortSymmetry")),
-                  days = .env$days)
+    dplyr::distinct(dplyr::across(dplyr::all_of(settings))) |>
+    dplyr::mutate(
+      result_id = as.integer(dplyr::row_number()),
+      result_type = "temporal_symmetry",
+      package_name = "CohortSymmetry",
+      package_version = as.character(utils::packageVersion("CohortSymmetry")),
+      days = as.character(.env$days)
+    )
 
   # new summarise result
   output_sum <- output_sum |>
