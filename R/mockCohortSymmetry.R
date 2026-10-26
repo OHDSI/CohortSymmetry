@@ -19,7 +19,6 @@
 #' library(CohortSymmetry)
 #' cdm <- mockCohortSymmetry()
 #' cdm
-#' CDMConnector::cdmDisconnect(cdm = cdm)
 #' }
 mockCohortSymmetry <- function(seed = 1,
                                indexCohort = NULL,

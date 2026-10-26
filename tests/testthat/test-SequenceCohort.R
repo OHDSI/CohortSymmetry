@@ -2,7 +2,7 @@
 test_that("check output table name", {
   skip_on_cran()
   cdm <- mockCohortSymmetry()
-  cdm <- sequenceCohort(cdm = cdm,
+  cdm$output <- sequenceCohort(cdm = cdm,
                                    name = "output",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2")
@@ -19,7 +19,7 @@ test_that("check output table name", {
 test_that("check output format, colnames", {
   skip_on_cran()
   cdm <- mockCohortSymmetry()
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2")
@@ -35,7 +35,7 @@ test_that("check output format, colnames", {
 test_that("one ID against one ID, example 1", {
   testthat::skip_if_not_installed("omock")
   cdm <- mockCohortSymmetry()
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    indexCohortId=1,
@@ -58,7 +58,7 @@ test_that("one ID against one ID, example 1", {
 test_that("one ID against one ID, example 2", {
   skip_on_cran()
   cdm <- mockCohortSymmetry()
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    indexCohortId=2,
@@ -77,7 +77,7 @@ test_that("one ID against one ID, example 2", {
 test_that("one ID against one ID, example 3", {
   testthat::skip_if_not_installed("omock")
   cdm <- mockCohortSymmetry()
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    indexCohortId=1,
@@ -130,7 +130,7 @@ test_that("multiple entries per person", {
     markerCohort = markerCohort
   )
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -142,7 +142,7 @@ test_that("multiple entries per person", {
   expect_true(all(loc %>% dplyr::group_by(subject_id) %>% dplyr::tally() %>% dplyr::select(n) == 1))
   expect_true(nrow(loc)==2)
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -162,7 +162,7 @@ test_that("change combinationWindow one ID against one ID, example 1", {
   skip_on_cran()
   cdm <- mockCohortSymmetry()
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    indexCohortId=1,
@@ -179,7 +179,7 @@ test_that("change combinationWindow one ID against one ID, example 1", {
   expect_true(all(0 < abs(loc$marker_date - loc$index_date)))
   expect_true((loc %>% dplyr::filter(index_name=="cohort_1" & marker_name=="cohort_2") %>% dplyr:: tally() %>% dplyr:: pull(n)) == 1)
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    indexCohortId=1,
@@ -195,7 +195,7 @@ test_that("change combinationWindow one ID against one ID, example 1", {
   expect_true(all(0 < abs(loc$marker_date - loc$index_date)))
   expect_true((loc %>% dplyr::filter(index_name=="cohort_1" & marker_name=="cohort_2") %>% dplyr:: tally() %>% dplyr:: pull(n)) == 3)
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    indexCohortId=1,
@@ -219,7 +219,7 @@ test_that("change combinationWindow one ID against one ID, example 2", {
   skip_on_cran()
   cdm <- mockCohortSymmetry()
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    indexCohortId=3,
@@ -236,7 +236,7 @@ test_that("change combinationWindow one ID against one ID, example 2", {
   expect_true(all(0 < abs(loc$marker_date - loc$index_date)))
   expect_true((loc %>% dplyr::filter(index_name=="cohort_3" & marker_name=="cohort_1") %>% dplyr:: tally() %>% dplyr:: pull(n)) == 1)
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    indexCohortId=3,
@@ -252,7 +252,7 @@ test_that("change combinationWindow one ID against one ID, example 2", {
   expect_true(all(0 < abs(loc$marker_date - loc$index_date)))
   expect_true((loc %>% dplyr::filter(index_name=="cohort_3" & marker_name=="cohort_1") %>% dplyr:: tally() %>% dplyr:: pull(n)) == 2)
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    indexCohortId=3,
@@ -277,7 +277,7 @@ test_that("change combinationWindow one ID against one ID, example 2", {
 test_that("all IDs against all IDs", {
   skip_on_cran()
   cdm <- mockCohortSymmetry()
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable = "cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -308,7 +308,7 @@ test_that("all IDs against all IDs", {
 test_that("one index (rsp. marker) ID against all marker (rsp. index) IDs", {
   skip_on_cran()
   cdm <- mockCohortSymmetry()
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    indexCohortId = 1,
@@ -329,7 +329,7 @@ test_that("one index (rsp. marker) ID against all marker (rsp. index) IDs", {
   expect_false("cohort_2" %in% (loc %>% dplyr::pull(index_name)))
   expect_false("cohort_3" %in% (loc %>% dplyr::pull(index_name)))
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -355,7 +355,7 @@ test_that("one index (rsp. marker) ID against all marker (rsp. index) IDs", {
 test_that("a subset of IDs against a subset of IDs", {
   skip_on_cran()
   cdm <- mockCohortSymmetry()
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    indexCohortId = c(1,2),
@@ -384,7 +384,7 @@ test_that("a subset of IDs against a subset of IDs", {
 test_that("example of changed combinationWindow", {
   skip_on_cran()
   cdm <- mockCohortSymmetry()
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    indexCohortId = 3,
@@ -397,7 +397,7 @@ test_that("example of changed combinationWindow", {
 
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n) == 1) # default time, 1 entry
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    indexCohortId = 3,
@@ -412,7 +412,7 @@ test_that("example of changed combinationWindow", {
     dplyr::collect()
   expect_true(loc %>% dplyr::tally() %>% dplyr::pull(n) == 4) #inf gives more values
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    indexCohortId = 3,
@@ -427,7 +427,7 @@ test_that("example of changed combinationWindow", {
     dplyr::collect()
   expect_true(loc %>% dplyr::tally() %>% dplyr::pull(n) == 2) #inf gives more values
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    indexCohortId = 3,
@@ -443,7 +443,7 @@ test_that("example of changed combinationWindow", {
   expect_true(loc %>% dplyr::tally() %>% dplyr::pull(n) == 1) #inf gives more values
   expect_true(loc %>% dplyr::select(subject_id) %>% dplyr::pull() == 1)
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    indexCohortId = 3,
@@ -495,7 +495,7 @@ test_that("priorObservation and cohortDateRange", {
     markerCohort = markerCohort
   )
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -506,7 +506,7 @@ test_that("priorObservation and cohortDateRange", {
 
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n) == 3)
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -516,7 +516,7 @@ test_that("priorObservation and cohortDateRange", {
   )
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n) == 3)
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -528,7 +528,7 @@ test_that("priorObservation and cohortDateRange", {
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n) == 3)
   expect_true(all(cdm$joined_cohorts %>% dplyr::pull(subject_id) %in% c(1,2,4)))
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -540,7 +540,7 @@ test_that("priorObservation and cohortDateRange", {
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n) == 2)
   expect_true(all(cdm$joined_cohorts %>% dplyr::pull(subject_id) %in% c(1,4)))
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -594,7 +594,7 @@ test_that("tests involving washout", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                             markerCohort = markerCohort)
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -617,7 +617,7 @@ test_that("tests involving washout", {
   expect_true(all(cdm$joined_cohorts %>% dplyr::pull(index_date) == earliest_index_date,
                   cdm$joined_cohorts %>% dplyr::pull(marker_date) == earliest_marker_date))
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -627,7 +627,7 @@ test_that("tests involving washout", {
   )
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n) == 0) #combinationWindow fails
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -637,7 +637,7 @@ test_that("tests involving washout", {
   )
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n) == 0) #insufficient prior_obs
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    cohortDateRange = as.Date(c("2000-01-01", NA)),
                                    indexCohortTable ="cohort_1",
@@ -649,7 +649,7 @@ test_that("tests involving washout", {
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n) == 1)
   expect_true(cdm$joined_cohorts %>% dplyr::pull(cohort_start_date) >= as.Date("2000-01-01"))
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -662,7 +662,7 @@ test_that("tests involving washout", {
   test_index <- cdm$cohort_1 %>% dplyr::filter(cohort_start_date<=as.Date(index_date)) %>% dplyr::collect() %>% dplyr::filter(cohort_start_date+365 >= as.Date(index_date)) %>% dplyr::collect()
   expect_true(test_index %>% dplyr::tally() %>% dplyr::pull(n) == 1)
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -685,7 +685,7 @@ test_that("tests involving washout", {
     )
   )
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -753,7 +753,7 @@ test_that("tests involving indexMarkerGap", {
   cdm <- mockCohortSymmetry(indexCohort = indexCohort,
                                             markerCohort = markerCohort)
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -763,7 +763,7 @@ test_that("tests involving indexMarkerGap", {
   )
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n)==2)
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -773,7 +773,7 @@ test_that("tests involving indexMarkerGap", {
   )
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n)==0)
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -785,7 +785,7 @@ test_that("tests involving indexMarkerGap", {
 
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n)==2)
 
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2",
@@ -796,7 +796,7 @@ test_that("tests involving indexMarkerGap", {
   )
 
   expect_true(cdm$joined_cohorts %>% dplyr::tally() %>% dplyr::pull(n)==0)
-  cdm <- sequenceCohort(cdm,
+  cdm$joined_cohorts <- sequenceCohort(cdm,
                                    name = "joined_cohorts",
                                    indexCohortTable ="cohort_1",
                                    markerCohortTable = "cohort_2",

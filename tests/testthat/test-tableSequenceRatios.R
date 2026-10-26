@@ -2,7 +2,7 @@ test_that("tableSequenceRatios - gt output", {
   testthat::skip_if_not_installed("gt")
   testthat::skip_if_not_installed("flextable")
   cdm <- mockCohortSymmetry()
-  cdm <- sequenceCohort(cdm = cdm,
+  cdm$joined_cohort <- sequenceCohort(cdm = cdm,
                                    indexCohortTable = "cohort_1",
                                    indexCohortId = 1,
                                    markerCohortTable = "cohort_2",
@@ -48,7 +48,7 @@ test_that("tableSequenceRatios - tibble output", {
   testthat::skip_if_not_installed("gt")
   testthat::skip_if_not_installed("flextable")
   cdm <- mockCohortSymmetry()
-  cdm <- sequenceCohort(cdm = cdm,
+  cdm$joined_cohort <- sequenceCohort(cdm = cdm,
                                    indexCohortTable = "cohort_1",
                                    indexCohortId = 1,
                                    markerCohortTable = "cohort_2",
@@ -72,7 +72,7 @@ test_that("tableSequenceRatios - flextable output", {
   testthat::skip_if_not_installed("gt")
   testthat::skip_if_not_installed("flextable")
   cdm <- mockCohortSymmetry()
-  cdm <- sequenceCohort(cdm = cdm,
+  cdm$joined_cohort <- sequenceCohort(cdm = cdm,
                                    indexCohortTable = "cohort_1",
                                    indexCohortId = 1,
                                    markerCohortTable = "cohort_2",

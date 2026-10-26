@@ -20,7 +20,7 @@
 #' \donttest{
 #' library(CohortSymmetry)
 #' cdm <- mockCohortSymmetry()
-#' cdm <- sequenceCohort(cdm = cdm,
+#' cdm$joined_cohort <- sequenceCohort(cdm = cdm,
 #'                                  indexCohortTable = "cohort_1",
 #'                                  markerCohortTable = "cohort_2",
 #'                                  name = "joined_cohort")
