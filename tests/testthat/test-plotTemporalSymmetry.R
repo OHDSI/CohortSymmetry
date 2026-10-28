@@ -119,3 +119,23 @@ test_that("empty result error",{
   )
 
 })
+
+
+test_that("temporal symmetry correctly assigns sequence colours", {
+
+  plot_data <- tibble::tibble(
+    time = c("-270", "-180", "-60", "60", "180", "270"),
+    count = c("25", "27", "33", "33", "32", "24")
+  )
+
+  plot_data <- plot_data |>
+    dplyr::mutate(count = as.integer(.data$count),
+                  time = as.integer(.data$time)) |>
+    dplyr::mutate(colour = dplyr::if_else(.data$time > 0, "B", "A"))
+
+  expect_equal(
+    plot_data$colour,
+    c("A", "A", "A", "B", "B", "B")
+  )
+
+})
