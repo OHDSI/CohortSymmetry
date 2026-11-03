@@ -2,7 +2,7 @@
 title: "Step 1. Generate a sequence cohort"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{a02_Generate_a_sequence_cohort}
+  %\VignetteIndexEntry{Step 1. Generate a sequence cohort}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
