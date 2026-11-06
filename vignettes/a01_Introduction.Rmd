@@ -2,7 +2,7 @@
 title: "Introduction to CohortSymmetry"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{a01_Introduction}
+  %\VignetteIndexEntry{Introduction to CohortSymmetry}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -133,7 +133,7 @@ plotSequenceRatios(result = sequence_ratio)
 
 ## As a diagram
 
-Diagrammatically, the work flow using CohortSymmetry resembles the following flow chat:
+Diagrammatically, the work flow using CohortSymmetry resembles the following flow chart:
 
 ```{r, echo=FALSE, message=FALSE, out.width="100%", warning=FALSE}
 library(here)

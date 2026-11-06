@@ -2,7 +2,7 @@
 title: "Step 4: Obtain aggregated data on temporal symmetry"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{a05_Summarise_temporal_symmetry}
+  %\VignetteIndexEntry{Step 4: Obtain aggregated data on temporal symmetry}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
