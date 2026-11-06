@@ -297,7 +297,7 @@ knitr::include_graphics(here("vignettes/6-indexGap.png"))
 
 The default for `indexMarkerGap = Inf` meaning that no restriction is imposed on the interval between the end of the first event and start of the second. This is in line with established SSA methodology, as SSA evaluates asymmetry in sequences rather than duration of concurrent exposure.
 
-However, this setting can be updated to implement a continued exposure interval (CEI) used in prescription-cascade analyses. By setting this parameter it specifies the maximum permitted interval between the end of the first event and start of the second. For example [Hendrix et al. (2024)](https://pubmed.ncbi.nlm.nih.gov/38212730/) applied a 4 month CEI to account for uncertainty in the estimated end of medication exposure. Analogous to this a`indexMarkerGap = 120` would be used for this argument. 
+However, this setting can be updated to implement a continued exposure interval (CEI) used in prescription-cascade analyses. By setting this parameter it specifies the maximum permitted interval between the end of the first event and start of the second. For example [Hendrix et al. (2024)](https://doi.org/10.1186/s12874-023-02108-y) applied a 4 month CEI to account for uncertainty in the estimated end of medication exposure. Analogous to this a`indexMarkerGap = 120` would be used for this argument. 
 
 An example of the `indexGap` argument to impose this restriction, for example is shown below:
 
