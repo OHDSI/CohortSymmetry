@@ -272,7 +272,7 @@ cdm$intersect <- sequenceCohort(
    dplyr::mutate(combinationWindow = pmax(index_date, marker_date) - pmin(index_date, marker_date))
 ```
 
-Furthermore, for the `combinationWindow` argument, a user can also set the minimum window so `combinationWindow = c(7,365)` for example. This allows for a blackout window/period to be applied as described in [Hendrix et al. (2024)](https://pubmed.ncbi.nlm.nih.gov/38212730/). So in other words if a user knows that the index and marker cannot occur within 7 days of each other this can be set and by setting this it would exclude sequences in which two events occur 7 days or fewer days apart, while retaining sequences occuring 8-365 days apart.
+Furthermore, for the `combinationWindow` argument, a user can also set the minimum window so `combinationWindow = c(7,365)` for example. This allows for a blackout window/period to be applied as described in [Hendrix et al. (2024)](https://doi.org/10.1186/s12874-023-02108-y). So in other words if a user knows that the index and marker cannot occur within 7 days of each other this can be set and by setting this it would exclude sequences in which two events occur 7 days or fewer days apart, while retaining sequences occuring 8-365 days apart.
 
 
 ## Specified study period, prior history requirement and index marker gap
