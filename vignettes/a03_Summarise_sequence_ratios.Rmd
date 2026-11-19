@@ -2,7 +2,7 @@
 title: "Step 2. Obtain the sequence ratios"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{a03_Summarise_sequence_ratios}
+  %\VignetteIndexEntry{Step 2. Obtain the sequence ratios}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

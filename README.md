@@ -19,8 +19,8 @@ The goal of CohortSymmetry is to carry out the necessary calculations
 for Sequence Symmetry Analysis (SSA). It is highly recommended that this
 method is tested beforehand against several positive and negative
 controls on a users specific database. Examples of controls could be
-found from [Pratt et al
-(2015)](https://pubmed.ncbi.nlm.nih.gov/25907076/) and the literature.
+found from [Pratt et al (2015)](https://doi.org/10.1002/pds.3780) and
+the literature.
 
 ## Installation
 
@@ -81,6 +81,9 @@ Using CohortConstructor R package (recommended):
 ``` r
 library(dplyr)
 library(CodelistGenerator)
+#> Registered S3 method overwritten by 'CodelistGenerator':
+#>   method            from        
+#>   print.code_search omopgenerics
 library(CohortConstructor)
 
 aspirin_codelist <- CodelistGenerator::getDrugIngredientCodes(

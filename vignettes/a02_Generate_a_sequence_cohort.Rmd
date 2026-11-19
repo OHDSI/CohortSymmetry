@@ -2,7 +2,7 @@
 title: "Step 1. Generate a sequence cohort"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{a02_Generate_a_sequence_cohort}
+  %\VignetteIndexEntry{Step 1. Generate a sequence cohort}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -272,7 +272,7 @@ cdm$intersect <- sequenceCohort(
    dplyr::mutate(combinationWindow = pmax(index_date, marker_date) - pmin(index_date, marker_date))
 ```
 
-Furthermore, for the `combinationWindow` argument, a user can also set the minimum window so `combinationWindow = c(7,365)` for example. This allows for a blackout window/period to be applied as described in [Hendrix et al. (2024)](https://pubmed.ncbi.nlm.nih.gov/38212730/). So in other words if a user knows that the index and marker cannot occur within 7 days of each other this can be set and by setting this it would exclude sequences in which two events occur 7 days or fewer days apart, while retaining sequences occuring 8-365 days apart.
+Furthermore, for the `combinationWindow` argument, a user can also set the minimum window so `combinationWindow = c(7,365)` for example. This allows for a blackout window/period to be applied as described in [Hendrix et al. (2024)](https://doi.org/10.1186/s12874-023-02108-y). So in other words if a user knows that the index and marker cannot occur within 7 days of each other this can be set and by setting this it would exclude sequences in which two events occur 7 days or fewer days apart, while retaining sequences occuring 8-365 days apart.
 
 
 ## Specified study period, prior history requirement and index marker gap
@@ -297,7 +297,7 @@ knitr::include_graphics(here("vignettes/6-indexGap.png"))
 
 The default for `indexMarkerGap = Inf` meaning that no restriction is imposed on the interval between the end of the first event and start of the second. This is in line with established SSA methodology, as SSA evaluates asymmetry in sequences rather than duration of concurrent exposure.
 
-However, this setting can be updated to implement a continued exposure interval (CEI) used in prescription-cascade analyses. By setting this parameter it specifies the maximum permitted interval between the end of the first event and start of the second. For example [Hendrix et al. (2024)](https://pubmed.ncbi.nlm.nih.gov/38212730/) applied a 4 month CEI to account for uncertainty in the estimated end of medication exposure. Analogous to this a`indexMarkerGap = 120` would be used for this argument. 
+However, this setting can be updated to implement a continued exposure interval (CEI) used in prescription-cascade analyses. By setting this parameter it specifies the maximum permitted interval between the end of the first event and start of the second. For example [Hendrix et al. (2024)](https://doi.org/10.1186/s12874-023-02108-y) applied a 4 month CEI to account for uncertainty in the estimated end of medication exposure. Analogous to this a`indexMarkerGap = 120` would be used for this argument. 
 
 An example of the `indexGap` argument to impose this restriction, for example is shown below:
 
