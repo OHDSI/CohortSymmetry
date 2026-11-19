@@ -336,7 +336,7 @@ cdm$intersect <- sequenceCohort(
 Furthermore, for the `combinationWindow` argument, a user can also set
 the minimum window so `combinationWindow = c(7,365)` for example. This
 allows for a blackout window/period to be applied as described in
-[Hendrix et al. (2024)](https://pubmed.ncbi.nlm.nih.gov/38212730/). So
+[Hendrix et al. (2024)](https://doi.org/10.1186/s12874-023-02108-y). So
 in other words if a user knows that the index and marker cannot occur
 within 7 days of each other this can be set and by setting this it would
 exclude sequences in which two events occur 7 days or fewer days apart,
@@ -371,8 +371,8 @@ However, this setting can be updated to implement a continued exposure
 interval (CEI) used in prescription-cascade analyses. By setting this
 parameter it specifies the maximum permitted interval between the end of
 the first event and start of the second. For example [Hendrix et
-al. (2024)](https://pubmed.ncbi.nlm.nih.gov/38212730/) applied a 4 month
-CEI to account for uncertainty in the estimated end of medication
+al. (2024)](https://doi.org/10.1186/s12874-023-02108-y) applied a 4
+month CEI to account for uncertainty in the estimated end of medication
 exposure. Analogous to this a`indexMarkerGap = 120` would be used for
 this argument.
 

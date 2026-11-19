@@ -180,6 +180,6 @@ plotSequenceRatios(result = sequence_ratio)
 ## As a diagram
 
 Diagrammatically, the work flow using CohortSymmetry resembles the
-following flow chat:
+following flow chart:
 
 ![](workflow.png)

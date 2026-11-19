@@ -1,8 +1,13 @@
 # CohortSymmetry: Sequence Symmetry Analysis Using the Observational Medical Outcomes Partnership Common Data Model
 
-Calculating crude sequence ratio, adjusted sequence ratio and confidence
-intervals using data mapped to the Observational Medical Outcomes
-Partnership Common Data Model.
+Calculates crude sequence ratios, adjusted sequence ratios and
+confidence intervals using data mapped to the Observational Medical
+Outcomes Partnership Common Data Model. The methodology for sequence
+symmetry analysis is described by Pratt et al. (2015)
+[doi:10.1002/pds.3780](https://doi.org/10.1002/pds.3780) and Hendrix et
+al. (2024)
+[doi:10.1186/s12874-023-02108-y](https://doi.org/10.1186/s12874-023-02108-y)
+.
 
 ## See also
 
